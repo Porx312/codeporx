@@ -59,7 +59,7 @@ input:-webkit-autofill:focus {
   vertical-align: middle;
 }
 
-.gradient{
+.gradient {
   background-image: linear-gradient(to bottom, #000000, #3d101c, #770c26, #b30025, #eb1212);
 }
 @keyframes slide {

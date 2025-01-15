@@ -1,8 +1,21 @@
 import React from 'react'
 
 const skills = [
-  "HTML", "CSS", "JavaScript", "TypeScript", "Node.js", "Express", "React", "Next.js",
-  "Tailwind CSS", "SEO", "SEM", "SQL", "MongoDB", "Git", "GitHub"
+  'HTML',
+  'CSS',
+  'JavaScript',
+  'TypeScript',
+  'Node.js',
+  'Express',
+  'React',
+  'Next.js',
+  'Tailwind CSS',
+  'SEO',
+  'SEM',
+  'SQL',
+  'MongoDB',
+  'Git',
+  'GitHub',
 ]
 
 export default function SkillsSlider() {
@@ -18,4 +31,3 @@ export default function SkillsSlider() {
     </div>
   )
 }
-

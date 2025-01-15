@@ -9,12 +9,10 @@ import SkillsSlider from '@/components/home/Skills'
 const MAX_DISPLAY = 2
 
 export default function Home({ posts }) {
-  return (  
+  return (
     <>
-
-      <HomeMain/>
-      <SkillsSlider/>
-     
+      <HomeMain />
+      <SkillsSlider />
     </>
   )
 }
