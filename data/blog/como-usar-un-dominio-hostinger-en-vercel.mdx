@@ -1,0 +1,82 @@
+---
+title: "Cómo Usar Un Dominio de Hostinger En Vercel"
+date: "2025-01-17"
+tags: ["Dominios", "Vercel", "Hostinger"]
+draft: false
+summary: "En este artículo te enseño a usar un dominio comprado en Hostinger en Vercel."
+images: ["/static/images/canada/mountains.jpg", "/static/images/canada/toronto.jpg"]
+authors: ["codeporx"]
+---
+
+# Cómo Usar Un Dominio de Hostinger En Vercel
+
+En este artículo te guiaré paso a paso para configurar un dominio comprado en Hostinger para usarlo con un proyecto en Vercel. Siguiendo estas instrucciones, lograrás vincular correctamente tu dominio para que apunte a tu aplicación alojada en Vercel.
+
+## Paso 1: Comprar y Configurar el Dominio en Hostinger
+
+### 1. Inicia sesión en tu cuenta de Hostinger
+
+Accede al panel de control de Hostinger con tus credenciales. Si aún no tienes un dominio, puedes adquirir uno desde su plataforma.
+
+![Hostinger paso 1](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138083/blog/wtogfj7ooqcwnlhdc4hz.png)
+
+- Busca un dominio disponible que se ajuste a tus necesidades.
+- Completa el proceso de compra siguiendo las instrucciones de Hostinger.
+
+### 2. Accede a la Configuración del Dominio
+
+Una vez adquirido el dominio, ve a la sección **Dominios** dentro del panel de Hostinger y selecciona el dominio que deseas configurar.
+
+## Paso 2: Configurar el Dominio en Vercel
+
+### 1. Accede a tu cuenta de Vercel
+
+Inicia sesión en tu cuenta de Vercel y selecciona el proyecto al que quieres asociar el dominio. Ve a la sección **Settings** (Configuración) del proyecto y haz clic en **Domains** (Dominios).
+
+![Vercel paso 2](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138382/blog/ibfpgxeysy1myngz6s2t.png)
+
+### 2. Agrega el Dominio
+
+Haz clic en el botón para agregar un dominio. Introduce el nombre de tu dominio y sigue las indicaciones.
+
+![Vercel paso 3](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138508/blog/yyzzpy8jlahculutcrks.png)
+
+### 3. Habilita las DNS en Nameservers
+
+Vercel te proporcionará un conjunto de DNS (nameservers) que necesitarás configurar en Hostinger.
+
+![Vercel paso 4](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138818/blog/avow3dmdg89ej4klz0u6.png)
+![vercel](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138914/blog/jjdurelawekfuvvbgnca.png)
+Copia los nameservers proporcionados por Vercel para utilizarlos en el siguiente paso.
+
+## Paso 3: Configurar los DNS en Hostinger
+
+### 1. Accede a la Configuración del Dominio
+
+En el panel de control de Hostinger, ve a la sección **Dominios** y selecciona el dominio que estás configurando.
+
+### 2. Edita los Nameservers
+
+En la configuración de DNS o Nameservers del dominio, selecciona la opción para editar. Pega los nameservers proporcionados por Vercel.
+
+![Hostinger paso 2](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737138976/blog/hhs1ri7mxd4nnzogekun.png)
+
+### 3. Guarda los Cambios y Espera la Propagación
+
+Una vez guardados los cambios, comienza el proceso de propagación del DNS. Este proceso puede tardar entre unos minutos y 48 horas, dependiendo del proveedor.
+
+![Hostinger paso 3](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737139065/blog/fth0klwjdf5q2qyduc7l.png)
+
+## Paso 4: Verificar la Configuración
+
+### Comprueba que el Dominio Esté Activo
+
+Una vez que los DNS se hayan propagado, vuelve a la sección de **Domains** en Vercel para verificar que el dominio esté activo.
+
+![Final](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737139189/blog/kkxpkrhxljypqcespdpa.png)
+
+Prueba acceder a tu dominio desde un navegador. Si todo está configurado correctamente, deberías ver tu proyecto desplegado en Vercel.
+
+---
+
+Siguiendo estos pasos, has configurado exitosamente un dominio comprado en Hostinger para usarlo con Vercel. Si tienes problemas durante el proceso, revisa las configuraciones y asegúrate de que los DNS se han propagado correctamente.
