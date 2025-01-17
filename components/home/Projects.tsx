@@ -1,23 +1,25 @@
 import ProjectCard from './ProjectCard'
-
 const projects = [
   {
-    title: 'Proyecto 1',
-    description: 'Una breve descripción del proyecto 1 y sus características principales.',
-    imageUrl: '/placeholder.svg?height=200&width=400',
-    projectUrl: '/proyecto1',
+    title: 'Reformas y Obras en Barcelona',
+    description:
+      'Página diseñada para atraer clientes potenciales y presentar los servicios especializados de reformas y construcción de la empresa.',
+    imageUrl: '/static/images/projects/project1.png',
+    projectUrl: 'https://www.obrasyabcn.com/',
   },
   {
-    title: 'Proyecto 2',
-    description: 'Detalles sobre el proyecto 2 y lo que lo hace especial.',
-    imageUrl: '/placeholder.svg?height=200&width=400',
-    projectUrl: '/proyecto2',
+    title: 'Agencia de Marketing Digital',
+    description:
+      'Sitio web para una agencia de marketing con integración de Stripe, ideal para gestionar pagos.',
+    imageUrl: '/static/images/projects/project2.png',
+    projectUrl: 'https://agenciamarketing.vercel.app/',
   },
   {
-    title: 'Proyecto 3',
-    description: 'Información sobre el proyecto 3 y por qué es importante.',
-    imageUrl: '/placeholder.svg?height=200&width=400',
-    projectUrl: '/proyecto3',
+    title: 'CRM para Gestión Empresarial',
+    description:
+      'Herramienta completa para administrar clientes, visualizar gráficos analíticos y crear presupuestos y facturas personalizadas.',
+    imageUrl: '/static/images/projects/project3.png',
+    projectUrl: 'https://adminbrasya.vercel.app/login',
   },
 ]
 

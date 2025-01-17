@@ -6,7 +6,9 @@ export default function AboutMe() {
       <div className="mx-auto max-w-7xl">
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
           <div className="relative">
-            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Sobre mí</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+              Sobre mí
+            </h2>
             <p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
               Soy un desarrollador web apasionado con experiencia en crear aplicaciones web modernas
               y responsivas. Mi objetivo es combinar diseño atractivo con funcionalidad robusta para
@@ -52,7 +54,9 @@ export default function AboutMe() {
                       {skill.name}
                     </p>
                   </dt>
-                  <dd className="ml-16 mt-2 text-base text-gray-500 dark:text-gray-400" >{skill.description}</dd>
+                  <dd className="ml-16 mt-2 text-base text-gray-500 dark:text-gray-400">
+                    {skill.description}
+                  </dd>
                 </div>
               ))}
             </dl>
