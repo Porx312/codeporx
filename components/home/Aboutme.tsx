@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function AboutMe() {
   return (
-    <section className="bg-white px-4 py-12 sm:px-6 lg:px-8" id="about">
+    <section className="px-4 py-12 sm:px-6 lg:px-8" id="about">
       <div className="mx-auto max-w-7xl">
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
           <div className="relative">

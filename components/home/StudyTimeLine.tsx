@@ -35,7 +35,7 @@ const studySources = [
 
 export default function StudyTimeline() {
   return (
-    <section className="bg-white px-4 py-12 sm:px-6 lg:px-8" id="study">
+    <section className=" px-4 py-12 sm:px-6 lg:px-8" id="study">
       <div className="mx-auto max-w-3xl">
         <h2 className="mb-8 text-center text-3xl font-extrabold text-gray-900">
           Mi Trayectoria de Aprendizaje
