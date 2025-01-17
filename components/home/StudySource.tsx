@@ -7,9 +7,17 @@ interface StudySourceProps {
   date: string
   icon: ReactNode
   description: string
+  time: string
 }
 
-export default function StudySource({ title, source, date, icon, description }: StudySourceProps) {
+export default function StudySource({
+  title,
+  source,
+  date,
+  icon,
+  description,
+  time,
+}: StudySourceProps) {
   return (
     <div className="mb-8 flex items-start space-x-4">
       <div className="flex h-12 w-12 flex-shrink-0 items-center  justify-center rounded-full bg-indigo-100 text-indigo-600">
@@ -18,7 +26,7 @@ export default function StudySource({ title, source, date, icon, description }: 
       <div className="flex-grow">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          {source} • {date}
+          {source} • {date} • {time}
         </p>
         <p className="mt-2 text-gray-600 dark:text-gray-500">{description}</p>
       </div>
