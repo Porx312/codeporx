@@ -63,7 +63,7 @@ export default function StickyMenu() {
           <motion.ul
             className={`${
               isMenuOpen ? 'flex' : 'hidden'
-            } mt-2 flex-col space-y-2 rounded-lg bg-white bg-opacity-80 p-4 shadow-lg backdrop-blur-sm md:mt-0 md:flex md:flex-row md:space-x-1 md:space-y-0`}
+            } mt-2 flex-col space-y-2 rounded-lg bg-white bg-opacity-80 p-4 shadow-lg backdrop-blur-sm dark:bg-opacity-100 dark:text-black md:mt-0 md:flex md:flex-row md:space-x-1 md:space-y-0`}
           >
             {menuItems.map((item) => (
               <li key={item.id}>

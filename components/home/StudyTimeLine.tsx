@@ -37,11 +37,11 @@ export default function StudyTimeline() {
   return (
     <section className=" px-4 py-12 sm:px-6 lg:px-8" id="study">
       <div className="mx-auto max-w-3xl">
-        <h2 className="mb-8 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mb-8 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           Mi Trayectoria de Aprendizaje
         </h2>
         <div className="relative">
-          <div className="absolute bottom-0 left-6 top-5 w-0.5 bg-indigo-200"></div>
+          <div className="absolute bottom-0 left-6 top-5 w-0.5 bg-indigo-200 dark:text-white"></div>
           <div className="space-y-8">
             {studySources.map((source, index) => (
               <StudySource key={index} {...source} />
