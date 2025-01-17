@@ -4,7 +4,7 @@ import { Github, Linkedin, Twitter } from 'lucide-react'
 
 export default function HomeMain() {
   return (
-    <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
+    <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm" id="home">
       <div className="flex flex-col items-center space-y-8">
         <Image
           src="/static/images/logoluffy.jpeg"

@@ -20,7 +20,7 @@ const skills = [
 
 export default function SkillsSlider() {
   return (
-    <div className="w-full overflow-hidden py-10">
+    <div className="w-full overflow-hidden py-10" id="skills">
       <div className="skills-slider">
         {[...skills, ...skills].map((skill, index) => (
           <div key={index} className="skill-item">
