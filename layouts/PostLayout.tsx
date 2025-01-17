@@ -77,14 +77,15 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                         <dt className="sr-only">Twitter</dt>
                         <dd>
                           {author.twitter && (
-                            <Link
-                              href={author.twitter}
-                              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            >
-                              {author.twitter
-                                .replace('https://twitter.com/', '@')
-                                .replace('https://x.com/', '@')}
-                            </Link>
+                          <Link
+                            href={author.twitter}
+                            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          >
+                            {author.twitter
+                            .replace('https://twitter.com/', '@')
+                            .replace('https://x.com/', '@')
+                            .replace('https://www.threads.net/', '@')}
+                          </Link>
                           )}
                         </dd>
                       </dl>

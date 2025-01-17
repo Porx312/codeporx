@@ -1,7 +1,7 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
   title: 'Codeporx',
-  author: 'Jose Blanco',
+  author: 'codeporx',
   headerTitle: 'CodePorx',
   description: 'un blog sobre desarrollo web y tecnología',
   language: 'es-es',
