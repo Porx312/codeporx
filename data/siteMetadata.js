@@ -6,8 +6,8 @@ const siteMetadata = {
   description: 'un blog sobre desarrollo web y tecnología',
   language: 'es-es',
   theme: 'light', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://www.codeporx.com/',
+  siteRepo: 'https://github.com/Porx312/codeporx',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.jpg`,
   mastodon: 'https://mastodon.social/@mastodonuser',
