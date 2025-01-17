@@ -6,12 +6,12 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8">
           <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Contacto</h2>
-            <p className="mt-3 text-lg text-gray-500">
+            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Contacto</h2>
+            <p className="mt-3 text-lg text-gray-500 dark:text-gray-300">
               ¿Tienes alguna pregunta o propuesta? No dudes en contactarme. Estaré encantado de
               escucharte y responder lo antes posible.
             </p>
-            <dl className="mt-8 text-base text-gray-500">
+            <dl className="mt-8 text-base text-gray-500 dark:text-gray-300">
               <div className="mt-6">
                 <dt className="sr-only">Dirección de correo electrónico</dt>
                 <dd className="flex">
