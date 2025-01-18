@@ -25,7 +25,7 @@ module.exports = {
         sans: ['var(--font-space-grotesk)', ...fontFamily.sans],
       },
       colors: {
-        primary: colors.pink,
+        primary: colors.red,
         gray: colors.gray,
       },
       zIndex: {
@@ -39,9 +39,9 @@ module.exports = {
             a: {
               color: theme('colors.primary.500'),
               '&:hover': {
-                color: `${theme('colors.primary.600')}`,
+                color: `${theme('colors.red.600')}`,
               },
-              code: { color: theme('colors.primary.400') },
+              code: { color: theme('colors.red.400') },
             },
             'h1,h2': {
               fontWeight: '700',
@@ -58,11 +58,11 @@ module.exports = {
         invert: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.red.500'),
               '&:hover': {
-                color: `${theme('colors.primary.400')}`,
+                color: `${theme('colors.red.400')}`,
               },
-              code: { color: theme('colors.primary.400') },
+              code: { color: theme('colors.red.400') },
             },
             'h1,h2,h3,h4,h5,h6': {
               color: theme('colors.gray.100'),
@@ -78,11 +78,11 @@ module.exports = {
     ({ addBase, theme }) => {
       addBase({
         'a, button': {
-          outlineColor: theme('colors.primary.500'),
+          outlineColor: theme('colors.red.500'),
           '&:focus-visible': {
             outline: '2px solid',
             borderRadius: theme('borderRadius.DEFAULT'),
-            outlineColor: theme('colors.primary.500'),
+            outlineColor: theme('colors.red.500'),
           },
         },
       })
