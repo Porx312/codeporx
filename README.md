@@ -23,9 +23,9 @@
 
 Si te gusta lo que lees aquí, te invito a:  
 
-- **Explorar mi GitHub**: [Visítame en GitHub](https://github.com/timlrx).  
+- **Explorar mi GitHub**: [Visítame en GitHub](https://github.com/porxd3).  
 - **Seguirme en Threads**: Comparte ideas y colaboremos juntos.  
-- **Apoyar este proyecto**: Si valoras este contenido, considera dar tu apoyo en [GitHub Sponsors](https://github.com/Porx312).  
+- **Apoyar este proyecto**: Si valoras este contenido, considera dar tu apoyo en [GitHub Sponsors](https://github.com/timlrx/tailwind-nextjs-starter-blog).  
 
 ---
 
