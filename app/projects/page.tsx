@@ -41,7 +41,7 @@ export default function Projects() {
               onClick={() => setSelectedCategory(category)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
                 selectedCategory === category
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-red-500 text-white'
                   : 'bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
               }`}
             >
