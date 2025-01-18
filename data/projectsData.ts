@@ -3,25 +3,46 @@ interface Project {
   description: string
   href?: string
   imgSrc?: string
+  category: string
 }
 
 const projectsData: Project[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'ObrasYaBcn',
+    description: `Pagina para conversion de ventas y captacion de clientes optimizada para seo / sem`,
+    imgSrc: '/static/images/projects/project1.png',
+    href: 'https://www.obrasyabcn.com/',
+    category: 'Paginas Web',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'CrmObrasYaBcn',
+    description: `Crm para gestion de clientes y presupuestos`,
+    imgSrc: '/static/images/projects/project3.png',
+    href: 'https://adminbrasya.vercel.app/login',
+    category: 'Crm',
   },
+  {
+    title: 'TransformaMax',
+    description: `Blog de articulos Seo para ventas de productos afiliados`,
+    imgSrc: '/static/images/projects/project4.png',
+    href: 'https://www.transformamax.com/',
+    category: 'Blog',
+  },
+  {
+    title: 'CleanAura',
+    description: `Proyecto de limpieza de casas y oficinas "Aun en desarrollo"`,
+    imgSrc: '/static/images/projects/project5.png',
+    href: 'https://www.cleanaura.org/',
+    category: 'Blog',
+  },
+  {
+    title: 'Portafolio Personal',
+    description: `Portafolio personal de Jose`,
+    imgSrc: '/static/images/projects/project6.png',
+    href: 'https://porx312.github.io/Portafolio-Jose/',
+    category: 'Portfolio',
+  },
+  // Add more projects with categories...
 ]
 
 export default projectsData
