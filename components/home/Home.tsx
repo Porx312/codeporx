@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Github, Linkedin, Twitter } from 'lucide-react'
-import { Threads } from '../social-icons/icons'
+import { Github, Linkedin } from 'lucide-react'
 
 export default function HomeMain() {
   return (
@@ -33,7 +32,6 @@ export default function HomeMain() {
           >
             <Linkedin size={24} />
           </Link>
-      
         </div>
       </div>
     </div>
