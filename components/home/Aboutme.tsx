@@ -64,7 +64,7 @@ export default function AboutMe() {
           <div className="relative -mx-4 mt-10 lg:mt-0" aria-hidden="true">
             <Image
               className="relative mx-auto rounded-lg shadow-lg"
-              src="/placeholder.svg?height=500&width=500"
+              src="/static/images/logo.jpg"
               alt="Foto de perfil"
               width={500}
               height={500}
