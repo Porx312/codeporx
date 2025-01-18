@@ -19,8 +19,8 @@ export default function StudySource({
   time,
 }: StudySourceProps) {
   return (
-    <div className="mb-8 flex items-start space-x-4">
-      <div className="flex h-12 w-12 flex-shrink-0 items-center  justify-center rounded-full bg-indigo-100 text-indigo-600">
+    <div className="mb-8  flex items-start space-x-4">
+      <div className="flex h-12 w-12 flex-shrink-0 items-center  justify-center rounded-full bg-red-100 text-red-600">
         {icon}
       </div>
       <div className="flex-grow">

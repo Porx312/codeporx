@@ -22,19 +22,19 @@ export default function HomeMain() {
         <div className="flex space-x-4">
           <Link
             href="https://github.com/tu-usuario"
-            className="text-gray-600 hover:text-blue-500 dark:text-white"
+            className="text-gray-600 hover:text-red-600 dark:text-white"
           >
             <Github size={24} />
           </Link>
           <Link
             href="https://linkedin.com/in/tu-usuario"
-            className="text-gray-600 hover:text-blue-600 dark:text-white"
+            className="text-gray-600 hover:text-red-600 dark:text-white"
           >
             <Linkedin size={24} />
           </Link>
           <Link
             href="https://twitter.com/tu-usuario"
-            className="text-gray-600 hover:text-blue-400 dark:text-white"
+            className="text-gray-600 hover:text-red-600 dark:text-white"
           >
             <Twitter size={24} />
           </Link>

@@ -33,7 +33,7 @@ export default function AboutMe() {
               ].map((skill) => (
                 <div key={skill.name} className="relative">
                   <dt>
-                    <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-indigo-500 text-white">
+                    <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-red-500 text-white">
                       <svg
                         className="h-6 w-6"
                         xmlns="http://www.w3.org/2000/svg"

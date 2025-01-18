@@ -33,7 +33,7 @@ export default function ProjectCard({
         <div className="mt-6">
           <Link
             href={projectUrl}
-            className="text-base font-semibold text-indigo-600 hover:text-indigo-500"
+            className="text-base font-semibold text-red-700 hover:text-red-500"
           >
             Ver proyecto
           </Link>
