@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Github, Linkedin, Twitter } from 'lucide-react'
+import { Threads } from '../social-icons/icons'
 
 export default function HomeMain() {
   return (
@@ -21,23 +22,18 @@ export default function HomeMain() {
 
         <div className="flex space-x-4">
           <Link
-            href="https://github.com/tu-usuario"
+            href="https://github.com/Porx312"
             className="text-gray-600 hover:text-red-600 dark:text-white"
           >
             <Github size={24} />
           </Link>
           <Link
-            href="https://linkedin.com/in/tu-usuario"
+            href="https://www.linkedin.com/in/joseblancodev/"
             className="text-gray-600 hover:text-red-600 dark:text-white"
           >
             <Linkedin size={24} />
           </Link>
-          <Link
-            href="https://twitter.com/tu-usuario"
-            className="text-gray-600 hover:text-red-600 dark:text-white"
-          >
-            <Twitter size={24} />
-          </Link>
+      
         </div>
       </div>
     </div>

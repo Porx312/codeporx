@@ -92,8 +92,17 @@ export default function ListLayoutWithTags({
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <aside className="mb-8 w-full lg:mb-0 lg:w-1/4">
             <div className="sticky top-8 rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
-              <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">Tags</h2>
-              <div className="flex flex-wrap gap-2">
+              {pathname.startsWith('/blog') ? (
+                <h3 className="font-bold uppercase text-red-500"> Todos Los Posts</h3>
+              ) : (
+                <Link
+                  href={`/blog`}
+                  className="font-bold uppercase text-gray-700 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-500"
+                >
+                  Todos Los Posts
+                </Link>
+              )}
+              <div className="mt-3 flex flex-wrap gap-2">
                 {sortedTags.map((t) => (
                   <Link
                     key={t}
