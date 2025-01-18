@@ -34,7 +34,7 @@ export default function Projects() {
         >
           Explora mis últimos trabajos y proyectos creativos
         </motion.p>
-        <div className="mb-8 flex justify-center flex-wrap gap-2 space-x-4">
+        <div className="mb-8 flex flex-wrap justify-center gap-2 space-x-4">
           {categories.map((category) => (
             <button
               key={category}
