@@ -13,7 +13,7 @@ export default function HomeMain() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-4xl bg-white p-8"
+        className="w-full max-w-4xl p-8"
       >
         <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative">
