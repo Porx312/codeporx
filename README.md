@@ -1,6 +1,6 @@
+![image]('/public/static/images/image.png')
 # Codeporx Portfolio/Blog  
 
-![image]('/public/static/images/image.png')
 
 ¡Bienvenido a **Codeporx**! Aquí encontrarás un espacio dedicado a compartir mis proyectos, aprendizajes y reflexiones como desarrollador. Mi objetivo es combinar tecnología, creatividad y experiencia para construir soluciones impactantes mientras documento este emocionante viaje en el mundo del desarrollo y el diseño.  
 
