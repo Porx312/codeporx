@@ -1,0 +1,123 @@
+---
+title: "Guía completa para usar ngrok y acceder a tu sitio web local desde cualquier dispositivo"
+date: "2025-01-18"
+tags: ["ngrok", "desarrollo web", "pruebas web"]
+draft: false
+summary: "Descubre cómo configurar y usar ngrok para acceder a tu servidor local desde cualquier dispositivo mediante una URL pública. Ideal para probar tu web en diferentes plataformas."
+authors: ["default"]
+---
+
+# Guía completa para usar ngrok y acceder a tu sitio web local desde cualquier dispositivo
+
+Si eres desarrollador web, seguramente te has encontrado con la necesidad de probar tu sitio en otros dispositivos, como un móvil o una tablet, sin subirlo a un servidor. En esta guía, te enseñaré a usar **ngrok**, una herramienta que te permite exponer tu servidor local mediante una URL pública, de forma fácil y rápida.
+
+## ¿Qué es ngrok?
+
+**ngrok** es una herramienta popular que crea túneles seguros entre tu servidor local y una URL pública. Esto te permite compartir tu proyecto en desarrollo con cualquier persona o dispositivo, sin necesidad de desplegarlo en un hosting.
+![ngok](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737289890/ngrok1_spekwz.png)
+## Beneficios de usar ngrok
+
+- **Pruebas en diferentes dispositivos:** Visualiza tu proyecto local en dispositivos móviles, tablets o cualquier equipo con acceso a internet.
+- **Demostraciones rápidas:** Comparte tu trabajo con clientes o compañeros sin necesidad de desplegar el sitio.
+- **Debugging remoto:** Prueba integraciones con servicios externos que requieran una URL pública, como webhooks o APIs.
+- **Ahorro de tiempo:** No necesitas configurar servidores o subir archivos a hosting.
+
+## Cómo usar ngrok: Paso a paso
+
+Sigue estos pasos para configurar y utilizar ngrok:
+
+### 1. Regístrate y descarga ngrok
+
+- Ve a la [página oficial de ngrok](https://ngrok.com/).
+- Crea una cuenta gratuita y descarga la versión correspondiente a tu sistema operativo.
+
+### 2. Instala ngrok en tu equipo
+
+- Una vez descargado, descomprime el archivo.
+- Abre una terminal en el directorio donde descomprimiste ngrok.
+
+### 3. Autentica tu cuenta
+
+Antes de usar ngrok, necesitas vincularlo a tu cuenta:
+
+```bash
+ngrok config add-authtoken TU_TOKEN_DE_AUTENTICACION
+```
+Puedes encontrar tu token en el panel de ngrok tras iniciar sesión.
+
+### 4. Inicia tu servidor local
+
+Asegúrate de que tu proyecto esté corriendo en un puerto local (por ejemplo, `localhost:3000`).
+
+### 5. Ejecuta ngrok
+
+En la misma terminal, ejecuta el siguiente comando:
+
+```bash
+ngrok http 3000
+```
+
+Sustituye `3000` por el puerto en el que esté funcionando tu servidor local. ngrok generará una URL pública como esta:
+
+```plaintext
+https://abcd-1234.ngrok-free.app
+```
+
+### 6. Comparte la URL
+
+Ahora puedes acceder a tu sitio desde cualquier dispositivo usando la URL generada. También puedes compartirla con otros usuarios para demostraciones o pruebas.
+
+### Ejemplo visual:
+
+1. **Ejecutando ngrok:**
+   ![ngrok terminal](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737287739/Captura_de_pantalla_2025-01-19_125330_ouf5ei.png)
+
+2. **Verificando tu servidor local:**
+   ![servidor local](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737287770/Captura_de_pantalla_2025-01-19_125310_yoisui.png)
+
+3. **URL generada:**
+   ![url generada](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737287813/Captura_de_pantalla_2025-01-19_125339_ig9k0b.png)
+
+---
+
+## Consejos de seguridad al usar ngrok
+
+- **Cierra el túnel cuando no lo uses:** Para evitar accesos no autorizados.
+- **Usa contraseñas o autenticación:** Si compartes tu URL pública, protege tu servidor local.
+- **No expongas información sensible:** ngrok solo debería usarse en entornos de desarrollo.
+
+---
+
+## Preguntas frecuentes (FAQ)
+
+### 1. ¿Es gratuito usar ngrok?
+
+Sí, ngrok ofrece un plan gratuito que incluye URL públicas temporales. Los planes de pago incluyen funcionalidades avanzadas como subdominios personalizados y conexiones simultáneas.
+
+### 2. ¿Puedo usar ngrok con HTTPS?
+
+Sí, las URLs generadas por ngrok incluyen soporte para HTTPS, lo que permite conexiones seguras.
+
+### 3. ¿Cuál es la diferencia entre ngrok y otros servicios similares?
+
+ngrok destaca por su facilidad de uso, configuración rápida y soporte para túneles seguros. Alternativas como **localtunnel** o **Serveo** también son opciones populares, pero ngrok ofrece más funcionalidades avanzadas.
+
+### 4. ¿Ngrok funciona para todos los tipos de servidores?
+
+Sí, puedes usar ngrok para exponer cualquier tipo de servidor local, ya sea Node.js, Python, PHP, Ruby, entre otros.
+
+### 5. ¿Qué pasa si cierro la terminal donde se ejecuta ngrok?
+
+El túnel se cerrará y la URL pública dejará de estar disponible. Tendrás que reiniciar ngrok para generar una nueva URL.
+
+---
+
+## Conclusión
+
+**ngrok** es una herramienta poderosa y fácil de usar para exponer tu servidor local al mundo. Ya sea para pruebas en dispositivos móviles, demostraciones a clientes o debugging remoto, ngrok simplifica enormemente el proceso. Sigue esta guía y empieza a compartir tu proyecto local en minutos. ¡Pruébalo hoy mismo!
+
+---
+
+### Recursos adicionales
+- [Documentación oficial de ngrok](https://ngrok.com/docs)
+- [Descargar ngrok](https://ngrok.com/download)
