@@ -1,0 +1,174 @@
+---
+title: 'Como Contribuir a un Proyecto Open Source en GitHub (Guía Práctica)'
+date: '2025-01-19'
+tags: ['github', 'open source', 'contribuciones']
+draft: false
+summary: 'En este artículo te enseñaré cómo contribuir a un proyecto Open Source en GitHub, desde la creación de un fork hasta el envío de un pull request. Aprende a colaborar con la comunidad de desarrolladores y mejorar tus habilidades.'
+authors: ['default']
+---
+
+# Cómo Contribuir a un Proyecto Open Source en GitHub
+En este artículo aprenderás paso a paso cómo realizar tus primeras contribuciones a proyectos de código abierto en GitHub, desde la creación de un fork hasta el envío de un pull request.
+
+[pagina web de contribuyentes](https://opensoursegithub.netlify.app/)
+![web](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737378092/Captura_de_pantalla_2025-01-20_140113_jumtr5.png)
+
+### ¿Qué es un Proyecto Open Source?
+Un proyecto Open Source o de código abierto es un proyecto generalmente creado por la comunidad de desarrolladores y que es de libre acceso para que cualquier persona pueda colaborar en él.
+
+### ¿Por qué contribuir a un Proyecto Open Source?
+Contribuir a un proyecto de código abierto te permite:
+- Aprender nuevas tecnologías y prácticas de desarrollo.
+- Colaborar con otros desarrolladores y construir una red profesional.
+- Mejorar tus habilidades de programación y resolución de problemas.
+- Contribuir al bien común y ayudar a la comunidad de desarrolladores.
+- Destacar tu trabajo y construir un portafolio sólido.
+
+
+## Requisitos Básicos para Contribuir
+Antes de empezar, asegúrate de cumplir con los siguientes requisitos:
+
+1. **Cuenta de GitHub:** Crea una cuenta gratuita en [GitHub](https://github.com).
+2. **Conocimientos de Git:** Aprende los comandos básicos, como `clone`, `add`, `commit`, y `push`.
+3. **Editor de código:** Utiliza un editor como [Visual Studio Code](https://code.visualstudio.com).
+4. **Conocimientos básicos de programación:** Familiarízate con el lenguaje del proyecto que deseas contribuir.
+5. **Paciencia y ganas de aprender:** La colaboración requiere tiempo y disposición para recibir retroalimentación.
+
+
+## En este artículo te guiaré con un ejemplo práctico de cómo contribuir a un proyecto de código abierto en GitHub
+Para este ejemplo, usaremos un repositorio de GitHub que he creado específicamente para que puedas practicar tus contribuciones de manera segura y efectiva.
+
+![Proyecto de Contribuyentes de GitHub](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737372655/Captura_de_pantalla_2025-01-20_122922_v0hlge.png)
+[Proyecto de Contribuyentes de GitHub](https://github.com/Porx312/opensource)
+
+## Paso 1: Hacer un Fork del Repositorio
+### ¿Qué es un fork?
+Un fork es una copia de un repositorio en tu cuenta de GitHub. Esto te permite:
+1. Trabajar en el proyecto sin afectar el repositorio original.
+2. Hacer cambios en tu fork y luego enviarlos de vuelta al repositorio original mediante un pull request.
+
+Para crear un fork:
+1. Ve al repositorio original [Proyecto de Contribuyentes de GitHub](https://github.com/Porx312/opensource).
+2. Haz clic en el botón **Fork** ubicado en la parte superior derecha de la página.
+
+![Create Fork](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737372957/Captura_de_pantalla_2025-01-20_123520_zeye45.png)
+
+## Paso 2: Clonar tu Fork a tu Máquina Local
+Una vez creado el fork, es momento de clonarlo en tu computadora para empezar a trabajar.
+
+1. Abre tu terminal o el terminal integrado de tu editor de código (por ejemplo, Visual Studio Code).
+2. Usa el comando `git clone` seguido de la URL de tu fork. Por ejemplo:
+
+```bash
+git clone https://github.com/tu-usuario/opensource.git
+```
+
+![Clonar Repositorio](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737373404/Captura_de_pantalla_2025-01-20_123927_bdabpn.png)
+
+3. Cambia al directorio del proyecto clonado:
+
+```bash
+cd opensource
+```
+
+4. Configura el repositorio original como remoto adicional para mantener tu fork actualizado. Usa el siguiente comando:
+
+```bash
+git remote add upstream https://github.com/Porx312/opensource.git
+```
+
+Esto asegura que puedas obtener los últimos cambios del repositorio original ejecutando:
+
+```bash
+git fetch upstream
+```
+
+## Paso 3: Crear una Rama para tu Contribución
+Antes de realizar cambios, crea una nueva rama para organizar tu trabajo:
+
+```bash
+git checkout -b mi-contribucion
+```
+
+Esto facilita el proceso de enviar tus cambios sin alterar la rama principal de tu fork.
+## Edita el Archivo `src/contributors.ts`
+
+Como primer ejercicio práctico, te guiaré para hacer tu primer cambio en el proyecto. Agregarás tu nombre y tu usuario de GitHub al archivo `src/contributors.ts`.
+
+#### Pasos:
+
+1. **Ubica el archivo en tu editor de código**  
+   Ve a la carpeta `src` dentro del proyecto y abre el archivo `contributors.ts`.
+
+   ![Guía](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737375289/Captura_de_pantalla_2025-01-20_131434_ourr9z.png)
+
+2. **Agrega tu información**  
+   Dentro del archivo encontrarás una lista con objetos en formato TypeScript. Cada objeto representa un contribuyente. Para añadirte, simplemente agrega una nueva entrada con tu nombre y usuario de GitHub. Por ejemplo:
+
+   ```typescript
+   const contributors = [
+       { name: 'Juan Pérez', github: 'juanperez' },
+       { name: 'codeporx', github: 'codeporx' },
+      // <- Agrega tu contribución aquí
+
+
+## Paso 4: Hacer Cambios y Confirmarlos
+1. Realiza los cambios necesarios en el proyecto utilizando tu editor de código.
+2. Guarda los archivos modificados.
+3. Agrega los archivos al área de preparación (staging area):
+
+```bash
+git add .
+```
+
+4. Crea un commit describiendo brevemente los cambios realizados:
+
+```bash
+git commit -m "Descripción de los cambios"
+```
+
+## Paso 5: Enviar Cambios a tu Fork
+Sube los cambios a tu fork en GitHub:
+
+```bash
+git push origin mi-contribucion
+```
+
+## Paso 6: Crear un Pull Request
+1. Ve a tu fork en GitHub.
+2. Haz clic en el botón **Compare & pull request** que aparece después de hacer un push.
+![create pull request](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737377279/Captura_de_pantalla_2025-01-20_134325_jib6qw.png)
+3. Escribe una descripción detallada de los cambios realizados.
+4. Envía el pull request para que el mantenedor del proyecto lo revise.
+![send pull request](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737377285/Captura_de_pantalla_2025-01-20_134608_gmqhh8.png)
+
+## Paso 7: Resolver Comentarios y Feedback
+
+Es posible que el mantenedor del proyecto sugiera cambios. Si es así:
+1. Realiza los cambios sugeridos en tu rama local.
+2. Confirma y sube los cambios nuevamente:
+3.espera a que el mantenedor del proyecto apruebe tus cambios.
+
+```bash
+git add .
+git commit -m "Incorporar sugerencias"
+git push origin mi-contribucion
+```
+
+3. Los cambios se reflejarán automáticamente en el pull request.
+![aprobado](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737378177/Captura_de_pantalla_2025-01-20_140034_ybl49u.png)
+
+## Paso 8: Mantener tu Fork Actualizado
+Para evitar conflictos, mantén tu fork sincronizado con el repositorio original:
+
+```bash
+git fetch upstream
+git merge upstream/main
+```
+
+Esto asegura que trabajas con la versión más reciente del código.
+
+## Conclusión
+Contribuir a proyectos Open Source en GitHub es una excelente manera de aprender, colaborar y crecer como desarrollador. Sigue estos pasos prácticos y estarás listo para realizar tus primeras contribuciones. ¡Empieza hoy mismo!
+
+[Proyecto de Contribuyentes de GitHub](https://github.com/Porx312/opensource)
