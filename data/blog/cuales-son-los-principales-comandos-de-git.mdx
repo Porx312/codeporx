@@ -1,0 +1,201 @@
+---
+title: 'Lista de Comandos de Git'
+date: '2025-01-20'
+tags: ['git']
+draft: false
+summary: 'Una lista de comandos de Git que te ayudarán a gestionar tu repositorio de forma eficiente y a colaborar con otros desarrolladores en proyectos de código abierto.'
+authors: ['default']
+---
+
+# Lista de Comandos de Git
+
+Aquí encontrarás una lista completa de comandos de Git organizados por categoría, con ejemplos y descripciones para ayudarte a gestionar tus repositorios y colaborar con otros desarrolladores.
+## Tabla de Contenidos
+
+- [Configuración Inicial](#configuración-inicial)
+- [Iniciar un Repositorio](#iniciar-un-repositorio)
+- [Añadir Archivos al Índice](#añadir-archivos-al-índice)
+- [Realizar Commits](#realizar-commits)
+- [Enviar Cambios al Repositorio Remoto](#enviar-cambios-al-repositorio-remoto)
+- [Registro de Cambios](#registro-de-cambios)
+- [Comparar Cambios](#comparar-cambios)
+- [Deshacer Cambios](#deshacer-cambios)
+- [Manejo de Repositorios Remotos](#manejo-de-repositorios-remotos)
+- [Manejo de Branches](#manejo-de-branches)
+- [Rebase](#rebase)
+- [Actualización desde el Repositorio Remoto](#actualización-desde-el-repositorio-remoto)
+- [Eliminar Archivos](#eliminar-archivos)
+- [Manejo de Etiquetas](#manejo-de-etiquetas)
+- [Sincronización con un Repositorio Upstream](#sincronización-con-un-repositorio-upstream)
+- [Estado del Repositorio](#estado-del-repositorio)
+## Configuración Inicial
+
+Antes de empezar a usar Git, debes configurarlo con tu información de usuario. Estos comandos aseguran que los commits estén asociados a tu identidad y que la interfaz sea más legible.
+
+```bash
+git config --global user.name "Tu Nombre"
+git config --global user.email tuemail@example.com
+git config --global color.ui true
+```
+
+## Iniciar un Repositorio
+
+Ya sea que estés comenzando un proyecto desde cero o contribuyendo a uno existente, estos comandos te ayudan a configurar tu entorno de trabajo con Git.
+
+```bash
+git init                       # Inicia un repositorio vacío
+git clone <url>                # Clona un repositorio remoto
+git clone <url> git-demo       # Clona un repositorio con un nombre específico
+```
+
+## Añadir Archivos al Índice
+
+Preparar archivos para el commit es un paso esencial. Aquí encontrarás diferentes formas de agregar archivos al índice, desde uno específico hasta todos los archivos en el directorio.
+
+```bash
+git add .                      # Añade todos los archivos al índice
+git add <archivo>              # Añade un archivo específico
+git add --all                  # Añade todos los archivos, incluyendo eliminados
+git add *.txt                  # Añade todos los archivos .txt
+git add docs/*.txt             # Añade archivos .txt dentro del directorio 'docs'
+```
+
+## Realizar Commits
+
+Guardar los cambios en el historial del repositorio es el corazón de Git. Aprende a realizar commits con mensajes claros, modificar commits anteriores y comprometer directamente cambios rastreados.
+
+
+
+```bash
+git commit -m "Mensaje del commit"              # Commit con mensaje
+git commit -a -m "Mensaje del commit"           # Salta `git add` para archivos ya rastreados
+git commit --amend -m "Nuevo mensaje"           # Modifica el último commit
+```
+
+## Enviar Cambios al Repositorio Remoto
+
+Envía tus cambios locales al repositorio remoto para que otros desarrolladores puedan verlos o contribuir a tu trabajo.
+
+```bash
+git push origin master                          # Envía cambios al branch 'master'
+git push <origen> <branch>                      # Envía cambios a un branch específico
+git push --tags                                 # Envía etiquetas al repositorio remoto
+```
+
+## Registro de Cambios
+
+Consulta el historial de cambios en tu proyecto con varios niveles de detalle. Desde una lista completa hasta un gráfico simplificado.
+
+```bash
+git log                                         # Muestra el historial completo
+git log --oneline                               # Muestra el historial en una línea por commit
+git log --oneline --graph                       # Muestra el historial en un gráfico simplificado
+```
+
+## Comparar Cambios
+
+Identifica las diferencias entre tu trabajo actual y el índice, o entre tus cambios locales y lo que está comprometido.
+
+```bash
+git diff                                        # Muestra diferencias no indexadas
+git diff --staged                               # Muestra diferencias indexadas
+```
+
+## Deshacer Cambios
+
+Corrige errores o ajusta el historial de tu proyecto con comandos que permiten deshacer cambios en diferentes etapas del flujo de trabajo.
+
+```bash
+git reset HEAD <archivo>                        # Quita un archivo del índice
+git reset --soft HEAD^                          # Deshace el último commit pero mantiene los cambios
+git reset --hard HEAD^                          # Deshace el último commit y los cambios
+git reset --hard <commit_sha>                   # Restaura el repositorio a un commit específico
+```
+
+## Manejo de Repositorios Remotos
+
+Administra las conexiones con repositorios remotos. Estos comandos son clave para configurar, actualizar o limpiar tus vínculos remotos.
+
+```bash
+git remote add origin <url>                     # Vincula un repositorio remoto
+git remote set-url origin <url>                 # Cambia la URL del repositorio remoto
+git remote rm origin                            # Elimina el repositorio remoto
+git remote -v                                   # Lista repositorios remotos
+git remote show origin                          # Muestra detalles del repositorio remoto
+git remote prune origin                         # Elimina referencias remotas obsoletas
+```
+
+## Manejo de Branches
+
+Trabaja con ramas para desarrollar características o realizar correcciones de forma aislada. Estos comandos te permiten crear, cambiar y fusionar ramas con facilidad.
+
+```bash
+git branch                                      # Lista las ramas locales
+git branch <nameBranch>                         # Crea una nueva rama
+git checkout <nameBranch>                       # Cambia a una rama existente
+git checkout -b newlocalbranch origin/branch    # Crea una rama local desde una remota
+git merge <nameBranch>                          # Fusiona una rama con la actual
+git merge --abort                               # Cancela una fusión en caso de conflictos
+```
+
+## Rebase
+
+Reorganiza los commits en una rama para mantener un historial limpio y claro. Aprende a continuar, cancelar o resolver conflictos durante el proceso de rebase.
+
+```bash
+git rebase                                      # Inicia el rebase
+git rebase --continue                           # Continúa después de resolver conflictos
+git rebase --abort                              # Cancela el rebase
+```
+
+## Actualización desde el Repositorio Remoto
+
+Mantén tu trabajo actualizado descargando y combinando cambios realizados por otros colaboradores en el repositorio remoto.
+
+```bash
+git fetch                                       # Descarga cambios remotos sin aplicarlos
+git pull origin <nameBranch>                    # Combina cambios del remoto con tu rama local
+```
+
+## Eliminar Archivos
+
+Elimina archivos del repositorio de manera controlada. Esto asegura que los cambios se reflejen correctamente en el historial del proyecto.
+
+```bash
+git rm <archivo>                                # Elimina un archivo del repositorio
+```
+
+## Manejo de Etiquetas
+
+Crea, lista y administra etiquetas para marcar puntos específicos en el historial, como versiones o lanzamientos importantes.
+
+```bash
+git tag                                         # Lista las etiquetas
+git tag -a <versión> -m "Descripción"           # Crea una etiqueta con mensaje
+git push --tags                                 # Envía etiquetas al repositorio remoto
+```
+
+## Sincronización con un Repositorio Upstream
+
+Colabora en proyectos que tienen un repositorio principal (upstream). Sincroniza tus cambios con el upstream para mantener tu trabajo al día.
+
+
+```bash
+git remote add upstream <url>                   # Añade un upstream
+git fetch upstream                              # Descarga cambios del upstream
+git merge upstream/master                       # Fusiona los cambios con tu rama actual
+```
+
+## Estado del Repositorio
+
+Consulta el estado actual del repositorio para saber qué archivos han cambiado, cuáles están en el índice y cuáles están sin rastrear.
+
+```bash
+git status                                      # Muestra el estado actual
+git checkout -- <file>                          # Descarta cambios en un archivo
+```
+
+---
+
+¡Con estos comandos podrás gestionar tus proyectos con Git de manera más eficiente!
+
