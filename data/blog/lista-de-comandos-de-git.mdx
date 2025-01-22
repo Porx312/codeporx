@@ -7,9 +7,8 @@ summary: 'Una lista de comandos de Git que te ayudarán a gestionar tu repositor
 authors: ['default']
 ---
 
-# Lista de Comandos de Git
-
 Aquí encontrarás una lista completa de comandos de Git organizados por categoría, con ejemplos y descripciones para ayudarte a gestionar tus repositorios y colaborar con otros desarrolladores.
+
 ## Tabla de Contenidos
 
 - [Configuración Inicial](#configuración-inicial)
@@ -28,6 +27,7 @@ Aquí encontrarás una lista completa de comandos de Git organizados por categor
 - [Manejo de Etiquetas](#manejo-de-etiquetas)
 - [Sincronización con un Repositorio Upstream](#sincronización-con-un-repositorio-upstream)
 - [Estado del Repositorio](#estado-del-repositorio)
+
 ## Configuración Inicial
 
 Antes de empezar a usar Git, debes configurarlo con tu información de usuario. Estos comandos aseguran que los commits estén asociados a tu identidad y que la interfaz sea más legible.
@@ -63,8 +63,6 @@ git add docs/*.txt             # Añade archivos .txt dentro del directorio 'doc
 ## Realizar Commits
 
 Guardar los cambios en el historial del repositorio es el corazón de Git. Aprende a realizar commits con mensajes claros, modificar commits anteriores y comprometer directamente cambios rastreados.
-
-
 
 ```bash
 git commit -m "Mensaje del commit"              # Commit con mensaje
@@ -179,7 +177,6 @@ git push --tags                                 # Envía etiquetas al repositori
 
 Colabora en proyectos que tienen un repositorio principal (upstream). Sincroniza tus cambios con el upstream para mantener tu trabajo al día.
 
-
 ```bash
 git remote add upstream <url>                   # Añade un upstream
 git fetch upstream                              # Descarga cambios del upstream
@@ -198,4 +195,3 @@ git checkout -- <file>                          # Descarta cambios en un archivo
 ---
 
 ¡Con estos comandos podrás gestionar tus proyectos con Git de manera más eficiente!
-

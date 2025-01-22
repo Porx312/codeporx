@@ -1,0 +1,235 @@
+---
+title: '¿Cómo crear rutas en nextjs?'
+date: '2025-01-22'
+tags: ['nextjs', 'rutas', 'tutorial']
+draft: false
+summary: 'Aprende a crear rutas dinámicas y estáticas en Next.js de forma rápida y sencilla. Descubre cómo aprovechar el sistema de enrutamiento automático para mejorar tu desarrollo web.'
+authors: ['default']
+---
+
+En este tutorial, te enseñaré a crear **rutas en Next.js** de manera sencilla y rápida. Next.js cuenta con un sistema de enrutamiento basado en archivos, lo que significa que no necesitas configurar un enrutador manualmente como en otros frameworks. ¡Todo se genera automáticamente!
+
+---
+
+## ¿Qué son las rutas en Next.js?
+
+En Next.js, las rutas son **URLs** que apuntan a páginas específicas dentro de tu aplicación. Estas pueden ser:
+
+- **Rutas estáticas**: Son páginas que no cambian, perfectas para contenido fijo.
+- **Rutas dinámicas**: Permiten manejar páginas que dependen de datos variables, como perfiles de usuario o productos.
+
+---
+
+## ¿Cómo crear una ruta estática en Next.js?
+
+Crear una **ruta estática** en Next.js es muy simple. Solo necesitas agregar un archivo `page.tsx` dentro de la carpeta `anyname`. Por ejemplo:
+
+1. Crea tu carpeta con el nombre de la ruta que quieres crear y dentro coloca un archivo page.tsx en este caso la carpeta de se llama anyname por lo tanto la ruta sera [http://localhost:3000/anyname](http://localhost:3000/anyname) y la estructura de carpetas debe ser la siguiente:
+
+![estructura de carpetas](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737549423/Captura_de_pantalla_2025-01-22_133653_zxsuvb.png)
+
+```javascript
+// app/anyname/page.tsx
+import React from 'react'
+
+const NOAfecta = () => {
+  return (
+    <div>
+      <h2 className="text-6xl">
+        No importa el nombre de la carpeta, pero el archivo dentro de la carpeta sí o sí debe
+        llamarse page.tsx. El nombre que le coloques al componente no afecta, solo el nombre del
+        archivo.
+      </h2>
+    </div>
+  )
+}
+
+export default NOAfecta
+```
+
+2. Inicia tu servidor local con:
+   ```bash
+   npm run dev
+   ```
+3. Ve a [http://localhost:3000/anyname](http://localhost:3000/anyname) y verás tu página estática funcionando.
+   ![rutas nextjs estaticas](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737548920/Captura_de_pantalla_2025-01-22_132742_qlaiva.png)
+
+¡Listo! Has creado tu primera ruta estática en Next.js. Ahora puedes agregar contenido y estilos a tu página como desees.
+
+## ¿Cómo crear rutas dinámicas en Next.js?
+
+Para crear **rutas dinámicas** en Next.js, seguimos una estructura de carpetas específica. La diferencia clave con las rutas estáticas es que los archivos que definen las rutas dinámicas deben tener corchetes `[]` en su nombre. Esto indica que la ruta espera un parámetro dinámico.
+
+### Estructura de carpetas para rutas dinámicas
+
+```bash
+- Projects
+  -- page.tsx // Archivo estático para listar proyectos
+  -- [id]
+    --- page.tsx // Archivo dinámico para mostrar detalles de un proyecto
+```
+
+![estructura rutas dinamica nextjs](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737556881/Captura_de_pantalla_2025-01-22_153753_ofk5q5.png)
+
+### ¿Cómo funciona?
+
+En la ruta `/projects` se lista un conjunto de proyectos de forma estática.  
+En la ruta `/projects/[id]`, se muestra la información de un proyecto específico de forma dinámica. Por ejemplo:
+
+- [http://localhost:3000/projects/1](http://localhost:3000/projects/1)
+- [http://localhost:3000/projects/2](http://localhost:3000/projects/2)
+
+---
+
+## Ejemplo práctico: Rutas estáticas y dinámicas
+
+### 1. Ruta estática: Listado de proyectos
+
+Aquí creamos una lista estática de proyectos. Cada proyecto enlaza a su respectiva página dinámica utilizando el componente `Link` de Next.js.
+
+#### Código: `page.tsx`
+
+```javascript
+import Link from 'next/link'
+
+// Simulamos una base de datos de proyectos
+const projects = [
+  {
+    id: 1,
+    name: 'Sistema de Gestión de Inventarios',
+    price: 1500,
+    description: 'Un sistema para gestionar el inventario...',
+  },
+  {
+    id: 2,
+    name: 'Aplicación de Tareas',
+    price: 800,
+    description: 'Una aplicación para gestionar tareas diarias, con funcionalidades....',
+  },
+  {
+    id: 3,
+    name: 'Sitio Web de Comercio Electrónico',
+    price: 3000,
+    description: 'Un sitio web completo para comercio electrónico...',
+  },
+]
+
+export default function Home() {
+  return (
+    <div className="p-4">
+      <h1 className="mb-4 text-2xl font-bold">Catálogo de Productos</h1>
+      <ul className="space-y-2">
+        {projects.map((project) => (
+          <li key={project.id} className="rounded bg-white p-4 shadow">
+            <Link href={`/projects/${project.id}`} className="text-blue-500 hover:underline">
+              {project.name} - ${project.price}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+**Vista previa de la ruta estática:**
+![Ruta estática - Projects](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737556888/Captura_de_pantalla_2025-01-22_153829_vjb7ui.png)
+
+---
+
+### 2. Ruta dinámica: Detalles del proyecto
+
+En esta ruta, utilizamos el parámetro dinámico `id` para mostrar los detalles de un proyecto específico. Si el proyecto no existe, se devuelve un error 404.
+
+#### Código: `[id]/page.tsx`
+
+```javascript
+import { notFound } from "next/navigation";
+import Link from "next/link";
+
+// Simulamos una base de datos de proyectos
+const projects = [
+  { id: 1, name: "Sistema de Gestión de Inventarios", price: 1500, description: "Un sistema para gestionar el inventario..." },
+  { id: 2, name: "Aplicación de Tareas", price: 800, description: "Una aplicación para gestionar tareas diarias, con funcionalidades...." },
+  { id: 3, name: "Sitio Web de Comercio Electrónico", price: 3000, description: "Un sitio web completo para comercio electrónico..." },
+];
+
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const project = projects.find((p) => p.id === Number.parseInt(params.id));
+
+  if (!project) {
+    notFound();
+  }
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">{project.name}</h1>
+      <p className="text-xl mb-2">Precio: ${project.price}</p>
+      <p className="mb-4">{project.description}</p>
+      <Link href="/projects" className="text-blue-500 hover:underline">
+        Volver al catálogo
+      </Link>
+    </div>
+  );
+}
+```
+
+**Vista previa de la ruta dinámica:**
+![Ruta dinámica - Proyecto](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737556842/blog/uin99wfkbwc1j2ip6nlp.png)
+
+---
+
+## Beneficios del sistema de rutas en Next.js
+
+1. **Automatización**: No necesitas configurar un enrutador; solo define tu estructura de carpetas.
+2. **SEO optimizado**: Next.js genera páginas amigables para los motores de búsqueda.
+3. **Flexibilidad**: Combina rutas estáticas y dinámicas según las necesidades de tu aplicación.
+
+---
+
+## ¿Cómo funciona el sistema de rutas en Next.js?
+
+1. **Rutas automáticas**: Cada archivo en la carpeta `pages` se convierte en una ruta automáticamente.
+2. **Jerarquía basada en carpetas**: Si creas carpetas dentro de `pages`, estas definen las subrutas.  
+   Por ejemplo:
+   - `pages/contact.js` → `/contact`
+   - `pages/blog/post.js` → `/blog/post`
+3. **Soporte para API**: Puedes crear rutas API con la misma estructura en la carpeta `pages/api`.
+
+---
+
+## Preguntas Frecuentes (FAQ)
+
+### ¿Qué son las rutas estáticas en Next.js?
+
+Son páginas cuyo contenido no cambia y no depende de datos dinámicos. Son ideales para secciones como "Acerca de" o "Contacto".
+
+---
+
+### ¿Qué son las rutas dinámicas en Next.js?
+
+Permiten generar páginas basadas en datos variables, como IDs de productos o nombres de usuarios. Se crean usando corchetes `[ ]` en los nombres de los archivos.
+
+---
+
+### ¿Necesito configurar un enrutador en Next.js?
+
+No. Next.js utiliza un sistema de rutas basado en archivos, por lo que no necesitas configurar un enrutador manualmente.
+
+---
+
+### ¿Cómo creo subrutas en Next.js?
+
+Puedes crear carpetas dentro de `pages` para definir subrutas. Por ejemplo:
+
+- `pages/blog/post.js` corresponde a `/blog/post`.
+
+---
+
+### ¿Puedo usar rutas dinámicas con datos de una API?
+
+Sí. Next.js permite combinar rutas dinámicas con funciones como `getStaticProps` o `getServerSideProps` para cargar datos en tiempo de construcción o en tiempo real.
+
+---
+
+Con esta guía, ya puedes comenzar a crear rutas en Next.js de forma eficiente. ¡Aprovecha el poder del enrutamiento automático para desarrollar aplicaciones modernas y escalables! 🚀
