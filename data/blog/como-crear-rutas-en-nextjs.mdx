@@ -179,57 +179,34 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
 ---
 
-## Beneficios del sistema de rutas en Next.js
+## Beneficios del Enrutamiento en Next.js 15
 
-1. **Automatización**: No necesitas configurar un enrutador; solo define tu estructura de carpetas.
-2. **SEO optimizado**: Next.js genera páginas amigables para los motores de búsqueda.
-3. **Flexibilidad**: Combina rutas estáticas y dinámicas según las necesidades de tu aplicación.
+- **Automatización**: No es necesario configurar manualmente un enrutador; la estructura de archivos define las rutas automáticamente.
 
----
+- **SEO Optimizado**: Next.js genera páginas que son amigables para los motores de búsqueda, mejorando la visibilidad de tu sitio.
 
-## ¿Cómo funciona el sistema de rutas en Next.js?
-
-1. **Rutas automáticas**: Cada archivo en la carpeta `pages` se convierte en una ruta automáticamente.
-2. **Jerarquía basada en carpetas**: Si creas carpetas dentro de `pages`, estas definen las subrutas.  
-   Por ejemplo:
-   - `pages/contact.js` → `/contact`
-   - `pages/blog/post.js` → `/blog/post`
-3. **Soporte para API**: Puedes crear rutas API con la misma estructura en la carpeta `pages/api`.
-
----
+- **Flexibilidad**: Con la introducción del App Router, puedes aprovechar las últimas características de React para construir aplicaciones más dinámicas y eficientes.
 
 ## Preguntas Frecuentes (FAQ)
 
-### ¿Qué son las rutas estáticas en Next.js?
+**¿Qué son las rutas estáticas en Next.js?**
 
 Son páginas cuyo contenido no cambia y no depende de datos dinámicos. Son ideales para secciones como "Acerca de" o "Contacto".
 
----
-
-### ¿Qué son las rutas dinámicas en Next.js?
+**¿Qué son las rutas dinámicas en Next.js?**
 
 Permiten generar páginas basadas en datos variables, como IDs de productos o nombres de usuarios. Se crean usando corchetes `[ ]` en los nombres de los archivos.
 
----
-
-### ¿Necesito configurar un enrutador en Next.js?
+**¿Necesito configurar un enrutador en Next.js?**
 
 No. Next.js utiliza un sistema de rutas basado en archivos, por lo que no necesitas configurar un enrutador manualmente.
 
----
+**¿Cómo creo subrutas en Next.js?**
 
-### ¿Cómo creo subrutas en Next.js?
+Puedes crear carpetas dentro de `app` para definir subrutas. Por ejemplo, `app/blog/post/page.tsx` corresponde a `/blog/post`.
 
-Puedes crear carpetas dentro de `pages` para definir subrutas. Por ejemplo:
-
-- `pages/blog/post.js` corresponde a `/blog/post`.
-
----
-
-### ¿Puedo usar rutas dinámicas con datos de una API?
+**¿Puedo usar rutas dinámicas con datos de una API?**
 
 Sí. Next.js permite combinar rutas dinámicas con funciones como `getStaticProps` o `getServerSideProps` para cargar datos en tiempo de construcción o en tiempo real.
 
----
-
-Con esta guía, ya puedes comenzar a crear rutas en Next.js de forma eficiente. ¡Aprovecha el poder del enrutamiento automático para desarrollar aplicaciones modernas y escalables! 🚀
+Con esta guía, estás preparado para crear rutas en Next.js 15 de manera eficiente. ¡Aprovecha las mejoras en el enrutamiento para desarrollar aplicaciones modernas y escalables! 🚀 
