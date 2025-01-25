@@ -1,8 +1,129 @@
 ---
-title: 'Como crear api en nextjs y consumirla'
+title: 'Como Crear una API Simple en Next.js con el App Router'
 date: '2025-01-22'
 tags: ['nextjs', 'desarrollo web']
 draft: false
 summary: 'Descubre qué es Next.js, por qué es una herramienta poderosa para el desarrollo web, y cómo empezar a usarlo para crear aplicaciones modernas y escalables.'
 authors: ['default']
 ---
+
+## Introducción
+
+Next.js es un poderoso framework que combina lo mejor del frontend y backend en un solo lugar. En este artículo, aprenderás a crear una API simple utilizando el App Router de Next.js. Construiremos una API que manejará solicitudes GET y POST para gestionar una lista de usuarios.
+![crear api en nextjs con node](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737826949/node_h0tztg.png)
+
+## Creando la API
+
+Para comenzar, crea un archivo `route.ts` en la carpeta `app/api/users/`. Este archivo manejará las solicitudes GET y POST a la ruta `/api/users`.
+
+```typescript
+import { NextResponse } from 'next/server'
+
+// Simulación de una base de datos de usuarios
+const users = [
+  { id: 1, name: 'Alice Johnson' },
+  { id: 2, name: 'Bob Smith' },
+  { id: 3, name: 'Charlie Brown' },
+]
+
+export async function GET() {
+  return NextResponse.json(users)
+}
+
+export async function POST(request: Request) {
+  const newUser = await request.json()
+
+  // Simular la adición de un nuevo usuario
+  const id = users.length + 1
+  users.push({ id, ...newUser })
+
+  return NextResponse.json({ message: 'User created', user: { id, ...newUser } }, { status: 201 })
+}
+```
+
+### Detalles:
+
+- La función `GET` devuelve la lista de usuarios.
+- La función `POST` agrega un nuevo usuario a la lista.
+
+## Creando la Interfaz de Usuario
+
+En la página principal (`app/page.tsx`), crearemos un componente React para interactuar con la API.
+
+```tsx
+import { useState, useEffect } from 'react'
+
+export default function Add() {
+  const [users, setUsers] = useState([])
+  const [newUserName, setNewUserName] = useState('')
+
+  // Utiliza useEffect para obtener la lista de usuarios cuando el componente se monta.
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
+  // Función para obtener la lista de usuarios desde la API.
+  const fetchUsers = async () => {
+    const response = await fetch('/api/users')
+    const data = await response.json()
+    setUsers(data)
+  }
+
+  // Función para manejar el envío del formulario.
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: newUserName }),
+    })
+    const data = await response.json()
+    console.log(data)
+    setNewUserName('')
+    fetchUsers()
+  }
+
+  return (
+    <div className="p-4">
+      <h1 className="mb-4 text-2xl font-bold">Users</h1>
+      <ul className="mb-4">
+        {users.map((user: { id: number; name: string }) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        <input
+          type="text"
+          value={newUserName}
+          onChange={(e) => setNewUserName(e.target.value)}
+          placeholder="Enter new user name"
+          className="rounded border p-2"
+        />
+        <button type="submit" className="rounded bg-blue-500 p-2 text-white">
+          Add User
+        </button>
+      </form>
+    </div>
+  )
+}
+```
+
+### Detalles:
+
+- **Carga Inicial**: Usamos `fetch` en `useEffect` para obtener los usuarios al cargar la página.
+- **Formulario**: Creamos un formulario que envía una solicitud POST a la API para agregar un nuevo usuario.
+
+## Probando la API
+
+Puedes probar la API y la interfaz de usuario de las siguientes maneras:
+
+1. **Interfaz Web**: Visita `http://localhost:3000` para ver la lista de usuarios y agregar nuevos usuarios mediante el formulario.
+2. **GET a la API**: Haz una solicitud GET a `http://localhost:3000/api/users` para obtener la lista de usuarios en formato JSON.
+3. **POST a la API**: Envía una solicitud POST a `http://localhost:3000/api/users` con un cuerpo JSON como `{ "name": "Nuevo Usuario" }` para agregar un nuevo usuario.
+   ![api](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737825823/blog_hgdkt2.png)
+
+## Conclusión
+
+Next.js facilita la creación de APIs junto con tu aplicación frontend, todo en el mismo proyecto. Este ejemplo te proporciona una base para construir APIs más complejas en el futuro. ¡Experimenta y adapta este código a tus necesidades!
