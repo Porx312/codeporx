@@ -1,0 +1,250 @@
+---
+title: 'Cómo generar PDFs con JavaScript: Guía completa con ejemplos prácticos'
+date: '2025-01-26'
+tags: ['javascript']
+draft: false
+summary: 'Aprende a generar PDFs con JavaScript de forma sencilla. Te explicamos paso a paso cómo usar librerías como jsPDF y PDF-Lib, con ejemplos prácticos y código listo para usar.'
+authors: ['default']
+---
+
+Generar PDFs es una funcionalidad común en aplicaciones web, desde facturas hasta reportes personalizados. Con JavaScript, puedes crear PDFs directamente en el navegador o en el servidor.
+
+## ¿Por qué generar PDFs con JavaScript?
+
+generar pdf con javscript nos permite crear documentos de formas dinamicas y perzonalizadas, imagina que tienes un negocio de reformas y debes generar presupuestos y facturas a tus clientes cada mes con javascript puedes automatizar este proceso y generar los documentos de forma rapida y sencilla y lo mejor es que puedes personalizarlos a tu gusto y necesidades.
+
+en este articulo te enseñaremos a como generar pdfs con javascript de forma sencilla y rapida
+![js to pdf](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737911273/blog/gwwprlbvpcnzcg6nxhqi.png)
+
+## Librerías populares para generar PDFs
+
+en este articulos estaremos utilizando dos librerias populares para generar pdfs con javascript
+
+### jsPDF
+
+jsPDF es una libreria de codigo abierto que nos permite generar pdfs de forma sencilla y rapida, con jsPDF podemos crear documentos pdfs desde cero o a partir de plantillas predefinidas, ademas jsPDF nos permite agregar imagenes, texto, tablas y mucho mas a nuestros documentos pdfs.
+
+### PDF-Lib
+
+PDF-Lib es otra librería popular para generar PDFs con JavaScript. PDF-Lib nos permite crear documentos PDFs de alta calidad y personalizados. Con PDF-Lib podemos agregar imágenes, texto, tablas, gráficos y mucho más a nuestros documentos PDFs.
+
+### las dos librerias son excelentes opciones para generar pdfs con javascript y cada una tiene sus propias ventajas y desventajas, en este articulo te mostraremos como utilizar ambas librerias para generar pdfs de forma sencilla y rapida.
+
+## Cómo generar PDFs con jsPDF
+
+para empezar te mostrare como generar pdfs con jsPDF de forma sencilla y rapida, jsPDF nos permite crear documentos pdfs desde cero o a partir de plantillas predefinidas, ademas jsPDF nos permite agregar imagenes, texto, tablas y mucho mas a nuestros documentos pdfs.
+
+en este ejemplo lo haremos con html y js sin usar librerias y usado la cdn de jsPDF
+
+### Paso 1: Incluir jsPDF en tu proyecto
+
+en este paso debemos importarlo en nuestro proyecto, para ello podemos usar la cdn de jsPDF y lo vamos a incluir abajo del titulo de nuestro html dentro de el head
+
+```html
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsPDF Ejemplo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+```
+
+si estas usando nodejs puedes instalarlo con npm o yarn
+
+```bash
+npm install jspdf
+```
+
+### paso 2: Crear un botón para generar el PDF
+
+te recuerdo que en este articulo te muestro una forma simple de generar tu pdf pero tu puedes personalizarlo a tu gusto y necesidades ya sea que necesites un formulario o mas
+creamos el boton para generar el pdf y vamos tambien a crear un archivo js para escribir nuestro codigo javascript
+
+```html
+<body>
+  <h1>jsPDF ejemplo</h1>
+  <button>Generate PDF</button>
+  <script src="./main"></script>
+</body>
+```
+
+### paso 3: Escribir el código JavaScript para generar el PDF
+
+en este paso vamos a escribir el codigo javascript para generar el pdf, en este ejemplo vamos a generar un pdf con un titulo y un parrafo de texto, para ello vamos a crear un archivo main.js y vamos a escribir el siguiente codigo
+
+```javascript
+function generatePDF() {
+  const { jsPDF } = window.jspdf
+  const doc = new jsPDF()
+
+  // Título
+  doc.setFontSize(22)
+  doc.text('Informe de Ejemplo', 10, 20)
+
+  // Texto
+  doc.setFontSize(16)
+  doc.text('Este es un ejemplo básico de cómo generar un PDF usando jsPDF.', 10, 40)
+
+  // Guardar el PDF
+  doc.save('informe-basico.pdf')
+}
+```
+
+### paso 4: Agregar un evento click al botón para generar el PDF
+
+en este paso vamos a agregar un evento click al boton para generar el pdf, para ello vamos a agregar el siguiente codigo en nuestro archivo main.js
+
+```html
+<button onclick="generatePDF()">Generate PDF</button>
+```
+
+### paso 5: Probar la generación del PDF
+
+si has seguido los pasos anteriores correctamente, al hacer click en el boton "Generate PDF" deberias ver un pdf generado con un titulo y un parrafo de texto, si no es asi revisa los pasos anteriores y asegurate de haberlos seguido correctamente.
+![pdf generado](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737913097/blog/qilqzpsdpumfot5bawhb.png)
+
+## Cómo generar PDFs con PDF-Lib
+
+en este paso te mostrare como generar pdfs con PDF-Lib de forma sencilla y rapida, PDF-Lib nos permite crear documentos pdfs de alta calidad y personalizados, con PDF-Lib podemos agregar imagenes, texto, tablas, graficos y mucho mas a nuestros documentos pdfs.
+
+### Paso 1: importa PDF-Lib en tu proyecto
+
+en este paso debemos importar PDF-Lib en nuestro proyecto, para ello podemos usar la cdn de PDF-Lib y lo vamos a incluir abajo del titulo de nuestro html dentro de el head
+
+```html
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pdf</title>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+```
+
+tambien puedes instalarlo con npm o yarn
+
+```bash
+npm install pdf-lib
+```
+
+### Paso 2: Crear un botón para generar el PDF
+
+creamos el boton para generar el pdf y vamos tambien a crear un archivo js para escribir nuestro codigo javascript
+
+```html
+<body>
+  <h1>PDFLib ejemplo</h1>
+  <button>Generate PDF</button>
+  <script src="./main"></script>
+</body>
+```
+
+### Paso 3: Escribir el código JavaScript para generar el PDF
+
+en este paso vamos a escribir el codigo javascript para generar el pdf, en este ejemplo vamos a generar un pdf con un titulo y un parrafo de texto, para ello vamos a crear un archivo main.js y vamos a escribir el siguiente codigo
+
+```javascript
+async function generatePDFLib() {
+  const { PDFDocument, rgb } = PDFLib
+
+  // Crear un nuevo documento PDF
+  const pdfDoc = await PDFDocument.create()
+
+  // Añadir una nueva página al documento
+  const page = pdfDoc.addPage([350, 400])
+
+  // Obtener la fuente
+  const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica)
+
+  // Dibujar texto en la página
+  page.drawText('¡Hola, PDF-LIB!', {
+    x: 50,
+    y: 350,
+    size: 30,
+    font: font,
+    color: rgb(0, 0.53, 0.71),
+  })
+
+  // Dibujar un rectángulo
+  page.drawRectangle({
+    x: 50,
+    y: 75,
+    width: 250,
+    height: 75,
+    borderColor: rgb(1, 0, 0),
+    borderWidth: 2,
+  })
+
+  // Serializar el documento PDF a bytes (un Uint8Array)
+  const pdfBytes = await pdfDoc.save()
+
+  // Crear un Blob a partir de los bytes
+  const blob = new Blob([pdfBytes], { type: 'application/pdf' })
+
+  // Crear un elemento de enlace y activar la descarga
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = 'pdf-lib-ejemplo.pdf'
+  link.click()
+
+  // Limpiar revocando la URL del objeto
+  URL.revokeObjectURL(link.href)
+}
+```
+
+## paso 4: Agregar un evento click al botón para generar el PDF
+
+en este paso vamos a agregar un evento click al boton para generar el pdf, para ello vamos a agregar el siguiente codigo en nuestro archivo main.js
+
+```html
+<button onclick="generatePDFLib()">Generate PDF</button>
+```
+
+## paso 5: Probar la generación del PDF
+
+si has seguido los pasos anteriores correctamente, al hacer click en el boton "Generate PDF" deberias ver un pdf generado con un titulo y un parrafo de texto, si no es asi revisa los pasos anteriores y asegurate de haberlos seguido correctamente.
+![pdf generado](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737915251/blog/kmk9nalidvretrlzbyce.png)
+
+## Comparación entre jsPDF y PDF-Lib
+
+- **Tabla comparativa**:
+  | Característica | jsPDF | PDF-Lib |
+  |----------------------|------------------------|------------------------|
+  | Entorno | Navegador | Navegador/Node.js |
+  | Facilidad de uso | Fácil | Moderada |
+  | Personalización | Básica | Avanzada |
+  | Tamaño del archivo | Ligero | Más pesado |
+
+## Casos de uso prácticos
+
+### Generar presupuestos
+
+A continuación, te mostraré un ejemplo de cómo sería un presupuesto generado dinámicamente con jsPDF usando React y Shadcn.
+
+### Ejemplo de formulario
+
+![formulario](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737913408/blog/ciyb5k8evnmxbjs8ouvn.png)
+
+### Ejemplo del PDF generado dinámicamente
+
+![ejemplo pdf](https://res.cloudinary.com/dq0pfesxe/image/upload/v1737913408/blog/ceiamql7p6uc3vteih4j.png)
+
+## Otros casos de uso para generar PDFs
+
+Además de los ejemplos mencionados, hay muchos otros casos de uso para generar PDFs con JavaScript, tales como:
+
+- Generar reportes
+- Generar facturas
+- Generar certificados
+- Generar diplomas
+- Generar contratos
+- Generar etiquetas
+- Generar tarjetas de presentación
+
+Las posibilidades son prácticamente infinitas y dependen de tus necesidades específicas.
+
+## Conclusión
+
+en Conclusión generar pdfs con javascript es una tarea sencilla y rapida, en este articulo te mostramos como generar pdfs con jsPDF y PDF-Lib de forma sencilla y rapida, ademas te mostramos ejemplos practicos de como generar pdfs dinamicos y personalizados, esperamos que este articulo te haya sido de ayuda y te haya inspirado a generar tus propios pdfs con javascript.
+
+¡Gracias por leer!
+si tienes alguna duda o sugerencia no dudes en dejarla en los comentarios, estaremos encantados de ayudarte.
