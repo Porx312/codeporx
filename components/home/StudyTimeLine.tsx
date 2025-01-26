@@ -180,8 +180,8 @@ export default function StudyTimeline() {
           Mi Trayectoria de Aprendizaje
         </h2>
         <div className="relative">
-          <div className="absolute z-0  bottom-0 left-6  top-5 w-0.5 bg-red-300 dark:bg-red-600"></div>
-          <div className="space-y-8 relative">
+          <div className="absolute   bottom-0 left-6  top-5 w-0.5 bg-red-300 dark:bg-red-600"></div>
+          <div className="relative space-y-8">
             {visibleSources.map((source, index) => (
               <StudySource key={index} {...source} />
             ))}
