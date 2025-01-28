@@ -1,0 +1,644 @@
+---
+title: 'Cómo Implementar un Sistema de Login OAuth en Next.js con NextAuth.js: Guía Paso a Paso'
+date: '2025-01-26'
+tags: ['nextjs', 'nextauth', 'autenticacion']
+draft: false
+summary: 'Aprende a implementar un sistema de autenticación seguro en Next.js utilizando NextAuth.js. Sigue esta guía paso a paso para integrar login con proveedores como Google, GitHub y más.'
+authors: ['default']
+---
+
+Implementa un Sistema de Login con Next.js y NextAuth.js  
+En este artículo, aprenderás cómo implementar un sistema de login utilizando Next.js y NextAuth.js, además de proteger rutas privadas en tu aplicación web.
+
+![Next.js Login](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738078064/blog/hdkzjppxihmcrpc5zeop.png)
+
+## ¿Qué es Next.js?
+
+Next.js es un framework basado en React que permite desarrollar aplicaciones web de manera rápida y sencilla. En este tutorial, utilizaremos Next.js para construir nuestro sistema de login.
+
+## ¿Qué es NextAuth.js?
+
+NextAuth.js es una librería de autenticación que facilita la implementación de sistemas de inicio de sesión en aplicaciones web, permitiendo a los usuarios autenticarse a través de diferentes proveedores como Google, GitHub, Facebook, entre otros.
+
+## Objetivo
+
+En este tutorial, crearemos un sistema de login usando Next.js y NextAuth.js para autenticar usuarios con GitHub como proveedor de autenticación. También protegeremos rutas privadas en nuestra aplicación web.
+
+Nuestra aplicación incluirá:
+
+1. Una landing page accesible para todos.
+2. Un dashboard privado que solo podrán acceder los usuarios autenticados.
+
+Para el diseño de la aplicación, utilizaremos **ShadCN**, una biblioteca de componentes de React que facilita la creación de interfaces modernas y elegantes.
+
+## Requisitos Previos
+
+- Conocimientos básicos de JavaScript y React.
+- Tener Node.js y npm instalados.
+- Un proyecto Next.js configurado.
+
+---
+
+Si deseas más modificaciones o explicaciones adicionales, ¡házmelo saber!
+
+### Configuración Del Proyecto Next.js
+
+Primero Vamos A instalar Nextjs con shadcn
+
+```bash
+npx create-next-app@latest --example with-shadcn my-app
+npx shadcn@latest init
+```
+
+tambien instalaremos next-auth
+
+```bash
+npm install next-auth
+```
+
+### estructura del proyecto
+
+![estructura del proyecto](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738077991/blog/yodttdwm1zwozbtedr6m.png)
+
+## 4. **Instalación y Configuración de NextAuth.js**
+
+```bash
+-- proyect
+   |-- App
+   |-- lib
+      |-- auth
+         auth.ts
+```
+
+Lo primero sera configurar nextauth en nuestro proyecto para ello crearemos un archivo auth.ts en la carpeta lib/auth y agregaremos la siguiente configuracion
+
+```javascript
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+
+const options = {
+providers: [
+ GitHub({
+   clientId: process.env.AUTH_GITHUB_ID as string,
+   clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+ }),
+],
+secret: process.env.AUTH_SECRET,
+};
+
+const { handlers, auth, signIn, signOut } = NextAuth(options);
+
+export { handlers, auth, signIn, signOut };
+```
+
+- ahora este archivo lo importaremos en (`[...nextauth]`).
+
+```bash
+-- pages
+   |-- api
+      |-- auth
+         |-- [...nextauth]/route.js
+```
+
+```javascript
+import { handlers } from '@/lib/auth'
+
+export const { GET, POST } = handlers
+```
+
+como paso final para terminar la configuracion de nextauth crearemos un archivo env
+
+```bash
+npx auth secret
+```
+
+esto creara un archivo .env con una clave secreta que usaremos en nuestra aplicacion
+ahora tendras que agregar las siguientes variables de entorno
+
+```bash
+AUTH_SECRET='esta es tu clave secreta que se genero con el comando anterior'
+AUTH_GITHUB_ID=Cliente-ID-GitHub
+AUTH_GITHUB_SECRET=Secreto-GitHub
+AUTH_URL=http://localhost:3000
+```
+
+## Como obtener el Cliente-ID-GitHub y Secreto-GitHub
+
+ahora ya tenemos todo lo necesario para empezar pero antes te enseñare a obtener la clave secreta de github
+lo primero que debemos hacer es ir a github y en la parte superior derecha de la pantalla seleccionar settings
+luego seleccionamos developer settings y en la parte izquierda seleccionamos OAuth Apps
+![develop](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738078938/Captura_de_pantalla_2025-01-28_123438_cg9uj1.png)
+Luego Seleccionaremos OAuth Apps y crearemos una nueva
+![nueva app github](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738078938/Captura_de_pantalla_2025-01-28_132300_kiglra.png)
+Llenamos los campos con la informacion
+![informacion](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738079005/Captura_de_pantalla_2025-01-28_132341_hjzgkw.png)
+
+#### cuando ya lo hayas rellenado te dara un cliente id y un secreto que deberas agregar a tu archivo .env, bien ya en este punto tenemos todo lo necesario para empezar a trabajar con nextauth
+
+## Crear el Provider de Autenticación
+
+lo primero que haremos sera crear el provider que permite ver si el usuario esta autenticado o no
+
+```bash
+-- components
+      |-- AuthProvider.tsx
+```
+
+en ese archivo pegaremos el siguiente codigo
+
+```javascript
+"use client"
+
+import { SessionProvider } from "next-auth/react"
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return <SessionProvider>{children}</SessionProvider>
+}
+```
+
+## Usar el Provider de Autenticación
+
+ahora en el archivo layout.tsx importaremos el provider que acabamos de crear
+
+```bash
+ -- App
+         |-- layout.tsx
+```
+
+```javascript
+import { Providers } from "@/components/Provider"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Create Next App",
+  description: "Generated by create next app",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+     <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased patterns`}
+      >
+        <Providers>
+          {children}
+          </Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+## Creación de la Página de Login
+
+en este punto ya podemos emepzar a crear nuestra pagina de login
+
+### crear componente Login
+
+lo primero que haremos sera un componente que nos sirva para la autenticacion
+
+```bash
+-- components
+     |-- LoginGithub.tsx
+```
+
+```javascript
+'use client'
+
+import { useSession, signIn } from 'next-auth/react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Github } from 'lucide-react'
+import { redirect } from 'next/navigation'
+
+export default function LoginGithub() {
+  const { data: session } = useSession()
+
+  if (session) {
+    redirect('/dashboard')
+  }
+
+  return (
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Iniciar sesión</CardTitle>
+        <CardDescription>Usa tu cuenta de GitHub para acceder</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button variant="outline" onClick={() => signIn('github')} className="w-full">
+          <Github className="mr-2 h-4 w-4" />
+          Continuar con GitHub
+        </Button>
+      </CardContent>
+      <CardFooter className="flex justify-center">
+        <p className="text-muted-foreground text-sm">
+          Al continuar, aceptas nuestros términos de servicio.
+        </p>
+      </CardFooter>
+    </Card>
+  )
+}
+```
+
+ahora usaremos este componetne en nuestra ruta auth
+
+```bash
+-- pages
+      |-- auth
+         |-- page.tsx
+```
+
+aca
+
+```javascript
+import LoginGithub from '@/components/LoginGithub'
+import React from 'react'
+
+const page = () => {
+  return (
+    <div className="flex h-screen w-full items-center justify-center ">
+      <LoginGithub />
+    </div>
+  )
+}
+
+export default page
+```
+
+en este punto ya hemos realizado gran parte del trabajo ahora solo nos queda proteger las rutas privadas y crear la pagina de dashboard
+
+## creacion de Landing page
+
+![landing page](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738079864/Captura_de_pantalla_2025-01-28_165720_mfrlv4.png)
+
+```bash
+-- app
+      |-- page.tsx
+```
+
+vamos a crear la pagina de inicio de nuestra aplicacion
+
+```javascript
+import Header from '@/components/Header'
+
+export default function LandingPage() {
+  return (
+    <div className="relative flex min-h-screen flex-col">
+      <Header />
+      <section className="flex w-full flex-col items-center justify-center py-12 md:py-24 lg:py-32 xl:py-48 ">
+        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-6xl lg:text-6xl">
+          Autenticación Simplificada para Next.js
+        </h1>
+        <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-3xl">
+          Implementa autenticación segura y fácil de usar en tus aplicaciones Next.js en minutos.
+        </p>
+      </section>
+    </div>
+  )
+}
+```
+
+y como puedes ver tambien creamemos un componente Header que nos servira de navegacion
+
+```bash
+-- components
+      |-- Header.tsx
+```
+
+```javascript
+'use client'
+import { Button } from '@/components/ui/button'
+import { Github } from 'lucide-react'
+import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { Router } from 'next/router'
+const Header = () => {
+  const { data: session } = useSession()
+
+  return (
+    <div>
+      <header className="flex h-14 items-center px-4 lg:px-6">
+        <Link href="/" className="flex items-center justify-center">
+          <Github className="mr-2 h-6 w-6" />
+          <span className="font-bold">AuthNext</span>
+        </Link>
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          {!session ? (
+            <Link href="/auth">
+              <Button className="inline-flex items-center justify-center">
+                <Github className="mr-2 h-6 w-6" />
+                Iniciar sesión con Github
+              </Button>
+            </Link>
+          ) : (
+            <Button onClick={() => signOut()} className="rounded bg-red-500 px-4 py-2 text-white">
+              Cerrar sesión
+            </Button>
+          )}
+        </nav>
+      </header>
+    </div>
+  )
+}
+
+export default Header
+```
+
+## Crear el Dashboard
+
+en este punto ya tenemos la pagina de inicio y la pagina de login ahora crearemos la pagina de dashboard que solo podra ser accedida por usuarios autenticados
+
+### componente Dashboard
+
+```bash
+-- components
+      |-- Dashboard.tsx
+```
+
+```javascript
+'use client'
+import { signOut, useSession } from 'next-auth/react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { SiGithub } from 'react-icons/si'
+import Unauthorized from './Unauthorize'
+export default function Dashboard() {
+  const { data: session } = useSession()
+
+  if (!session) {
+    return <Unauthorized />
+  }
+  if (session) {
+    return (
+      <div className="container mx-auto p-4">
+        <h1 className="mb-6 text-3xl font-bold">Dashboard de Usuario</h1>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Perfil de Usuario</CardTitle>
+            </CardHeader>
+            <CardContent className="flex items-center space-x-4">
+              <Avatar className="h-20 w-20">
+                <AvatarImage
+                  src={session.user?.image || ''}
+                  alt={session.user?.name || 'undefine'}
+                />
+                <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h2 className="text-2xl font-semibold">{session.user?.name}</h2>
+                <p className="text-gray-500">{session.user?.email}</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Información de la Sesión</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <div>
+                  <strong>ID de Usuario:</strong> {session.user?.id}
+                </div>
+                <div>
+                  <strong>Proveedor:</strong>{' '}
+                  <Badge className="inline-flex items-center">
+                    <SiGithub className="mr-1 h-4 w-4" /> GitHub
+                  </Badge>
+                </div>
+                <div>
+                  <strong>Expira:</strong> {new Date(session.expires).toLocaleString()}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="md:col-span-2">
+            <CardHeader>
+              <CardTitle>Datos Completos de la Sesión</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <pre className="max-h-96 overflow-auto rounded-md bg-gray-100 p-4">
+                {JSON.stringify(session, null, 2)}
+              </pre>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-6 flex items-center justify-between"></div>
+      </div>
+    )
+  }
+}
+```
+
+y tambien crearemos un componente para mostrar un mensaje de no autorizado
+
+```bash
+-- components
+      |-- Unauthorized.tsx
+```
+
+```javascript
+import Link from 'next/link'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+export default function Unauthorized() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Acceso No Autorizado</CardTitle>
+          <CardDescription>No tienes permiso para acceder a esta página.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-gray-600">
+            Por favor, inicia sesión para acceder al contenido protegido.
+          </p>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button asChild variant="outline">
+            <Link href="/auth">Iniciar Sesión</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/">Volver al Inicio</Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
+```
+
+## Crear la Ruta de Dashboard
+
+```bash
+-- pages
+      |-- dashboard
+         |-- page.tsx
+```
+
+```javascript
+import Dashboard from '@/components/Dashboard'
+import Header from '@/components/Header'
+import React from 'react'
+
+const page = () => {
+  return (
+    <>
+      <Header />
+      <Dashboard />
+    </>
+  )
+}
+
+export default page
+```
+
+en este punto ya tenemos todo lo necesario para crear un sistema de login con nextjs y nextauth solo nos queda probar nuestra aplicacion y ver como funciona
+
+### **FAQ: Implementación de Login con Next.js, NextAuth y GitHub**
+
+A continuación, se presentan las preguntas frecuentes más relevantes para guiar a los lectores en la integración de autenticación con Next.js, NextAuth.js y GitHub. Cada respuesta incluye referencias a los recursos clave del proceso:
+
+---
+
+#### **1. ¿Qué requisitos previos necesito para integrar GitHub OAuth con NextAuth.js?**
+
+- **Respuesta**:
+  - Un proyecto Next.js configurado (versión 13 o superior).
+  - Una cuenta de GitHub para crear una OAuth App en [GitHub Developer Settings](https://github.com/settings/developers).
+  - Variables de entorno (`GITHUB_ID`, `GITHUB_SECRET`, `NEXTAUTH_SECRET`) configuradas en `.env.local` .
+
+---
+
+#### **2. ¿Cómo configuro la OAuth App de GitHub para NextAuth.js?**
+
+- **Respuesta**:
+  - En GitHub, crea una nueva OAuth App y configura:
+    - **Homepage URL**: `http://localhost:3000` (para desarrollo).
+    - **Authorization callback URL**: `http://localhost:3000/api/auth/callback/github`.
+  - Copia el **Client ID** y genera un **Client Secret** para añadirlos a las variables de entorno .
+
+---
+
+#### **3. ¿Por qué recibo un error de redirección al iniciar sesión?**
+
+- **Respuesta**:
+  - Asegúrate de que las URLs en la OAuth App de GitHub coincidan exactamente con las de tu entorno (local o producción).
+  - Verifica que la ruta `[...nextauth].js` esté correctamente ubicada en `pages/api/auth/` (Next.js ≤13) o en `app/api/auth/[...nextauth]/route.ts` (Next.js ≥14) .
+
+---
+
+#### **4. ¿Cómo personalizo la página de inicio de sesión?**
+
+- **Respuesta**:
+  - Crea componentes personalizados (ej. `SignInButton.tsx`) y utiliza `signIn("github")` para manejar la autenticación.
+  - Define rutas personalizadas en `pages` dentro de la configuración de NextAuth.js (ej. `signIn: "/mi-login"`) .
+
+---
+
+#### **5. ¿Cómo protejo rutas para usuarios no autenticados?**
+
+- **Respuesta**:
+  - Usa **middleware** de Next.js para redirigir usuarios no autenticados. Por ejemplo:
+    ```javascript
+    export const config = { matcher: ['/dashboard'] }
+    ```
+  - Valida la sesión con `getServerSession()` en páginas protegidas .
+
+---
+
+#### **6. ¿Cómo obtengo los datos del usuario (ej. email, nombre) después del login?**
+
+- **Respuesta**:
+  - Los datos del usuario se almacenan en `session.user` después de la autenticación.
+  - Usa `useSession()` (frontend) o `getServerSession()` (backend) para acceder a ellos .
+
+---
+
+#### **7. ¿Es necesario usar una base de datos con NextAuth.js?**
+
+- **Respuesta**:
+  - No es obligatorio. NextAuth.js funciona sin base de datos usando JWT para almacenar sesiones.
+  - Si necesitas persistencia avanzada, integra adaptadores como MongoDB o Prisma .
+
+---
+
+#### **8. ¿Cómo manejo errores comunes como "Invalid credentials"?**
+
+- **Respuesta**:
+  - Verifica que las variables de entorno (`GITHUB_ID`, `GITHUB_SECRET`) estén correctamente definidas.
+  - Asegúrate de que el `NEXTAUTH_SECRET` esté configurado y sea seguro (generado con `openssl rand -base64 32`) .
+
+---
+
+#### **9. ¿Puedo agregar más proveedores de autenticación (ej. Google, Email)?**
+
+- **Respuesta**:
+  - Sí. NextAuth.js soporta múltiples proveedores. Simplemente añade nuevos proveedores en el array `providers` de `[...nextauth].js` .
+
+---
+
+#### **10. ¿Cómo implemento logout en mi aplicación?**
+
+- **Respuesta**:
+  - Usa `signOut()` de NextAuth.js en un botón o formulario. Ejemplo:
+    ```jsx
+    <button onClick={() => signOut({ callbackUrl: '/' })}>Cerrar sesión</button>
+    ```
+  - Define rutas personalizadas para logout si es necesario .
+
+---
+
+### **Recursos Adicionales**
+
+- [Documentación Oficial de NextAuth.js](https://next-auth.js.org) .
+- [Ejemplo de Repositorio con Next.js 14 y NextAuth](https://github.com/MayowaXI/NextJS14-NextAuth-Login-And-Register-main) .
+- [Repositorio del Proyecto](https://github.com/Porx312/auth-nextjs) .
+
+### Palabras Clave:
+
+- Next.js login
+- NextAuth.js tutorial
+- Autenticación en Next.js
+- Sistema de login con Next.js
+- Protección de rutas Next.js
+- NextAuth.js configuración
+- Login con Google en Next.js
+- Autenticación segura Next.js
+
+---
