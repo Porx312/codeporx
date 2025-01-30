@@ -1,0 +1,167 @@
+---
+title: 'Lista Completa de Comandos SQL'
+date: '2025-01-30'
+tags: ['sql', 'comandos']
+draft: false
+summary: 'Descubre la lista completa de comandos SQL para gestionar bases de datos. Aprende a crear, modificar y consultar datos con ejemplos prácticos y optimización para buscadores.'
+authors: ['default']
+---
+
+En este artículo encontrarás una lista detallada de comandos SQL esenciales para la gestión de bases de datos. Desde la creación de bases de datos hasta la manipulación de datos y estructuras. 
+
+## Índice
+## ¿Cuáles son las instrucciones de SQL?
+
+- [Crear base de datos](#crear-base-de-datos)
+- [Eliminar base de datos](#eliminar-base-de-datos)
+- [Usar una base de datos](#usar-una-base-de-datos)
+- [Crear tablas](#crear-tablas)
+- [Eliminar tablas](#eliminar-tablas)
+- [Insertar datos](#insertar-datos)
+- [Actualizar datos](#actualizar-datos)
+- [Eliminar datos](#eliminar-datos)
+- [Consultar datos](#consultar-datos)
+- [Filtrar datos](#filtrar-datos)
+- [Ordenar datos](#ordenar-datos)
+- [Joins (Uniones de tablas)](#joins-uniones-de-tablas)
+
+---
+
+## Crear Base de Datos 
+### ¿Cómo se crea la base de datos en SQL?
+
+Para crear una base de datos en SQL, utilizamos el comando `CREATE DATABASE`.  
+
+```sql
+CREATE DATABASE nombre_de_la_base_de_datos;
+```
+
+Este comando es fundamental para cualquier desarrollador que desee estructurar y almacenar información en un sistema de gestión de bases de datos como MySQL, PostgreSQL o SQL Server.
+
+## Eliminar Base de Datos
+### ¿Cómo eliminar una base de datos en SQL?
+
+El comando `DROP DATABASE` se usa para eliminar permanentemente una base de datos y todo su contenido.
+
+```sql
+DROP DATABASE nombre_de_la_base_de_datos;
+```
+
+⚠️ **Importante**: Esta acción es irreversible. Asegúrate de hacer una copia de seguridad antes de ejecutarlo.
+
+## Usar una Base de Datos
+
+```sql
+USE nombre_de_la_base_de_datos;
+```
+
+Permite seleccionar una base de datos específica para realizar consultas y modificaciones.
+
+## Crear Tablas
+
+```sql
+CREATE TABLE nombre_de_la_tabla (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    edad INT,
+    correo VARCHAR(255) UNIQUE
+);
+```
+
+Crea una nueva tabla con diferentes tipos de datos y restricciones.
+
+## Eliminar Tablas
+### ¿Cómo elimino una tabla creada en SQL?
+
+Para eliminar una tabla específica en SQL y borrar todos sus registros, se usa `DROP TABLE`.
+
+```sql
+DROP TABLE nombre_de_la_tabla;
+```
+
+Este comando elimina completamente la tabla de la base de datos. ⚠️ **Precaución**: No se puede recuperar la información eliminada.
+
+## Insertar Datos
+### ¿Cómo insertar en SQL?
+
+Para agregar nuevos registros en una tabla, usa `INSERT INTO`.
+
+```sql
+INSERT INTO nombre_de_la_tabla (nombre, edad, correo)
+VALUES ('Juan Pérez', 30, 'juan@example.com');
+```
+
+Este comando inserta una fila en la tabla con los valores especificados.
+
+## Actualizar Datos
+### ¿Cómo se usa el comando UPDATE en SQL?
+
+El comando `UPDATE` permite modificar valores en registros existentes.
+
+```sql
+UPDATE nombre_de_la_tabla
+SET edad = 31
+WHERE nombre = 'Juan Pérez';
+```
+
+⚠️ **Nota**: Es importante incluir `WHERE` para evitar actualizar todos los registros accidentalmente.
+
+## Eliminar Datos
+### ¿Cómo borrar datos en una tabla de SQL?
+
+Para eliminar registros específicos, se usa `DELETE FROM`.
+
+```sql
+DELETE FROM nombre_de_la_tabla
+WHERE nombre = 'Juan Pérez';
+```
+
+⚠️ **Precaución**: Si omites `WHERE`, se eliminarán todos los datos de la tabla.
+
+## Consultar Datos
+### ¿Cómo consultar en base de datos SQL?
+
+Para obtener información almacenada en una tabla, usa `SELECT`.
+
+```sql
+SELECT * FROM nombre_de_la_tabla;
+```
+
+Esto recupera todos los registros de la tabla. Puedes especificar columnas para obtener solo ciertos datos.
+
+## Filtrar Datos
+### ¿Cómo filtrar datos en SQL?
+
+Puedes usar `WHERE` para obtener registros que cumplan ciertas condiciones.
+
+```sql
+SELECT * FROM nombre_de_la_tabla
+WHERE edad > 25;
+```
+
+Esto devuelve solo los registros donde la edad sea mayor a 25.
+
+## Ordenar Datos
+### ¿Qué hace el ORDER BY en SQL?
+
+El comando `ORDER BY` se usa para ordenar los resultados de una consulta.
+
+```sql
+SELECT * FROM nombre_de_la_tabla
+ORDER BY edad DESC;
+```
+
+Aquí, los datos se ordenan en orden descendente por edad. También puedes usar `ASC` para orden ascendente.
+
+## Joins (Uniones de Tablas)
+### ¿Cómo se usan los JOIN en SQL?
+
+Los `JOIN` permiten combinar datos de dos o más tablas relacionadas.
+
+```sql
+SELECT a.nombre, b.puesto 
+FROM empleados a
+INNER JOIN puestos b ON a.id_puesto = b.id;
+```
+
+En este caso, estamos obteniendo información combinada de las tablas `empleados` y `puestos`, vinculándolas mediante el campo `id_puesto`.

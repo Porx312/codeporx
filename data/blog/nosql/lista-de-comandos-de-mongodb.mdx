@@ -1,0 +1,169 @@
+---
+title: 'Lista Completa de Comandos MongoDB'
+date: '2025-01-30'
+tags: ['mongodb', 'comandos', 'bases de datos', 'tutorial']
+draft: false
+summary: 'Descubre la lista completa de comandos MongoDB para gestionar bases de datos. Aprende a crear, modificar y consultar datos con ejemplos prácticos y optimización para buscadores.'
+authors: ['default']
+---
+
+En este artículo encontrarás una lista detallada de comandos esenciales para la gestión de bases de datos en MongoDB. Desde la creación de bases de datos hasta la manipulación de documentos y colecciones.
+
+## Índice
+
+- [Crear base de datos](#crear-base-de-datos)
+- [Eliminar base de datos](#eliminar-base-de-datos)
+- [Usar una base de datos](#usar-una-base-de-datos)
+- [Crear colecciones](#crear-colecciones)
+- [Eliminar colecciones](#eliminar-colecciones)
+- [Insertar documentos](#insertar-documentos)
+- [Actualizar documentos](#actualizar-documentos)
+- [Eliminar documentos](#eliminar-documentos)
+- [Consultar documentos](#consultar-documentos)
+- [Filtrar documentos](#filtrar-documentos)
+- [Ordenar documentos](#ordenar-documentos)
+- [Joins (Uniones de documentos)](#joins-uniones-de-documentos)
+
+---
+
+## Crear Base de Datos 
+### ¿Cómo se crea la base de datos en MongoDB?
+
+En MongoDB, la base de datos se crea automáticamente cuando insertas datos en una colección.
+
+```javascript
+use nombre_de_la_base_de_datos;
+```
+
+Este comando selecciona una base de datos y la crea si no existe.
+
+## Eliminar Base de Datos
+### ¿Cómo eliminar una base de datos en MongoDB?
+
+Para eliminar una base de datos, se usa el comando `dropDatabase()`.
+
+```javascript
+db.dropDatabase();
+```
+
+⚠️ **Precaución**: Esta acción es irreversible.
+
+## Usar una Base de Datos
+
+```javascript
+use nombre_de_la_base_de_datos;
+```
+
+Selecciona una base de datos específica para realizar operaciones.
+
+## Crear Colecciones
+
+```javascript
+db.createCollection('nombre_de_la_coleccion');
+```
+
+Crea una nueva colección dentro de la base de datos seleccionada.
+
+## Eliminar Colecciones
+### ¿Cómo elimino una colección en MongoDB?
+
+Para eliminar una colección específica, usa `drop()`.
+
+```javascript
+db.nombre_de_la_coleccion.drop();
+```
+
+Este comando borra toda la colección y sus documentos.
+
+## Insertar Documentos
+### ¿Cómo insertar en MongoDB?
+
+Para agregar un nuevo documento a una colección, usa `insertOne()` o `insertMany()`.
+
+```javascript
+db.nombre_de_la_coleccion.insertOne({ nombre: 'Juan Pérez', edad: 30, correo: 'juan@example.com' });
+```
+
+Este comando agrega un solo documento a la colección.
+
+## Actualizar Documentos
+### ¿Cómo se usa el comando update en MongoDB?
+
+Para modificar documentos existentes, usa `updateOne()` o `updateMany()`.
+
+```javascript
+db.nombre_de_la_coleccion.updateOne(
+  { nombre: 'Juan Pérez' },
+  { $set: { edad: 31 } }
+);
+```
+
+⚠️ **Nota**: Si no se incluye una condición, todos los documentos pueden actualizarse accidentalmente.
+
+## Eliminar Documentos
+### ¿Cómo borrar documentos en MongoDB?
+
+Para eliminar documentos específicos, usa `deleteOne()` o `deleteMany()`.
+
+```javascript
+db.nombre_de_la_coleccion.deleteOne({ nombre: 'Juan Pérez' });
+```
+
+⚠️ **Precaución**: Si usas `deleteMany({})`, eliminarás todos los documentos de la colección.
+
+## Consultar Documentos
+### ¿Cómo consultar en MongoDB?
+
+Para obtener todos los documentos de una colección, usa `find()`.
+
+```javascript
+db.nombre_de_la_coleccion.find();
+```
+
+Para mostrar datos de forma legible, usa:
+
+```javascript
+db.nombre_de_la_coleccion.find().pretty();
+```
+
+## Filtrar Documentos
+### ¿Cómo filtrar documentos en MongoDB?
+
+Para obtener registros que cumplan ciertas condiciones, usa `find()` con filtros.
+
+```javascript
+db.nombre_de_la_coleccion.find({ edad: { $gt: 25 } });
+```
+
+Esto devuelve documentos donde `edad` sea mayor a 25.
+
+## Ordenar Documentos
+### ¿Qué hace el sort en MongoDB?
+
+El método `sort()` se usa para ordenar los resultados de una consulta.
+
+```javascript
+db.nombre_de_la_coleccion.find().sort({ edad: -1 });
+```
+
+Aquí, los documentos se ordenan en orden descendente por `edad`. Para orden ascendente, usa `1`.
+
+## Joins (Uniones de Documentos)
+### ¿Cómo se hacen joins en MongoDB?
+
+En MongoDB, los `JOINs` se realizan con `aggregate()` y `$lookup`.
+
+```javascript
+db.empleados.aggregate([
+  {
+    $lookup: {
+      from: 'puestos',
+      localField: 'id_puesto',
+      foreignField: 'id',
+      as: 'detalle_puesto'
+    }
+  }
+]);
+```
+
+Esto combina información de las colecciones `empleados` y `puestos` mediante `id_puesto`.
