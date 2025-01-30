@@ -23,6 +23,7 @@ En este artículo encontrarás una lista detallada de comandos SQL esenciales pa
 - [Consultar datos](#consultar-datos)
 - [Filtrar datos](#filtrar-datos)
 - [Ordenar datos](#ordenar-datos)
+- [Agrupar datos](#group-by-agrupar-datos)
 - [Joins (Uniones de tablas)](#joins-uniones-de-tablas)
 
 ---
@@ -152,6 +153,19 @@ ORDER BY edad DESC;
 ```
 
 Aquí, los datos se ordenan en orden descendente por edad. También puedes usar `ASC` para orden ascendente.
+## Group By (Agrupar Datos)
+
+### ¿Cómo se usa `GROUP BY` en SQL?
+
+El comando `GROUP BY` se utiliza para agrupar filas que tienen valores comunes en una o más columnas. Esto es útil para realizar funciones agregadas como `COUNT`, `SUM`, `AVG`, entre otras.
+
+```sql
+SELECT departamento, COUNT(*) AS cantidad_empleados
+FROM empleados
+GROUP BY departamento;
+```
+
+En este ejemplo, estamos agrupando los registros de la tabla `empleados` por `departamento`, y luego contamos cuántos empleados hay en cada uno. El resultado nos dará una lista de departamentos con la cantidad de empleados que tienen.
 
 ## Joins (Uniones de Tablas)
 ### ¿Cómo se usan los JOIN en SQL?
