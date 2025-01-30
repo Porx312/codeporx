@@ -165,3 +165,59 @@ INNER JOIN puestos b ON a.id_puesto = b.id;
 ```
 
 En este caso, estamos obteniendo información combinada de las tablas `empleados` y `puestos`, vinculándolas mediante el campo `id_puesto`.
+
+## Otras Operaciones Comunes:
+13. **Definir restricciones (Constraints)**  
+   - Ejemplos: `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `NOT NULL`, etc.
+
+14. **Modificar la estructura de las tablas**  
+   - **Agregar columnas** (`ALTER TABLE ADD COLUMN`)
+   - **Eliminar columnas** (`ALTER TABLE DROP COLUMN`)
+   - **Cambiar el tipo de datos de una columna** (`ALTER TABLE MODIFY COLUMN` o `ALTER TABLE CHANGE COLUMN`)
+  
+15. **Índices (Indexes)**  
+   - **Crear índices** (`CREATE INDEX`)
+   - **Eliminar índices** (`DROP INDEX`)
+   - Los índices mejoran el rendimiento de las consultas, especialmente cuando hay filtros y ordenamientos complejos.
+
+16. **Vistas (Views)**  
+   - **Crear vistas** (`CREATE VIEW`)
+   - **Eliminar vistas** (`DROP VIEW`)
+   - Las vistas son consultas guardadas que pueden simplificar la interacción con datos complejos.
+
+17. **Funciones y Procedimientos almacenados**  
+   - **Crear funciones** (`CREATE FUNCTION`)
+   - **Crear procedimientos almacenados** (`CREATE PROCEDURE`)
+   - **Llamar funciones/procedimientos** (`CALL`)
+   - Son bloques de código SQL reutilizables que se pueden ejecutar en la base de datos.
+
+18. **Triggers (Desencadenadores)**  
+   - **Crear triggers** (`CREATE TRIGGER`)
+   - Los triggers son acciones automáticas que se ejecutan en respuesta a ciertos eventos como `INSERT`, `UPDATE`, o `DELETE` en una tabla.
+
+19. **Transacciones**  
+   - **Iniciar transacción** (`BEGIN TRANSACTION`)
+   - **Confirmar transacción** (`COMMIT`)
+   - **Deshacer transacción** (`ROLLBACK`)
+   - Las transacciones permiten agrupar varias operaciones en una única unidad atómica de trabajo.
+
+20. **Copias de seguridad y restauración**  
+   - **Crear copias de seguridad** (`BACKUP DATABASE`)
+   - **Restaurar base de datos** (`RESTORE DATABASE`)
+
+21. **Seguridad y permisos**  
+   - **Crear usuarios** (`CREATE USER`)
+   - **Asignar permisos** (`GRANT`)
+   - **Revocar permisos** (`REVOKE`)
+   - **Eliminar usuarios** (`DROP USER`)
+
+22. **Normalización y desnormalización de bases de datos**  
+   - **Proceso de normalización**: organización de los datos para minimizar la redundancia.
+   - **Desnormalización**: se hace en situaciones donde la eficiencia de las consultas es más importante que la eliminación de redundancias.
+
+23. **Exportar e importar datos**  
+   - **Exportar datos** (por ejemplo, a un archivo CSV o SQL)
+   - **Importar datos** (desde archivos CSV, SQL, o Excel)
+
+24. **Control de versiones de la base de datos**  
+   - Herramientas como **Liquibase** o **Flyway** para gestionar los cambios en el esquema de la base de datos de forma controlada.
