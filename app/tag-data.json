@@ -1,10 +1,10 @@
 {
+  "sql": 4,
+  "mysql": 3,
   "mongodb": 1,
   "comandos": 2,
   "bases-de-datos": 1,
   "tutorial": 2,
-  "sql": 2,
-  "mysql": 1,
   "javascript": 1,
   "nextjs": 5,
   "nextauth": 1,
@@ -14,7 +14,7 @@
   "axios": 1,
   "desarrollo-web": 3,
   "rutas": 1,
-  "seo": 3,
+  "seo": 4,
   "git": 1,
   "github": 1,
   "open-source": 1,
@@ -25,5 +25,8 @@
   "search-console": 1,
   "dominios": 1,
   "vercel": 1,
-  "hostinger": 1
+  "hostinger": 1,
+  "landing-page": 1,
+  "conversiones": 1,
+  "diseño-web": 1
 }
