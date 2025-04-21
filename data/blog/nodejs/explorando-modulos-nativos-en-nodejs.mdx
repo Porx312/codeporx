@@ -1,0 +1,97 @@
+---
+title: 'Explorando modulos nativos en nodejs'
+date: '2025-04-21'
+tags: ['nodejs']
+draft: false
+summary: 'Descubre los módulos nativos de Node.js, aprende a utilizarlos eficientemente y domina las funcionalidades clave como HTTP, OS, FS, Path, Events y Crypto'
+authors: ['default']
+---
+
+## Node.js: Explorando Módulos Nativos
+
+## 1. Introducción
+
+- ¿Qué es Node.js?
+- ¿Qué son los módulos nativos?
+- ¿Por qué es importante conocerlos?
+
+## 2. Cómo funcionan los módulos en Node.js
+
+- CommonJS (`require`) vs ES Modules (`import`).
+- Módulos nativos vs módulos externos (npm).
+
+## 3. Principales módulos nativos
+
+### 3.1. `http`
+
+- Crear un servidor básico.
+- Manejar solicitudes y respuestas.
+- Ejemplo práctico: servidor que responde texto.
+
+### 3.2. `os`
+
+- Obtener información del sistema operativo.
+- Mostrar plataforma, CPUs, memoria libre.
+- Ejemplo práctico.
+
+### 3.3. `fs`
+
+- Leer y escribir archivos.
+- Versiones síncronas y asíncronas.
+- Uso de `fs.promises`.
+
+### 3.4. `path`
+
+- Construcción y normalización de rutas.
+- Diferencia entre `__dirname`, `__filename`.
+- Ejemplo práctico de unir rutas dinámicamente.
+
+### 3.5. `events`
+
+- Crear y manejar eventos personalizados.
+- Ejemplo: emisor de eventos básico.
+
+### 3.6. `crypto`
+
+- Generar hashes (MD5, SHA256).
+- Crear claves y tokens seguros.
+- Ejemplo práctico de encriptación.
+
+---
+
+## 4. Buenas prácticas trabajando con módulos nativos
+
+- Preferir operaciones asíncronas siempre que sea posible.
+- Modularizar el código: separar funcionalidades.
+- Manejar errores adecuadamente (`try/catch`, callbacks, promesas).
+
+## 5. Mini Proyecto: "Servidor de Archivos Estáticos"
+
+- Crear un servidor HTTP que lea archivos locales con `fs` y los sirva dinámicamente.
+- Integrar `path` para manejar rutas de forma segura.
+- Mostrar información del sistema cuando se accede a una ruta especial (`/info`).
+
+_(opcional: guía paso a paso con código explicado)_
+
+---
+
+## 6. Conclusión
+
+- Recapitulación de los módulos explorados.
+- Importancia de dominar los módulos nativos antes de usar librerías externas.
+- Consejos finales para seguir mejorando en Node.js.
+
+---
+
+## 7. Recursos adicionales
+
+- [Documentación oficial de Node.js](https://nodejs.org/en/docs/)
+- [Node.js API Reference](https://nodejs.org/dist/latest-v18.x/docs/api/)
+- Cursos y libros recomendados para profundizar.
+
+---
+
+### ✨ Bonus opcional:
+
+- **Tabla resumen** de todos los módulos mencionados con descripción corta.
+- **Gráfica o diagrama** mostrando relación entre módulos (ideal para visual learners).
