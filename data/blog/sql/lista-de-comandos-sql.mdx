@@ -7,9 +7,10 @@ summary: 'Descubre la lista completa de comandos SQL para gestionar bases de dat
 authors: ['default']
 ---
 
-En este artículo encontrarás una lista detallada de comandos SQL esenciales para la gestión de bases de datos. Desde la creación de bases de datos hasta la manipulación de datos y estructuras. 
+En este artículo encontrarás una lista detallada de comandos SQL esenciales para la gestión de bases de datos. Desde la creación de bases de datos hasta la manipulación de datos y estructuras.
 
 ## Índice
+
 ## ¿Cuáles son las instrucciones de SQL?
 
 - [Crear base de datos](#crear-base-de-datos)
@@ -28,10 +29,11 @@ En este artículo encontrarás una lista detallada de comandos SQL esenciales pa
 
 ---
 
-## Crear Base de Datos 
+## Crear Base de Datos
+
 ### ¿Cómo se crea la base de datos en SQL?
 
-Para crear una base de datos en SQL, utilizamos el comando `CREATE DATABASE`.  
+Para crear una base de datos en SQL, utilizamos el comando `CREATE DATABASE`.
 
 ```sql
 CREATE DATABASE nombre_de_la_base_de_datos;
@@ -40,6 +42,7 @@ CREATE DATABASE nombre_de_la_base_de_datos;
 Este comando es fundamental para cualquier desarrollador que desee estructurar y almacenar información en un sistema de gestión de bases de datos como MySQL, PostgreSQL o SQL Server.
 
 ## Eliminar Base de Datos
+
 ### ¿Cómo eliminar una base de datos en SQL?
 
 El comando `DROP DATABASE` se usa para eliminar permanentemente una base de datos y todo su contenido.
@@ -72,6 +75,7 @@ CREATE TABLE nombre_de_la_tabla (
 Crea una nueva tabla con diferentes tipos de datos y restricciones.
 
 ## Eliminar Tablas
+
 ### ¿Cómo elimino una tabla creada en SQL?
 
 Para eliminar una tabla específica en SQL y borrar todos sus registros, se usa `DROP TABLE`.
@@ -83,6 +87,7 @@ DROP TABLE nombre_de_la_tabla;
 Este comando elimina completamente la tabla de la base de datos. ⚠️ **Precaución**: No se puede recuperar la información eliminada.
 
 ## Insertar Datos
+
 ### ¿Cómo insertar en SQL?
 
 Para agregar nuevos registros en una tabla, usa `INSERT INTO`.
@@ -95,6 +100,7 @@ VALUES ('Juan Pérez', 30, 'juan@example.com');
 Este comando inserta una fila en la tabla con los valores especificados.
 
 ## Actualizar Datos
+
 ### ¿Cómo se usa el comando UPDATE en SQL?
 
 El comando `UPDATE` permite modificar valores en registros existentes.
@@ -108,6 +114,7 @@ WHERE nombre = 'Juan Pérez';
 ⚠️ **Nota**: Es importante incluir `WHERE` para evitar actualizar todos los registros accidentalmente.
 
 ## Eliminar Datos
+
 ### ¿Cómo borrar datos en una tabla de SQL?
 
 Para eliminar registros específicos, se usa `DELETE FROM`.
@@ -120,6 +127,7 @@ WHERE nombre = 'Juan Pérez';
 ⚠️ **Precaución**: Si omites `WHERE`, se eliminarán todos los datos de la tabla.
 
 ## Consultar Datos
+
 ### ¿Cómo consultar en base de datos SQL?
 
 Para obtener información almacenada en una tabla, usa `SELECT`.
@@ -131,6 +139,7 @@ SELECT * FROM nombre_de_la_tabla;
 Esto recupera todos los registros de la tabla. Puedes especificar columnas para obtener solo ciertos datos.
 
 ## Filtrar Datos
+
 ### ¿Cómo filtrar datos en SQL?
 
 Puedes usar `WHERE` para obtener registros que cumplan ciertas condiciones.
@@ -143,6 +152,7 @@ WHERE edad > 25;
 Esto devuelve solo los registros donde la edad sea mayor a 25.
 
 ## Ordenar Datos
+
 ### ¿Qué hace el ORDER BY en SQL?
 
 El comando `ORDER BY` se usa para ordenar los resultados de una consulta.
@@ -153,6 +163,7 @@ ORDER BY edad DESC;
 ```
 
 Aquí, los datos se ordenan en orden descendente por edad. También puedes usar `ASC` para orden ascendente.
+
 ## Group By (Agrupar Datos)
 
 ### ¿Cómo se usa `GROUP BY` en SQL?
@@ -168,12 +179,13 @@ GROUP BY departamento;
 En este ejemplo, estamos agrupando los registros de la tabla `empleados` por `departamento`, y luego contamos cuántos empleados hay en cada uno. El resultado nos dará una lista de departamentos con la cantidad de empleados que tienen.
 
 ## Joins (Uniones de Tablas)
+
 ### ¿Cómo se usan los JOIN en SQL?
 
 Los `JOIN` permiten combinar datos de dos o más tablas relacionadas.
 
 ```sql
-SELECT a.nombre, b.puesto 
+SELECT a.nombre, b.puesto
 FROM empleados a
 INNER JOIN puestos b ON a.id_puesto = b.id;
 ```
@@ -181,57 +193,70 @@ INNER JOIN puestos b ON a.id_puesto = b.id;
 En este caso, estamos obteniendo información combinada de las tablas `empleados` y `puestos`, vinculándolas mediante el campo `id_puesto`.
 
 ## Otras Operaciones Comunes:
-13. **Definir restricciones (Constraints)**  
-   - Ejemplos: `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `NOT NULL`, etc.
 
-14. **Modificar la estructura de las tablas**  
-   - **Agregar columnas** (`ALTER TABLE ADD COLUMN`)
-   - **Eliminar columnas** (`ALTER TABLE DROP COLUMN`)
-   - **Cambiar el tipo de datos de una columna** (`ALTER TABLE MODIFY COLUMN` o `ALTER TABLE CHANGE COLUMN`)
-  
-15. **Índices (Indexes)**  
-   - **Crear índices** (`CREATE INDEX`)
-   - **Eliminar índices** (`DROP INDEX`)
-   - Los índices mejoran el rendimiento de las consultas, especialmente cuando hay filtros y ordenamientos complejos.
+13. **Definir restricciones (Constraints)**
 
-16. **Vistas (Views)**  
-   - **Crear vistas** (`CREATE VIEW`)
-   - **Eliminar vistas** (`DROP VIEW`)
-   - Las vistas son consultas guardadas que pueden simplificar la interacción con datos complejos.
+- Ejemplos: `PRIMARY KEY`, `FOREIGN KEY`, `UNIQUE`, `NOT NULL`, etc.
 
-17. **Funciones y Procedimientos almacenados**  
-   - **Crear funciones** (`CREATE FUNCTION`)
-   - **Crear procedimientos almacenados** (`CREATE PROCEDURE`)
-   - **Llamar funciones/procedimientos** (`CALL`)
-   - Son bloques de código SQL reutilizables que se pueden ejecutar en la base de datos.
+14. **Modificar la estructura de las tablas**
 
-18. **Triggers (Desencadenadores)**  
-   - **Crear triggers** (`CREATE TRIGGER`)
-   - Los triggers son acciones automáticas que se ejecutan en respuesta a ciertos eventos como `INSERT`, `UPDATE`, o `DELETE` en una tabla.
+- **Agregar columnas** (`ALTER TABLE ADD COLUMN`)
+- **Eliminar columnas** (`ALTER TABLE DROP COLUMN`)
+- **Cambiar el tipo de datos de una columna** (`ALTER TABLE MODIFY COLUMN` o `ALTER TABLE CHANGE COLUMN`)
 
-19. **Transacciones**  
-   - **Iniciar transacción** (`BEGIN TRANSACTION`)
-   - **Confirmar transacción** (`COMMIT`)
-   - **Deshacer transacción** (`ROLLBACK`)
-   - Las transacciones permiten agrupar varias operaciones en una única unidad atómica de trabajo.
+15. **Índices (Indexes)**
 
-20. **Copias de seguridad y restauración**  
-   - **Crear copias de seguridad** (`BACKUP DATABASE`)
-   - **Restaurar base de datos** (`RESTORE DATABASE`)
+- **Crear índices** (`CREATE INDEX`)
+- **Eliminar índices** (`DROP INDEX`)
+- Los índices mejoran el rendimiento de las consultas, especialmente cuando hay filtros y ordenamientos complejos.
 
-21. **Seguridad y permisos**  
-   - **Crear usuarios** (`CREATE USER`)
-   - **Asignar permisos** (`GRANT`)
-   - **Revocar permisos** (`REVOKE`)
-   - **Eliminar usuarios** (`DROP USER`)
+16. **Vistas (Views)**
 
-22. **Normalización y desnormalización de bases de datos**  
-   - **Proceso de normalización**: organización de los datos para minimizar la redundancia.
-   - **Desnormalización**: se hace en situaciones donde la eficiencia de las consultas es más importante que la eliminación de redundancias.
+- **Crear vistas** (`CREATE VIEW`)
+- **Eliminar vistas** (`DROP VIEW`)
+- Las vistas son consultas guardadas que pueden simplificar la interacción con datos complejos.
 
-23. **Exportar e importar datos**  
-   - **Exportar datos** (por ejemplo, a un archivo CSV o SQL)
-   - **Importar datos** (desde archivos CSV, SQL, o Excel)
+17. **Funciones y Procedimientos almacenados**
 
-24. **Control de versiones de la base de datos**  
-   - Herramientas como **Liquibase** o **Flyway** para gestionar los cambios en el esquema de la base de datos de forma controlada.
+- **Crear funciones** (`CREATE FUNCTION`)
+- **Crear procedimientos almacenados** (`CREATE PROCEDURE`)
+- **Llamar funciones/procedimientos** (`CALL`)
+- Son bloques de código SQL reutilizables que se pueden ejecutar en la base de datos.
+
+18. **Triggers (Desencadenadores)**
+
+- **Crear triggers** (`CREATE TRIGGER`)
+- Los triggers son acciones automáticas que se ejecutan en respuesta a ciertos eventos como `INSERT`, `UPDATE`, o `DELETE` en una tabla.
+
+19. **Transacciones**
+
+- **Iniciar transacción** (`BEGIN TRANSACTION`)
+- **Confirmar transacción** (`COMMIT`)
+- **Deshacer transacción** (`ROLLBACK`)
+- Las transacciones permiten agrupar varias operaciones en una única unidad atómica de trabajo.
+
+20. **Copias de seguridad y restauración**
+
+- **Crear copias de seguridad** (`BACKUP DATABASE`)
+- **Restaurar base de datos** (`RESTORE DATABASE`)
+
+21. **Seguridad y permisos**
+
+- **Crear usuarios** (`CREATE USER`)
+- **Asignar permisos** (`GRANT`)
+- **Revocar permisos** (`REVOKE`)
+- **Eliminar usuarios** (`DROP USER`)
+
+22. **Normalización y desnormalización de bases de datos**
+
+- **Proceso de normalización**: organización de los datos para minimizar la redundancia.
+- **Desnormalización**: se hace en situaciones donde la eficiencia de las consultas es más importante que la eliminación de redundancias.
+
+23. **Exportar e importar datos**
+
+- **Exportar datos** (por ejemplo, a un archivo CSV o SQL)
+- **Importar datos** (desde archivos CSV, SQL, o Excel)
+
+24. **Control de versiones de la base de datos**
+
+- Herramientas como **Liquibase** o **Flyway** para gestionar los cambios en el esquema de la base de datos de forma controlada.

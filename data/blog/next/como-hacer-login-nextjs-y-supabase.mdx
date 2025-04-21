@@ -6,6 +6,7 @@ draft: false
 summary: 'Aprende a implementar un sistema de autenticación seguro en Next.js con Supabase, NextAuth y Drizzle.'
 authors: ['default']
 ---
+
 En este artículo, te enseñaré cómo implementar autenticación en **Next.js** utilizando **Supabase**. Usaremos **Supabase desde Vercel** y nos conectaremos a nuestra base de datos con **Drizzle ORM** y **NextAuth.js**.
 
 ![resultado](https://res.cloudinary.com/dq0pfesxe/image/upload/v1742053319/Captura_de_pantalla_2025-03-15_163932_svo4ih.png)
@@ -122,29 +123,29 @@ La base de datos y el esquema de usuario estarán en el archivo `db.ts`.
 Este archivo define la conexión a la base de datos PostgreSQL, maneja la creación de la tabla `User`, y proporciona funciones para registrar y buscar usuarios.
 
 ```tsx
-import { drizzle } from 'drizzle-orm/postgres-js';
-import { pgTable, serial, varchar } from 'drizzle-orm/pg-core';
-import { eq } from 'drizzle-orm';
-import postgres from 'postgres';
-import { genSaltSync, hashSync } from 'bcrypt-ts';
+import { drizzle } from 'drizzle-orm/postgres-js'
+import { pgTable, serial, varchar } from 'drizzle-orm/pg-core'
+import { eq } from 'drizzle-orm'
+import postgres from 'postgres'
+import { genSaltSync, hashSync } from 'bcrypt-ts'
 
 // Conectamos a la base de datos con PostgreSQL y habilitamos SSL
-let client = postgres(`${process.env.POSTGRES_URL!}?sslmode=require`);
-let db = drizzle(client);
+let client = postgres(`${process.env.POSTGRES_URL!}?sslmode=require`)
+let db = drizzle(client)
 
 // Función para obtener un usuario por su email
 export async function getUser(email: string) {
-  const users = await ensureTableExists();
-  return await db.select().from(users).where(eq(users.email, email));
+  const users = await ensureTableExists()
+  return await db.select().from(users).where(eq(users.email, email))
 }
 
 // Función para crear un usuario con contraseña encriptada
 export async function createUser(email: string, password: string) {
-  const users = await ensureTableExists();
-  let salt = genSaltSync(10); // Generamos un "sal" para la encriptación
-  let hash = hashSync(password, salt); // Hasheamos la contraseña
+  const users = await ensureTableExists()
+  let salt = genSaltSync(10) // Generamos un "sal" para la encriptación
+  let hash = hashSync(password, salt) // Hasheamos la contraseña
 
-  return await db.insert(users).values({ email, password: hash });
+  return await db.insert(users).values({ email, password: hash })
 }
 
 // Función para verificar si la tabla "User" existe, si no, la crea
@@ -154,7 +155,7 @@ async function ensureTableExists() {
       SELECT FROM information_schema.tables
       WHERE table_schema = 'public'
       AND table_name = 'User'
-    );`;
+    );`
 
   if (!result[0].exists) {
     await client`
@@ -162,7 +163,7 @@ async function ensureTableExists() {
         id SERIAL PRIMARY KEY,
         email VARCHAR(64),
         password VARCHAR(64)
-      );`;
+      );`
   }
 
   // Definimos la estructura de la tabla "User"
@@ -170,11 +171,10 @@ async function ensureTableExists() {
     id: serial('id').primaryKey(),
     email: varchar('email', { length: 64 }),
     password: varchar('password', { length: 64 }),
-  });
+  })
 
-  return table;
+  return table
 }
-
 ```
 
 ✅ **Explicación:**
@@ -184,8 +184,7 @@ async function ensureTableExists() {
 - `createUser(email, password)` guarda un usuario con la contraseña encriptada con `bcrypt-ts`.
 - `ensureTableExists()` verifica si la tabla `User` existe; si no, la crea.
 
-[supabase table](https://res.cloudinary.com/dq0pfesxe/image/upload/v1742063040/Captura_de_pantalla_2025-03-15_192312_dfs7cf.png)
----
+## [supabase table](https://res.cloudinary.com/dq0pfesxe/image/upload/v1742063040/Captura_de_pantalla_2025-03-15_192312_dfs7cf.png)
 
 ## 📌 **Configurar la autenticación con NextAuth.js**
 
@@ -199,11 +198,11 @@ La lógica de autenticación se divide en dos archivos:
 Este archivo define cómo se maneja la autenticación con **NextAuth.js** y **credenciales personalizadas (email y contraseña)**.
 
 ```tsx
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { compare } from 'bcrypt-ts';
-import { getUser } from 'app/db';
-import { authConfig } from 'app/auth.config';
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
+import { compare } from 'bcrypt-ts'
+import { getUser } from 'app/db'
+import { authConfig } from 'app/auth.config'
 
 export const {
   handlers: { GET, POST }, // Métodos para manejar autenticación desde API
@@ -215,17 +214,16 @@ export const {
   providers: [
     Credentials({
       async authorize({ email, password }: any) {
-        let user = await getUser(email);
-        if (user.length === 0) return null;
+        let user = await getUser(email)
+        if (user.length === 0) return null
 
-        let passwordsMatch = await compare(password, user[0].password!);
-        if (passwordsMatch) return user[0] as any; // Retorna el usuario si la contraseña es válida
-        return null; // Si la contraseña no coincide, retorna null
+        let passwordsMatch = await compare(password, user[0].password!)
+        if (passwordsMatch) return user[0] as any // Retorna el usuario si la contraseña es válida
+        return null // Si la contraseña no coincide, retorna null
       },
     }),
   ],
-});
-
+})
 ```
 
 ✅ **Explicación:**
@@ -242,7 +240,7 @@ export const {
 Define la configuración general de NextAuth, incluyendo páginas personalizadas y reglas de acceso.
 
 ```tsx
-import { NextAuthConfig } from 'next-auth';
+import { NextAuthConfig } from 'next-auth'
 
 export const authConfig = {
   pages: {
@@ -250,29 +248,28 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      let isLoggedIn = !!auth?.user; // Verifica si el usuario está autenticado
-      let isOnDashboard = nextUrl.pathname.startsWith('/protected'); // Verifica si está en una ruta protegida
+      let isLoggedIn = !!auth?.user // Verifica si el usuario está autenticado
+      let isOnDashboard = nextUrl.pathname.startsWith('/protected') // Verifica si está en una ruta protegida
 
       if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Si no está autenticado, se le bloquea el acceso
+        if (isLoggedIn) return true
+        return false // Si no está autenticado, se le bloquea el acceso
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/protected', nextUrl)); // Redirige a /protected si ya está logueado
+        return Response.redirect(new URL('/protected', nextUrl)) // Redirige a /protected si ya está logueado
       }
 
-      return true;
+      return true
     },
   },
-} satisfies NextAuthConfig;
-
+} satisfies NextAuthConfig
 ```
 
 ✅ **Explicación:**
 
 - **`signIn: '/login'`** → Personaliza la página de inicio de sesión.
 - **`callbacks.authorized`** → Define reglas de acceso a rutas protegidas.
-    - Si el usuario intenta acceder a `/protected` sin autenticarse, se bloquea.
-    - Si ya está autenticado y está en la página de inicio, lo redirige a `/protected`.
+  - Si el usuario intenta acceder a `/protected` sin autenticarse, se bloquea.
+  - Si ya está autenticado y está en la página de inicio, lo redirige a `/protected`.
 
 ---
 
@@ -283,8 +280,7 @@ En **Next.js App Router**, debemos exportar los controladores `GET` y `POST` de 
 ### 📄 `api/auth/[...nextauth]/route.ts`
 
 ```tsx
-export { GET, POST } from 'app/auth';
-
+export { GET, POST } from 'app/auth'
 ```
 
 ✅ **Explicación:**
@@ -301,24 +297,23 @@ Finalmente, creamos un **middleware** que bloqueará el acceso a rutas protegida
 ### 📄 `middleware.ts`
 
 ```tsx
-import NextAuth from 'next-auth';
-import { authConfig } from 'app/auth.config';
+import NextAuth from 'next-auth'
+import { authConfig } from 'app/auth.config'
 
-export default NextAuth(authConfig).auth;
+export default NextAuth(authConfig).auth
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'], // Aplica el middleware a todas las rutas excepto las estáticas y la API
-};
-
+}
 ```
 
 ✅ **Explicación:**
 
 - **`NextAuth(authConfig).auth;`** → Usa la configuración de `auth.config.ts`.
 - **`matcher`** → Aplica el middleware a todas las rutas **excepto**:
-    - `api/` (rutas de API)
-    - `_next/static` y `_next/image` (archivos estáticos)
-    - Imágenes (`.png`)
+  - `api/` (rutas de API)
+  - `_next/static` y `_next/image` (archivos estáticos)
+  - Imágenes (`.png`)
 
 ---
 
@@ -343,35 +338,35 @@ La página de bienvenida es el primer punto de contacto de los usuarios con nues
 ![pagina de bienvenida](https://res.cloudinary.com/dq0pfesxe/image/upload/v1742062538/Captura_de_pantalla_2025-03-15_191523_z0cqcn.png)
 
 ```tsx
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
-      <main className="flex-1 flex flex-col items-center justify-center p-6">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-gray-900 to-gray-800">
+      <main className="flex flex-1 flex-col items-center justify-center p-6">
         <div className="w-full max-w-md">
-          <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold text-white mb-2">AppName</h1>
+          <div className="mb-10 text-center">
+            <h1 className="mb-2 text-4xl font-bold text-white">AppName</h1>
             <p className="text-gray-400">Tu solución simple para todo</p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-8 text-center border-b border-gray-200">
+          <div className="overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <div className="border-b border-gray-200 p-8 text-center">
               <h2 className="text-2xl font-bold text-gray-800">Bienvenido</h2>
-              <p className="text-gray-600 mt-1">Por favor, inicia sesión o crea una cuenta</p>
+              <p className="mt-1 text-gray-600">Por favor, inicia sesión o crea una cuenta</p>
             </div>
 
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
               <Link
                 href="/login"
-                className="block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-center rounded-lg transition duration-200"
+                className="block w-full rounded-lg bg-blue-600 px-4 py-3 text-center font-medium text-white transition duration-200 hover:bg-blue-700"
               >
                 Iniciar Sesión
               </Link>
 
               <Link
                 href="/register"
-                className="block w-full py-3 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium text-center rounded-lg transition duration-200"
+                className="block w-full rounded-lg bg-gray-200 px-4 py-3 text-center font-medium text-gray-800 transition duration-200 hover:bg-gray-300"
               >
                 Registrarse
               </Link>
@@ -380,13 +375,12 @@ export default function Page() {
         </div>
       </main>
 
-      <footer className="py-6 text-center text-gray-500 text-sm">
+      <footer className="py-6 text-center text-sm text-gray-500">
         <p>&copy; {new Date().getFullYear()} AppName. Todos los derechos reservados.</p>
       </footer>
     </div>
-  );
+  )
 }
-
 ```
 
 ### Explicación:
@@ -403,17 +397,11 @@ Estos componentes nos ayudarán a evitar redundancia en las páginas de login y 
 ### `Form.tsx`
 
 ```tsx
-export function Form({
-  action,
-  children,
-}: {
-  action: any;
-  children: React.ReactNode;
-}) {
+export function Form({ action, children }: { action: any; children: React.ReactNode }) {
   return (
     <form action={action} className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16">
       <div>
-        <label htmlFor="email" className="block text-xs text-gray-600 uppercase">
+        <label htmlFor="email" className="block text-xs uppercase text-gray-600">
           Correo Electrónico
         </label>
         <input
@@ -426,7 +414,7 @@ export function Form({
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-xs text-gray-600 uppercase">
+        <label htmlFor="password" className="block text-xs uppercase text-gray-600">
           Contraseña
         </label>
         <input
@@ -439,20 +427,19 @@ export function Form({
       </div>
       {children}
     </form>
-  );
+  )
 }
-
 ```
 
 ### `SubmitButton.tsx`
 
 ```tsx
-'use client';
+'use client'
 
-import { useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom'
 
 export function SubmitButton({ children }: { children: React.ReactNode }) {
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
 
   return (
     <button
@@ -463,9 +450,8 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
       {children}
       {pending && <span className="ml-2 animate-spin">⏳</span>}
     </button>
-  );
+  )
 }
-
 ```
 
 ---
@@ -477,61 +463,65 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
 ### `login/page.tsx`
 
 ```tsx
-import Link from 'next/link';
-import { Form } from '../components/Form';
-import { signIn } from '../lib/auth';
-import { SubmitButton } from '../components/SubmitButton';
+import Link from 'next/link'
+import { Form } from '../components/Form'
+import { signIn } from '../lib/auth'
+import { SubmitButton } from '../components/SubmitButton'
 
 export default function Login() {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center">Iniciar Sesión</h2>
+        <h2 className="text-center text-2xl font-bold">Iniciar Sesión</h2>
         <Form
           action={async (formData: FormData) => {
-            await signIn(formData.get('email') as string, formData.get('password') as string);
+            await signIn(formData.get('email') as string, formData.get('password') as string)
           }}
         >
           <SubmitButton>Ingresar</SubmitButton>
         </Form>
         <p className="text-center text-sm">
-          ¿No tienes cuenta? <Link href="/register" className="text-blue-500">Regístrate</Link>
+          ¿No tienes cuenta?{' '}
+          <Link href="/register" className="text-blue-500">
+            Regístrate
+          </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
-
 ```
 
 ### `register/page.tsx`
 
 ```tsx
-import Link from 'next/link';
-import { Form } from '../components/Form';
-import { registerUser } from '../lib/auth';
-import { SubmitButton } from '../components/SubmitButton';
+import Link from 'next/link'
+import { Form } from '../components/Form'
+import { registerUser } from '../lib/auth'
+import { SubmitButton } from '../components/SubmitButton'
 
 export default function Register() {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center">Registro</h2>
+        <h2 className="text-center text-2xl font-bold">Registro</h2>
         <Form
           action={async (formData: FormData) => {
-            await registerUser(formData.get('email') as string, formData.get('password') as string);
+            await registerUser(formData.get('email') as string, formData.get('password') as string)
           }}
         >
           <SubmitButton>Registrarse</SubmitButton>
         </Form>
         <p className="text-center text-sm">
-          ¿Ya tienes cuenta? <Link href="/login" className="text-blue-500">Inicia sesión</Link>
+          ¿Ya tienes cuenta?{' '}
+          <Link href="/login" className="text-blue-500">
+            Inicia sesión
+          </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
-
 ```
 
 ---
@@ -543,35 +533,35 @@ Este pagina protegida o dashboard sirve como la página principal donde los usua
 ### `protected/page.tsx`
 
 ```tsx
-import { auth, signOut } from "app/auth"
+import { auth, signOut } from 'app/auth'
 
 export default async function ProtectedPage() {
   const session = await auth()
 
   // Default avatar if no image is available
-  const userInitial = session?.user?.email?.charAt(0).toUpperCase() || "U"
+  const userInitial = session?.user?.email?.charAt(0).toUpperCase() || 'U'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <header className="border-b border-gray-800 py-4">
-        <div className="container mx-auto px-6 flex justify-between items-center">
+        <div className="container mx-auto flex items-center justify-between px-6">
           <h1 className="text-2xl font-bold">AppName</h1>
           <SignOut />
         </div>
       </header>
 
       <main className="container mx-auto px-6 py-12">
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto max-w-4xl">
           {/* User Welcome Card */}
-          <div className="bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-700">
+          <div className="rounded-2xl border border-gray-700 bg-gray-800 p-8 shadow-xl">
             <div className="flex items-center space-x-6">
               {/* User Avatar */}
-              <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-2xl font-bold">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600 text-2xl font-bold">
                 {session?.user?.image ? (
                   <img
-                    src={session.user.image || "/placeholder.svg"}
-                    alt={session.user.name || "User"}
-                    className="w-full h-full rounded-full object-cover"
+                    src={session.user.image || '/placeholder.svg'}
+                    alt={session.user.name || 'User'}
+                    className="h-full w-full rounded-full object-cover"
                   />
                 ) : (
                   userInitial
@@ -580,53 +570,63 @@ export default async function ProtectedPage() {
 
               {/* User Info */}
               <div>
-                <h2 className="text-2xl font-bold mb-1">{session?.user?.name || "Welcome back!"}</h2>
+                <h2 className="mb-1 text-2xl font-bold">
+                  {session?.user?.name || 'Welcome back!'}
+                </h2>
                 <p className="text-gray-400">
-                  You are logged in as <span className="text-blue-400 font-medium">{session?.user?.email}</span>
+                  You are logged in as{' '}
+                  <span className="font-medium text-blue-400">{session?.user?.email}</span>
                 </p>
               </div>
             </div>
           </div>
 
           {/* Dashboard Content */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4">Account Overview</h3>
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+              <h3 className="mb-4 text-xl font-semibold">Account Overview</h3>
               <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-700">
+                <div className="flex justify-between border-b border-gray-700 py-2">
                   <span className="text-gray-400">Email</span>
                   <span>{session?.user?.email}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-700">
+                <div className="flex justify-between border-b border-gray-700 py-2">
                   <span className="text-gray-400">Account Type</span>
-                  <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Premium</span>
+                  <span className="rounded-full bg-blue-600 px-2 py-1 text-xs text-white">
+                    Premium
+                  </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-700">
+                <div className="flex justify-between border-b border-gray-700 py-2">
                   <span className="text-gray-400">Member Since</span>
                   <span>{new Date().toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4">Quick Actions</h3>
+            <div className="rounded-xl border border-gray-700 bg-gray-800 p-6">
+              <h3 className="mb-4 text-xl font-semibold">Quick Actions</h3>
               <div className="grid grid-cols-2 gap-4">
-                <button className="p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-200 text-center">
+                <button className="rounded-lg bg-gray-700 p-4 text-center transition duration-200 hover:bg-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 mx-auto mb-2"
+                    className="mx-auto mb-2 h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
                   </svg>
                   New Project
                 </button>
-                <button className="p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-200 text-center">
+                <button className="rounded-lg bg-gray-700 p-4 text-center transition duration-200 hover:bg-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 mx-auto mb-2"
+                    className="mx-auto mb-2 h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -640,10 +640,10 @@ export default async function ProtectedPage() {
                   </svg>
                   Calendar
                 </button>
-                <button className="p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-200 text-center">
+                <button className="rounded-lg bg-gray-700 p-4 text-center transition duration-200 hover:bg-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 mx-auto mb-2"
+                    className="mx-auto mb-2 h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -657,10 +657,10 @@ export default async function ProtectedPage() {
                   </svg>
                   Messages
                 </button>
-                <button className="p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition duration-200 text-center">
+                <button className="rounded-lg bg-gray-700 p-4 text-center transition duration-200 hover:bg-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 mx-auto mb-2"
+                    className="mx-auto mb-2 h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -693,17 +693,17 @@ function SignOut() {
   return (
     <form
       action={async () => {
-        "use server"
+        'use server'
         await signOut()
       }}
     >
       <button
         type="submit"
-        className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-medium transition duration-200 flex items-center"
+        className="flex items-center rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition duration-200 hover:bg-red-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 mr-2"
+          className="mr-2 h-5 w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -720,7 +720,6 @@ function SignOut() {
     </form>
   )
 }
-
 ```
 
 ![pagina protegida](https://res.cloudinary.com/dq0pfesxe/image/upload/v1742053319/Captura_de_pantalla_2025-03-15_163932_svo4ih.png)

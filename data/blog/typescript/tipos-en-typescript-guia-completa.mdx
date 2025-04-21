@@ -1,0 +1,653 @@
+---
+title: 'Tipos en typescript: Una Guía Completa'
+date: '2025-04-25'
+tags: ['typescript']
+draft: false
+summary: 'Aprende cómo funcionan los tipos en TypeScript, mejora la seguridad de tu código y aprovecha todo el poder del tipado estático.'
+authors: ['default']
+---
+
+![tipos en typescript](https://res.cloudinary.com/dq0pfesxe/image/upload/v1745246500/tsx_xxhxma.png)
+
+## **¿Qué son los tipos en TypeScript?**
+
+En TypeScript, los **tipos** son una forma de describir y restringir los valores que puede tener una variable, función o propiedad en el código.  
+Su principal objetivo es **proporcionar seguridad y claridad**, ayudando a detectar errores en tiempo de compilación antes de que el programa se ejecute.
+
+Un tipo define **qué clase de dato** (como `string`, `number`, `boolean`, etc.) puede ser asignado o manipulado, permitiendo a los desarrolladores escribir código **más predecible, robusto y fácil de mantener**.
+
+## 📚 Índice de Contenidos
+
+- [Introducción](#introducción)
+- [¿Qué son los Tipos en TypeScript?](#qué-son-los-tipos-en-typescript)
+- [Diferencias con JavaScript](#diferencias-con-javascript)
+- [Tipos Básicos](#tipos-básicos)
+- [Tipos Personalizados](#tipos-personalizados)
+- [Tipos de Unión y Tipos de Intersección](#tipos-de-unión-y-tipos-de-intersección)
+- [Tipos Literales](#tipos-literales)
+- [Inferencia de Tipos](#inferencia-de-tipos)
+- [Tipos Genéricos](#tipos-genéricos)
+- [Utilidades Avanzadas de Tipos](#utilidades-avanzadas-de-tipos)
+- [Buenas Prácticas con Tipos en TypeScript](#buenas-prácticas-con-tipos-en-typescript)
+- [Conclusión](#conclusión)
+
+---
+
+## Tipado Dinámico en JavaScript
+
+**Explicación:**
+
+- En JavaScript no hay control de tipo en tiempo de compilación.
+- Puedes asignar cualquier tipo de dato a una variable y el programa no se quejará (aunque pueda causar errores en ejecución).
+
+  ![dinamico](https://res.cloudinary.com/dq0pfesxe/image/upload/v1745245362/estatico_oq0nr4.png)
+
+## Tipado Estático en TypeScript
+
+**Explicación:**
+
+- TypeScript te obliga (o infiere) que `mensaje` debe ser un `string`.
+- Si intentas asignar un `number`, TypeScript lanza un error **antes** de ejecutar el código.
+- Esto ayuda a prevenir bugs y errores raros en producción.
+  ![estatico](https://res.cloudinary.com/dq0pfesxe/image/upload/v1745245362/dinamic_rihmp4.png)
+
+---
+
+## 🧠 Comparación Visual Rápida
+
+| Característica               | JavaScript                 | TypeScript                   |
+| ---------------------------- | -------------------------- | ---------------------------- |
+| **Tipado**                   | Dinámico                   | Estático                     |
+| **Chequeo de tipos**         | En tiempo de ejecución     | En tiempo de compilación     |
+| **Cambio de tipo permitido** | Sí                         | No (salvo casting explícito) |
+| **Detección de errores**     | Solo al correr el programa | Antes de correrlo            |
+
+---
+
+## Tipos Primitivos en TypeScript
+
+En TypeScript, los **tipos primitivos** son los tipos de datos más básicos, que representan valores simples e inmutables. No son objetos y no tienen métodos propios (aunque JavaScript los puede envolver en objetos automáticamente cuando es necesario).  
+Estos tipos permiten describir con precisión qué tipo de dato esperamos, ayudando a prevenir errores.
+
+---
+
+### 📌 Ejemplos y Descripción de cada Tipo
+
+### 1. **string**
+
+Representa texto o cadenas de caracteres.
+
+```typescript
+let saludo: string = 'Hola, TypeScript!'
+```
+
+- **Descripción:** Se utiliza para almacenar cualquier texto. Las cadenas se encierran en comillas simples, dobles o invertidas (backticks).
+
+---
+
+### 2. **number**
+
+Representa tanto números enteros como flotantes.
+
+```typescript
+let edad: number = 30
+let precio: number = 99.99
+```
+
+- **Descripción:** TypeScript no distingue entre enteros y decimales: todos son del tipo `number`.
+
+---
+
+### 3. **boolean**
+
+Representa un valor de verdad: `true` o `false`.
+
+```typescript
+let esActivo: boolean = true
+let tienePermiso: boolean = false
+```
+
+- **Descripción:** Perfecto para condiciones lógicas, flags o estados binarios.
+
+---
+
+### 4. **null** y **undefined**
+
+Representan ausencia o falta de valor.
+
+```typescript
+let datoVacio: null = null
+let datoIndefinido: undefined = undefined
+```
+
+- **Descripción:**
+  - `null` representa **intencionalmente** la ausencia de un valor.
+  - `undefined` indica que una variable ha sido declarada pero **aún no se le asignó un valor**.
+
+---
+
+### 5. **symbol**
+
+Representa un valor único e inmutable, normalmente usado como identificadores únicos para propiedades de objetos.
+
+```typescript
+let id: symbol = Symbol('id_unico')
+```
+
+- **Descripción:** Incluso si dos símbolos tienen la misma descripción, siempre serán valores diferentes. Útil para crear propiedades privadas o únicas en objetos.
+
+---
+
+### 6. **bigint**
+
+Permite trabajar con números enteros extremadamente grandes, más allá del límite de `number`.
+
+```typescript
+let numeroGrande: bigint = 9007199254740991n
+```
+
+- **Descripción:**
+  - Se usa para representar números enteros que exceden `Number.MAX_SAFE_INTEGER`.
+  - Se define agregando una `n` al final del número.
+
+¡Claro! Siguiendo el mismo estilo que antes, aquí tienes una **descripción general**, **ejemplos de código** y **explicaciones** para los **Tipos Especiales** en TypeScript:
+
+---
+
+## Tipos Especiales en TypeScript
+
+Además de los tipos primitivos, TypeScript ofrece **tipos especiales** que permiten manejar situaciones más avanzadas o específicas.  
+Estos tipos son esenciales para construir aplicaciones seguras, robustas y flexibles, manejando casos como ausencia de valor, valores desconocidos o imposibles.
+
+---
+
+### 📌 Ejemplos y Descripción de cada Tipo Especial
+
+### 1. **any**
+
+Permite que una variable contenga cualquier tipo de valor, desactivando el chequeo de tipos.
+
+```typescript
+let datos: any = 5
+datos = 'ahora es un string'
+datos = true
+```
+
+- **Descripción:**
+  - `any` es un "escape" del sistema de tipos.
+  - Útil en migraciones o cuando no se puede conocer el tipo por adelantado.
+  - **⚠️ Precaución:** Usarlo excesivamente elimina la principal ventaja de TypeScript.
+
+---
+
+### 2. **unknown**
+
+Similar a `any`, pero **más seguro**: no puedes operar sobre un valor `unknown` sin antes comprobar su tipo.
+
+```typescript
+let valorDesconocido: unknown = 'texto'
+
+if (typeof valorDesconocido === 'string') {
+  console.log(valorDesconocido.toUpperCase())
+}
+```
+
+- **Descripción:**
+  - `unknown` obliga a realizar una verificación de tipo antes de usar el valor.
+  - Ideal cuando recibes datos de fuentes externas donde el tipo no es confiable.
+
+---
+
+### 3. **void**
+
+Se utiliza para indicar que una función **no devuelve ningún valor**.
+
+```typescript
+function mostrarMensaje(): void {
+  console.log('Este mensaje no retorna nada.')
+}
+```
+
+- **Descripción:**
+  - `void` generalmente se usa en funciones cuyo único propósito es realizar efectos secundarios (como mostrar en pantalla, registrar logs, etc.).
+  - No se debe usar `return` con un valor en funciones que devuelven `void`.
+
+---
+
+### 4. **never**
+
+Indica que una función **nunca devuelve un valor** (porque lanza un error o entra en un bucle infinito).
+
+```typescript
+function errorFatal(mensaje: string): never {
+  throw new Error(mensaje)
+}
+```
+
+- **Descripción:**
+  - `never` se usa cuando una función **termina la ejecución abruptamente** o **nunca finaliza**.
+  - Ayuda al sistema de tipos a identificar flujos que son inalcanzables o peligrosos.
+
+¡Claro! Siguiendo el mismo estilo que estamos usando, aquí tienes la parte de **Tipos de Datos Estructurados**:
+
+---
+
+## Tipos de Datos Estructurados en TypeScript
+
+En TypeScript, los **tipos de datos estructurados** permiten representar **colecciones** de valores o **estructuras de datos complejas** como arrays, tuplas y objetos.  
+Son fundamentales para modelar datos del mundo real de forma precisa y segura.
+
+---
+
+### 📌 Ejemplos y Descripción de cada Tipo
+
+### 1. **Arrays**
+
+Colección ordenada de elementos del mismo tipo.
+
+```typescript
+let numeros: number[] = [1, 2, 3, 4, 5]
+
+let nombres: Array<string> = ['Ana', 'Luis', 'Carlos']
+```
+
+- **Descripción:**
+  - Puedes usar la notación `tipo[]` o `Array<tipo>`.
+  - TypeScript asegurará que todos los elementos del array sean del tipo especificado.
+  - Si intentas agregar un tipo distinto, se generará un error.
+
+---
+
+### 2. **Tuplas**
+
+Array de **longitud fija** donde cada posición puede tener un tipo diferente.
+
+```typescript
+let persona: [string, number] = ['María', 28]
+```
+
+- **Descripción:**
+  - Cada posición tiene un tipo de dato específico.
+  - Se usa para representar conjuntos de valores donde el orden y el tipo importan (por ejemplo, un par nombre-edad).
+  - TypeScript verifica tanto la cantidad de elementos como el tipo de cada uno.
+
+---
+
+### 3. **Objetos**
+
+Estructuras que agrupan propiedades nombradas con tipos específicos.
+
+```typescript
+let usuario: { nombre: string; edad: number; activo: boolean } = {
+  nombre: 'Pedro',
+  edad: 35,
+  activo: true,
+}
+```
+
+- **Descripción:**
+  - Los objetos permiten modelar entidades más complejas, definiendo el tipo de cada propiedad.
+  - Puedes anidar objetos dentro de otros objetos, usar tipos opcionales (`?`) y combinarlo con interfaces o type aliases para mayor claridad.
+
+## Tipos Personalizados en TypeScript
+
+En TypeScript puedes crear **tus propios tipos** para hacer tu código más legible, mantenible y seguro. Para eso existen dos herramientas principales: **Type aliases** y **Interfaces**.
+
+---
+
+### 🔹 Type Aliases (`type`)
+
+Un **type alias** te permite darle un nombre a cualquier tipo, incluso a tipos complejos.
+
+```typescript
+// Crear un alias para un objeto
+type Usuario = {
+  nombre: string
+  edad: number
+  activo: boolean
+}
+
+const user1: Usuario = {
+  nombre: 'Ana',
+  edad: 30,
+  activo: true,
+}
+```
+
+- Puedes usar `type` para tipos primitivos, uniones, intersecciones, etc.
+- Son muy flexibles.
+
+---
+
+### 🔹 Interfaces (`interface`)
+
+Una **interface** también describe la forma de un objeto, pero tiene algunas capacidades extra como la **extensión** (herencia entre interfaces).
+
+```typescript
+interface Usuario {
+  nombre: string
+  edad: number
+  activo: boolean
+}
+
+const user2: Usuario = {
+  nombre: 'Carlos',
+  edad: 25,
+  activo: false,
+}
+```
+
+- **Interfaces** son ideales cuando describes estructuras de objetos.
+- Permiten ser extendidas:
+
+```typescript
+interface Empleado extends Usuario {
+  salario: number
+}
+```
+
+### 🎯 ¿Cuándo usar cada uno?
+
+- Usa **`interface`** si estás **describiendo objetos o clases**, especialmente si vas a extenderlos después.
+- Usa **`type`** cuando necesites **composiciones más avanzadas** como uniones, intersecciones o tipos primitivos.
+
+> **Tip práctico**: en proyectos grandes, muchos equipos prefieren `interface` para modelos de datos (DTOs, entidades), y `type` para combinaciones o transformaciones de tipos.
+
+## 🔗 Tipos de Unión y Tipos de Intersección en TypeScript
+
+En TypeScript puedes crear tipos más flexibles combinando otros tipos usando **uniones** (`|`) e **intersecciones** (`&`).  
+Esto te da muchísimo control sobre lo que puede o no puede ser una variable.
+
+---
+
+### 🔹 Tipos de Unión (`|`)
+
+Un **tipo de unión** indica que una variable puede ser **de uno u otro tipo**.
+
+```typescript
+let respuesta: string | number
+
+respuesta = 'Correcto' // ✅
+respuesta = 200 // ✅
+respuesta = true // ❌ Error: 'boolean' no está permitido
+```
+
+**Uso típico**: cuando una función o variable puede aceptar múltiples tipos.
+
+```typescript
+function imprimirId(id: string | number) {
+  console.log('ID:', id)
+}
+
+imprimirId(123) // OK
+imprimirId('abc-456') // OK
+```
+
+---
+
+### 🔹 Tipos de Intersección (`&`)
+
+Un **tipo de intersección** combina varios tipos **en uno solo**. El nuevo tipo debe cumplir **todos** los tipos al mismo tiempo.
+
+```typescript
+type Persona = {
+  nombre: string
+}
+
+type Empleado = {
+  salario: number
+}
+
+type EmpleadoPersona = Persona & Empleado
+
+const trabajador: EmpleadoPersona = {
+  nombre: 'Lucía',
+  salario: 50000,
+}
+```
+
+**Uso típico**: cuando quieres **fusionar características** de múltiples tipos.
+
+---
+
+### 🚀 Ejemplo práctico combinando ambos
+
+```typescript
+type Admin = {
+  rol: 'admin'
+  permisos: string[]
+}
+
+type Usuario = {
+  rol: 'user'
+}
+
+type PersonaSistema = Admin | Usuario
+
+function accederSistema(persona: PersonaSistema) {
+  if (persona.rol === 'admin') {
+    console.log('Permisos:', persona.permisos)
+  } else {
+    console.log('Acceso básico.')
+  }
+}
+```
+
+Aquí usamos **unión** para decir: "esta persona puede ser un `Admin` o un `Usuario`" y dependiendo de qué sea, actuamos diferente.
+
+¡Perfecto! Aquí tienes el contenido completo para la sección **Tipos Literales** que pediste, organizado con **explicación**, **ejemplo** y **descripción**:
+
+---
+
+## 🎯 Tipos Literales en TypeScript
+
+### 🔹 ¿Qué son los Tipos Literales?
+
+Los **tipos literales** en TypeScript permiten restringir una variable a un **conjunto exacto de valores posibles**.  
+En lugar de permitir cualquier valor de un tipo general (`string`, `number`, etc.), defines **valores específicos** que son válidos.
+
+Esto mejora la **seguridad**, el **autocompletado** y previene **errores** al codificar.
+
+---
+
+### 🔹 Ejemplo de Tipos Literales
+
+```typescript
+// Definimos un tipo literal
+type RolUsuario = 'admin' | 'user' | 'guest'
+
+function asignarPermisos(rol: RolUsuario) {
+  if (rol === 'admin') {
+    console.log('Acceso total')
+  } else if (rol === 'user') {
+    console.log('Acceso limitado')
+  } else {
+    console.log('Acceso de solo lectura')
+  }
+}
+
+// Uso correcto
+asignarPermisos('admin') // OK
+asignarPermisos('guest') // OK
+
+// Uso incorrecto
+asignarPermisos('superadmin') // ❌ Error: Argument of type '"superadmin"' is not assignable to type 'RolUsuario'.
+```
+
+---
+
+### 🔹 Descripción
+
+- **Seguridad:** Solo puedes usar los valores definidos. TypeScript marcará como error cualquier valor inesperado.
+- **Inteligencia de autocompletado:** Los editores de código pueden sugerirte automáticamente los valores permitidos.
+- **Ideal para:** Roles de usuarios, estados de procesos, opciones limitadas, etc.
+
+---
+
+### 🚀 Beneficios principales de usar Tipos Literales
+
+- **Prevención de errores**: Evitas valores mal escritos o inválidos.
+- **Documentación automática**: El código es más legible y explícito.
+- **Control en tiempo de compilación**: Detectas problemas antes de ejecutar.
+
+---
+
+## 🧠 Inferencia de Tipos
+
+### 🔹 ¿Cómo TypeScript infiere tipos automáticamente?
+
+TypeScript tiene la capacidad de **deducir el tipo** de una variable o expresión **basándose en el valor que se le asigna inicialmente**, sin que sea necesario especificarlo explícitamente.
+
+Esto se conoce como **inferencia de tipos** y permite escribir código más limpio sin perder seguridad de tipos.
+
+**Ejemplo sencillo:**
+
+```typescript
+let saludo = 'Hola mundo'
+// TypeScript infiere que 'saludo' es de tipo 'string'
+
+saludo = '¡Hola de nuevo!' // ✅ Correcto
+saludo = 123 // ❌ Error: Type 'number' is not assignable to type 'string'
+```
+
+También infiere:
+
+- Tipos de retorno de funciones
+- Tipos de propiedades en objetos
+- Tipos dentro de arrays, etc.
+
+---
+
+### 🔹 Ventajas de la Inferencia de Tipos
+
+| ✅ Ventaja                        | 📝 Descripción                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------- |
+| **Código más limpio**             | Menos necesidad de escribir anotaciones explícitas.                             |
+| **Mayor productividad**           | Permite desarrollar más rápido.                                                 |
+| **Mejor experiencia en editores** | Facilita autocompletado y sugerencias inteligentes en herramientas como VSCode. |
+| **Mantenimiento sencillo**        | Menos código escrito = menos código que mantener.                               |
+
+---
+
+### 🔹 Desventajas de la Inferencia de Tipos
+
+| ⚠️ Desventaja                  | 📝 Descripción                                                                   |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| **Inferencias incorrectas**    | En casos complejos, TypeScript podría inferir un tipo demasiado general (`any`). |
+| **Pérdida de claridad**        | El tipo de una variable no siempre es evidente al leer solo el código.           |
+| **Problemas en APIs públicas** | En librerías o APIs es mejor ser explícito para evitar malentendidos en el uso.  |
+
+---
+
+### 🎯 Consejo práctico
+
+- Deja que TypeScript infiera tipos **en variables locales** donde el valor es obvio.
+- **Anota explícitamente** tipos en:
+  - Parámetros de funciones
+  - Retornos de funciones
+  - Interfaces públicas
+  - APIs expuestas a otros módulos
+
+¡Genial! Aquí te dejo el contenido completo para esas últimas secciones de tu guía, siguiendo tu estructura clara y profesional:
+
+---
+
+## 🧩 Tipos Genéricos
+
+### 🔹 ¿Qué son los genéricos?
+
+Los **genéricos** en TypeScript permiten crear componentes que **funcionan con múltiples tipos** en lugar de uno solo.  
+Son como "variables de tipos" que se definen al momento de usar la función, clase o tipo.
+
+> **Idea principal:** "No sé qué tipo usarás, pero lo sabré cuando llames a la función o crees el objeto".
+
+---
+
+### 🔹 Ejemplos simples
+
+**Función genérica:**
+
+```typescript
+function identidad<T>(valor: T): T {
+  return valor
+}
+
+const numero = identidad(42) // número
+const texto = identidad('hola mundo') // string
+```
+
+**Clase genérica:**
+
+```typescript
+class Caja<T> {
+  contenido: T
+  constructor(valor: T) {
+    this.contenido = valor
+  }
+}
+
+const cajaDeZapatos = new Caja<string>('Nike')
+```
+
+**Tipo genérico:**
+
+```typescript
+type Resultado<T> = {
+  exito: boolean
+  datos: T
+}
+
+const respuesta: Resultado<string> = {
+  exito: true,
+  datos: 'Todo OK',
+}
+```
+
+---
+
+## 🛠️ Utilidades Avanzadas de Tipos
+
+### 🔹 ¿Qué son los _Utility Types_?
+
+Los **Utility Types** son tipos predefinidos en TypeScript que permiten **transformar y construir nuevos tipos** de manera sencilla, ahorrando código y evitando repeticiones.
+
+---
+
+### 🔹 Principales Utility Types
+
+| Utility Type  | Descripción                                   | Ejemplo                                                       |
+| ------------- | --------------------------------------------- | ------------------------------------------------------------- |
+| `Partial<T>`  | Vuelve todas las propiedades opcionales.      | `Partial<Usuario>` — `nombre?: string; edad?: number;`        |
+| `Required<T>` | Vuelve todas las propiedades obligatorias.    | `Required<Usuario>` — `nombre: string; edad: number;`         |
+| `Readonly<T>` | Hace que todas las propiedades sean readonly. | `Readonly<Usuario>` — no se pueden modificar las propiedades. |
+| `Pick<T, K>`  | Elige solo algunas propiedades de un tipo.    | `Pick<Usuario, "nombre">` — solo incluye `nombre`.            |
+| `Omit<T, K>`  | Excluye propiedades de un tipo.               | `Omit<Usuario, "edad">` — elimina `edad` del tipo.            |
+
+---
+
+### 🔹 Ejemplos prácticos
+
+```typescript
+interface Usuario {
+  nombre: string
+  edad: number
+  activo: boolean
+}
+
+const usuarioParcial: Partial<Usuario> = { nombre: 'Ana' }
+const usuarioCompleto: Required<Usuario> = { nombre: 'Luis', edad: 29, activo: true }
+const usuarioSoloNombre: Pick<Usuario, 'nombre'> = { nombre: 'Carlos' }
+const usuarioSinEdad: Omit<Usuario, 'edad'> = { nombre: 'Laura', activo: false }
+const usuarioSoloLectura: Readonly<Usuario> = { nombre: 'Sofía', edad: 22, activo: true }
+
+// usuarioSoloLectura.nombre = "Cambio"; // ❌ Error: no se puede modificar
+```
+
+---
+
+## 📏 Buenas Prácticas con Tipos en TypeScript
+
+- **Prefiere tipos explícitos** cuando sea importante para la claridad del código (por ejemplo, en funciones públicas).
+- **Evita `any`** salvo casos realmente necesarios donde no puedas determinar un tipo seguro.
+- **Reutiliza tipos** utilizando `type`, `interface` o _utility types_ para evitar duplicaciones y facilitar el mantenimiento.
+- **Nombra tipos y genéricos de forma clara** para mejorar la legibilidad (`T`, `K`, `V`, o nombres más descriptivos como `Usuario`, `Producto`, etc.).

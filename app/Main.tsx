@@ -15,7 +15,7 @@ export default function Home({ posts }) {
       <StickyMenu />
       <HomeMain />
       <SkillsSlider />
-      <ProjectCardBanner/>
+      <ProjectCardBanner />
       <StudyTimeline />
       <Project />
       <AboutMe />

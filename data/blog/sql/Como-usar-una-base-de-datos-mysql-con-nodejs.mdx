@@ -8,7 +8,9 @@ authors: ['default']
 ---
 
 Si estás buscando una forma de integrar una base de datos MySQL en tu aplicación Node.js, estás en el lugar correcto. En este artículo, te mostraremos paso a paso cómo hacerlo de manera efectiva, desde la instalación hasta las consultas SQL más comunes. ¡Vamos a empezar!
+
 ## ¿Por qué elegir MySQL con Node.js?
+
 ![MySQL con Node.Js](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738250684/Sin_t%C3%ADtulo-2_owndm8.png)
 MySQL es uno de los sistemas de gestión de bases de datos más populares debido a su fiabilidad, escalabilidad y facilidad de uso. Cuando lo combinas con Node.js, un entorno de ejecución rápido y eficiente, obtienes una solución potente para aplicaciones web y móviles. Veamos por qué es una excelente elección:
 
@@ -25,19 +27,25 @@ Antes de comenzar, asegúrate de tener instalados los siguientes elementos:
 - **Docker** (opcional): Si prefieres usar un contenedor de Docker para MySQL, puedes hacerlo. [Aquí](https://hub.docker.com/_/mysql) tienes más información.
 - **Administrador de paquetes NPM**: Node.js incluye npm, lo que facilita la instalación de dependencias.
 - **Table Plus** (opcional) o cualquier otro cliente de MySQL para visualizar y administrar la base de datos.
-## Iniciar proyecto en Nodejs 
+
+## Iniciar proyecto en Nodejs
+
 primero debemos crear nuestra carpeta y iniciar el siguiente comando
+
 ```bash
 npm init -y
 ```
+
 ahora crearemos nuestra estructura de carpetas
 ![estructura de carpetas](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738248844/Captura_de_pantalla_2025-01-30_155231_ag1viz.png)
 en este caso index.js para nuestro archivo principal
-y docker compose para la configuracion de nuestra base de datos en docker si no queremos instalar mysql en nuestra maquina recuerda que debes tener instalado docker DeskTop en tu PC 
+y docker compose para la configuracion de nuestra base de datos en docker si no queremos instalar mysql en nuestra maquina recuerda que debes tener instalado docker DeskTop en tu PC
 [instlar docker](https://docs.docker.com/desktop/setup/install/windows-install/)
 
 ## Iniciar Mysql con Docker
-en el archivo docker-compose.yml debemos tener el siguiente codigo 
+
+en el archivo docker-compose.yml debemos tener el siguiente codigo
+
 ```yml
 version: '3.8'
 
@@ -51,7 +59,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -64,25 +72,29 @@ networks:
   mysql_network:
     driver: bridge
 ```
+
 con este codigo definiremos el usuario y contraseña de nuestra base de datos y el nombre de la base de datos que vamos a usar en este caso my_database y el puerto que vamos a usar en este caso 3306
 par que funcione debemos tener abierto nuestro DockerDestop y ejecutar el siguiente comando en la terminal
-```bash 
+
+```bash
 docker-compose up -d
 ```
+
 una vez que lo corras de deberia descargar la imagen en docker y iniciar el contenedor de mysql y ya tendriamos nuestra base de datos corriendo en nuestro localhost:3306
 ![docker](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738249385/Captura_de_pantalla_2025-01-30_160115_aajnof.png)
-aca podras ver tu contenedor corriendo en docker y en caso de error podras ver el log de tu contenedor el error mas comun que me pasa es tener instlado mysql en mi pc con el puerto por defecto 3306 y no poder usarlo en docker para solucionar esto debes detener el servicio de mysql en tu pc y volver a correr el docker-compose up -d 
+aca podras ver tu contenedor corriendo en docker y en caso de error podras ver el log de tu contenedor el error mas comun que me pasa es tener instlado mysql en mi pc con el puerto por defecto 3306 y no poder usarlo en docker para solucionar esto debes detener el servicio de mysql en tu pc y volver a correr el docker-compose up -d
 
 ## Comprobar la base de datos (opcional)
+
 para comprobar que la base de datos este corriendo perfectamente vamos a usar Table Plus o cualquier otro cliente de MySQL para conectarnos a nuestra base de datos.
-primero debemos crear una nueva conexion en Table Plus 
+primero debemos crear una nueva conexion en Table Plus
 y usaremos los datos que definimos en el docker-compose.yml para conectarnos a nuestra base de datos
 ![conexion table plus](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738249576/Captura_de_pantalla_2025-01-30_160548_nvdbpo.png)
 una vez que inicies podras ver tu base de datos corriendo perfectamente
 ![base de datos](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738249732/Captura_de_pantalla_2025-01-30_160750_zcdfso.png)
-aca podemos administrar nuestra base de datos y tablas desde una interfaz grafica 
+aca podemos administrar nuestra base de datos y tablas desde una interfaz grafica
 
-### ahora si a conectar mysql con nodejs 
+### ahora si a conectar mysql con nodejs
 
 ### Instalación de MySQL y el paquete `mysql2`
 
@@ -95,47 +107,56 @@ npm install mysql2
 ### Conexión a la base de datos
 
 Una vez instalada la dependencia, es hora de conectar tu aplicación Node.js a MySQL. Aquí te mostramos cómo hacerlo:
-en el archivo index.js debemos tener el siguiente codigo 
+en el archivo index.js debemos tener el siguiente codigo
+
 ```js
-const mysql = require('mysql2');
+const mysql = require('mysql2')
 
 // Crear una conexión a la base de datos
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'user',
   password: 'userpassword',
-  database: 'my_database'
-});
+  database: 'my_database',
+})
 
 // Conectar a la base de datos
 connection.connect((err) => {
   if (err) {
-    console.error('Error al conectar a la base de datos: ' + err.stack);
-    return;
+    console.error('Error al conectar a la base de datos: ' + err.stack)
+    return
   }
-  console.log('Conexión exitosa a la base de datos con el ID: ' + connection.threadId);
-});
+  console.log('Conexión exitosa a la base de datos con el ID: ' + connection.threadId)
+})
 ```
 
 ## Iniciar el servidor de Node.js Con nodemon
+
 para este paso iniciaremos el servidor usando nodemon para que cada vez que hagamos un cambio en nuestro codigo se reinicie el servidor automaticamente
 para instalar nodemon debemos ejecutar el siguiente comando en la terminal
+
 ```bash
 npm install nodemon -d
 ```
-iniciar nuestro servidor con el siguiente comando 
+
+iniciar nuestro servidor con el siguiente comando
+
 ```bash
 npx nodemon src/index.js
 ```
+
 una vez que tengas ya todo corriendo podras ver en la terminal que se conecto a la base de datos y podras ver el id de la conexion
 
 ![conexion exitosa](https://res.cloudinary.com/dq0pfesxe/image/upload/v1738250114/Captura_de_pantalla_2025-01-30_161445_pgkkty.png)
 
 ## Operaciones básicas con MySQL
+
 Ahora que tienes la conexión establecida, puedes comenzar a realizar operaciones sobre tu base de datos. Empecemos con una de las operaciones más comunes: insertar datos.
 
 ### crear tabla en la base de datos
+
 para crear una tabla en la base de datos debemos tener el siguiente codigo en nuestro index.js
+
 ```js
 const sql = `
 CREATE TABLE IF NOT EXISTS usuarios (
@@ -146,25 +167,24 @@ CREATE TABLE IF NOT EXISTS usuarios (
 `
 connection.query(sql, (err, result) => {
   if (err) {
-    console.error('Error al crear la tabla: ' + err);
-    return;
+    console.error('Error al crear la tabla: ' + err)
+    return
   }
-  console.log('Tabla creada correctamente: ', result);
-});
-
+  console.log('Tabla creada correctamente: ', result)
+})
 ```
+
 ### Insertar datos en la base de datos
 
-
 ```js
-const sql = "INSERT INTO usuarios (nombre, email) VALUES (?, ?)";
+const sql = 'INSERT INTO usuarios (nombre, email) VALUES (?, ?)'
 connection.execute(sql, ['Juan Pérez', 'juan@example.com'], (err, result) => {
   if (err) {
-    console.error('Error al insertar datos: ' + err);
-    return;
+    console.error('Error al insertar datos: ' + err)
+    return
   }
-  console.log('Datos insertados correctamente: ', result);
-});
+  console.log('Datos insertados correctamente: ', result)
+})
 ```
 
 ### Consultar datos
@@ -172,14 +192,14 @@ connection.execute(sql, ['Juan Pérez', 'juan@example.com'], (err, result) => {
 Una vez que tengas datos en la base de datos, puedes realizar consultas para obtenerlos. Aquí te mostramos cómo hacer una consulta simple:
 
 ```js
-const sql = "SELECT * FROM usuarios";
+const sql = 'SELECT * FROM usuarios'
 connection.execute(sql, (err, results) => {
   if (err) {
-    console.error('Error al consultar datos: ' + err);
-    return;
+    console.error('Error al consultar datos: ' + err)
+    return
   }
-  console.log('Resultados de la consulta: ', results);
-});
+  console.log('Resultados de la consulta: ', results)
+})
 ```
 
 ### Actualizar datos
@@ -187,14 +207,14 @@ connection.execute(sql, (err, results) => {
 También puedes actualizar registros en la base de datos usando una consulta SQL:
 
 ```js
-const sql = "UPDATE usuarios SET email = ? WHERE nombre = ?";
+const sql = 'UPDATE usuarios SET email = ? WHERE nombre = ?'
 connection.execute(sql, ['nuevoemail@example.com', 'Juan Pérez'], (err, result) => {
   if (err) {
-    console.error('Error al actualizar datos: ' + err);
-    return;
+    console.error('Error al actualizar datos: ' + err)
+    return
   }
-  console.log('Datos actualizados correctamente: ', result);
-});
+  console.log('Datos actualizados correctamente: ', result)
+})
 ```
 
 ### Eliminar datos
@@ -202,14 +222,14 @@ connection.execute(sql, ['nuevoemail@example.com', 'Juan Pérez'], (err, result)
 Finalmente, también puedes eliminar registros de la base de datos:
 
 ```js
-const sql = "DELETE FROM usuarios WHERE nombre = ?";
+const sql = 'DELETE FROM usuarios WHERE nombre = ?'
 connection.execute(sql, ['Juan Pérez'], (err, result) => {
   if (err) {
-    console.error('Error al eliminar datos: ' + err);
-    return;
+    console.error('Error al eliminar datos: ' + err)
+    return
   }
-  console.log('Datos eliminados correctamente: ', result);
-});
+  console.log('Datos eliminados correctamente: ', result)
+})
 ```
 
 ## Manejo de errores y buenas prácticas
@@ -245,15 +265,19 @@ Integrar MySQL con Node.js es una excelente opción para construir aplicaciones 
 Aquí tienes un ejemplo de cómo usar `async/await` para realizar una consulta:
 
 ```js
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2/promise')
 
 async function consultarDatos() {
-  const connection = await mysql.createConnection({host: 'localhost', user: 'root', database: 'test'});
-  const [rows, fields] = await connection.execute('SELECT * FROM usuarios');
-  console.log(rows);
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'test',
+  })
+  const [rows, fields] = await connection.execute('SELECT * FROM usuarios')
+  console.log(rows)
 }
 
-consultarDatos();
+consultarDatos()
 ```
 
 ---
@@ -262,5 +286,4 @@ consultarDatos();
 
 - [Documentación oficial de MySQL](https://dev.mysql.com/doc/)
 - [Documentación de Node.js](https://nodejs.org/es/docs/)
-- [Tutoriales sobre MySQL y Node.js en YouTube](https://www.youtube.com/results?search_query=mysql+nodejs)
--[repositorio del tutorial](https://github.com/Porx312/MysqlNode/tree/mysqlconnectnode)
+- [Tutoriales sobre MySQL y Node.js en YouTube](https://www.youtube.com/results?search_query=mysql+nodejs) -[repositorio del tutorial](https://github.com/Porx312/MysqlNode/tree/mysqlconnectnode)
