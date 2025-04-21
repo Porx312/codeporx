@@ -1,0 +1,299 @@
+---
+title: 'Guia para aprender nodejs'
+date: '2025-02-08'
+tags: ['nodejs', 'roadmap']
+draft: false
+summary: 'En esta guía, aprenderás los conceptos fundamentales de Node.js. Está inspirada en las lecciones del curso de Fernando Herrera, adaptadas para que puedas comenzar a trabajar con Node.js desde lo básico hasta conceptos más avanzados'
+authors: ['default']
+---
+
+[fundamentos de nodejs](#fundamentos-de-nodejs)
+
+## Fundamentos de nodejs
+
+### Preguntas comunes sobre nodejs
+
+#### Que es nodejs?
+
+Nodejs es un Ambiente de ejecucion para ejecutar javascript Desligado del navegador web.
+
+#### Que lo Hace Especial?
+
+_Motor_ : COdigo Abierto con el motor de v8 de Google y esta diseñado para realizar tareas de E/S(entrada y salida) junto con el manejo de archivos de la computadora cliente/servidor
+
+_Caracteristicas_
+
+- Asincronia
+- Modulos Nativos y de terceros
+- Gestion de paquetes con Npm
+- Construccion De servidores
+- Escalabilidad
+- Multiple Plataforma
+
+#### Non-Blocking I/obtener
+
+Casi Ninguna Funcion en Node Bloquea la lectura, por lo que podemos tener cientos de peticiones sin bloquear el servidor
+
+Npm(Node Packajge Manager) es el gestor de paquetes con mayor crecimiento y paquetes desplegados
+
+Node Tambien es muy usado para crear herramientas y ejecutar paquetes sin tener que instalarlos con NPX (Node Package Execute)
+
+Ejemplo si el archivo es muy grande o su lectura lenta, de igual forma 'moreWork()' se ejecuta primero
+
+```Bash
+const fs = require('fs')
+
+fs.readFile('/file.md', (err,data)=>{
+   if(err) throw err;
+   console.log(data)
+})
+
+
+moreWork() // se ejecuta antes del console.log
+```
+
+#### Blocking
+
+Basicamente Cuando la ejecucion del codigo debe de esperar a que se complete el proceso pero este a su vez, impide que se sigan ejecutando otras instrucciones en paralelo
+
+ejemplo de codigo bloqueate, se debe de leer completamente el archivo para poder continuar.
+
+```Bash
+const fs = require('fs')
+/// bloquea hasta que el archivo es leido
+const data = fs.readFileSync('/file.md');
+console.log(data)
+
+moreWork() // se ejecuta despues del console.log
+```
+
+### Hola mundo en nodejs
+
+aca relizaremos nuestro primer 'hola Mundo'
+para esto debemos ir a nuestro navegador y abrir el inspector he ir a consola y dentro de la consola podremos ejecutar codigo de nodejs
+![hello world](https://res.cloudinary.com/dq0pfesxe/image/upload/v1739086877/Captura_de_pantalla_2025-02-09_083843_oantwl.png)
+aca lo hemos ejecutado en el navegador pero ahora debemos ejecutarlo desde una terminal para eso abriremos cualquier terminal que tengamos ya sea powershell, cmd etc..
+tambien debes tener instalado nodejs en tu computadora puedes instalarlo desde su pagina oficial [instalar nodejs](https://nodejs.org/en/download)
+
+para este paso aca ejecutaremos los siguientes comandos
+
+```Bash
+node --version //comprobar que node este instalado
+const message = 'hola mundo' // crear la constante para guardar el mensaje
+message // ejecutar el mensaje desde nuestra consola
+```
+
+![consola nodejs](https://res.cloudinary.com/dq0pfesxe/image/upload/v1739087084/Captura_de_pantalla_2025-02-09_084431_tdgsqm.png)
+
+### Archivos de Javascript
+
+#### Crear Carpeta
+
+para este punto lo primero es crear una carpeta en nuestro escritorio y abrirla desde nuestro editor de codigo
+
+ahora ejecutaremos nodejs desde nuestro Ide o Editor de codigo yo en este caso estare usando vscode
+iremos a la ruta de nuestra carpeta si no estamos
+
+```bash
+cd C:\Users\jose\Desktop\WebNicho\fulllstack\nodejs\01-fundamentos
+```
+
+y crearemos un archivo app.js dentro de nuestra carpeta
+
+```javascript
+app.js
+```
+
+dentro de nuestro archivo vamos a pegar el siguiente codigo
+
+```bash
+const message = 'Hola Mundo'
+console.log(message)
+
+```
+
+ahora si ejecutamos esto en nuestro terminal de node podremos ejecutar el archivo de js con nodejs
+
+```bash
+node app
+```
+
+y veremos el mensaje de 'hola mundo' desde nuestro terminal
+
+### Leer Archivos
+
+ahora en este ejemplo leeremos archivos para eso vamos a crear un nuevo archivo en nuestra carpeta y lo llamaremos 'Readme.md'
+y pegaremos todo el texto que se encuentra en el readme de la documentacion de react [documentacion de react](https://github.com/facebook/react/blob/main/README.md)
+
+ahora crearemos un nuevo archivo Llamado 'app2.js'
+y pegaremos el siguiente codigo
+
+```bash
+const fs = require('fs') // fs es una funcion propia de nodejs
+
+// con esta funcion podremos leer el archivo y utf8 es para el tipo de caracteres que debemos leer
+const data = fs.readFileSync('Readme.md','utf8')
+
+console.log(data)
+```
+
+y si ejecutamos esto en la consola va a leer todo el archivo
+
+ejecutamos con
+
+```bash
+node app2.js
+```
+
+podriamos modificar el archivo
+
+```Bash
+const fs = require('fs')
+
+const data = fs.readFileSync('Readme.md','utf8')
+// esto modifica los datos y cambia todas las palabras que sean React por Angular
+const newData = data.replace(/React/ig, 'Angular')
+// y con wirtefileSyng vamos a crear un nuevo archivo con esta nueva data
+fs.writeFileSync('Readme-Angular.md',newData)
+```
+
+lo ejecutamos en terminal y nos da el archivo
+
+```bash
+node app2
+```
+
+### Tarea
+
+Crear un contador de palabras para esta tarea vamos a crear un nuevo archivo 'app3.js'
+
+ahora pegaremos el siguiente codigo y el ejercico es encontrar cuantas veces se repite la palabra react 'caseSensitive'
+
+```Bash
+const fs = require('fs')
+
+const content = fs.readFileSync('Readme.md','utf8')
+
+const wordCount = content.split(' ')
+
+console.log('palabras',wordCount)
+console.log('palabraReact' ReactwordCount)
+```
+
+#### Solucion
+
+```bash
+const fs = require('fs')
+
+const content = fs.readFileSync('Readme.md','utf8')
+
+const wordCount = content.split(' ').length
+
+
+ReactWordCount = content.match(/react/gi ?? []).length  // lo podriamos hacer tambien con un filter pero de esta manera es mucho mas precisom usando regex
+
+ console.log('palabras',wordCount)
+console.log('palabra React', ReactWordCount)
+```
+
+### Event Loop & Code Execution
+
+```bash
+console.log('Inicio del programa');
+
+setTimeout(() => {
+    console.log('setTimeout ejecutado');
+}, 0);
+
+setImmediate(() => {
+    console.log('setImmediate ejecutado');
+});
+
+process.nextTick(() => {
+    console.log('process.nextTick ejecutado');
+});
+
+console.log('Fin del programa');
+
+```
+
+### Explicación:
+
+1. Se imprime `"Inicio del programa"`.
+2. `setTimeout` se programa con un tiempo de espera de `0` ms, pero no se ejecuta inmediatamente.
+3. `setImmediate` también se programa para ejecutarse en la fase de "check" del event loop.
+4. `process.nextTick` se ejecuta antes de que el event loop avance a la siguiente fase, por lo que se ejecuta antes que `setTimeout` y `setImmediate`.
+5. Se imprime `"Fin del programa"`.
+6. `process.nextTick` se ejecuta inmediatamente después del código síncrono.
+7. `setTimeout` y `setImmediate` se ejecutan en sus respectivas fases del event loop.
+
+El orden de ejecución en la consola generalmente será:
+
+```
+Inicio del programa
+Fin del programa
+process.nextTick ejecutado
+setTimeout ejecutado
+setImmediate ejecutado
+```
+
+Esto demuestra cómo el event loop maneja diferentes tipos de tareas en Node.js. 🚀
+
+### ejecucion del codigo
+
+El proceso de ejecución en Node.js comienza cuando el código es colocado en el **Call Stack**. Si la tarea es sincrónica, se ejecuta y se elimina de inmediato. Si es asíncrona (como una operación de E/S o un temporizador), se delega a **libuv**, que la registra y la ejecuta en segundo plano. Una vez completada, la tarea es enviada de vuelta para ser procesada y finalmente eliminada del Call Stack, permitiendo que la siguiente instrucción continúe su ejecución.
+
+![ejecucion de codigo](https://res.cloudinary.com/dq0pfesxe/image/upload/v1739095586/nodejs_yh3lbd.png)
+
+### Event Loop
+
+Aquí tienes una versión mejorada con una descripción clara del **Event Loop** y la analogía bien explicada:
+
+### **¿Qué es el Event Loop?**
+
+El **Event Loop** es el mecanismo fundamental de **Node.js** que permite la ejecución de operaciones **asíncronas** sin bloquear el flujo del programa. Se encarga de gestionar tareas en segundo plano y ejecutarlas en el momento adecuado.
+
+Cuando se ejecuta código en Node.js, las operaciones sincrónicas se procesan de inmediato en la **pila de llamadas (Call Stack)**, mientras que las tareas asíncronas (como temporizadores, operaciones de E/S o promesas) se delegan al **sistema de manejo de eventos** y se colocan en una **cola de tareas** para ser ejecutadas posteriormente cuando el Call Stack esté vacío.
+
+El **Event Loop** es el encargado de revisar constantemente si hay tareas pendientes en la cola y ejecutarlas cuando corresponda.
+
+### **Analogía del Event Loop con una cocina**
+
+Imagina que el **Event Loop** es una **madre cocinera**, que debe preparar la comida siguiendo un proceso eficiente.
+
+- **El hijo (libuv)** es su ayudante, que se encarga de traer los ingredientes de la tienda.
+- **La mesa (cola de tareas)** es el lugar donde se colocan los ingredientes listos para ser procesados.
+- **El pollo (tarea asíncrona)** es un ingrediente que el hijo debe traer antes de que la madre pueda cocinarlo.
+
+#### **Paso a paso en la cocina:**
+
+1️⃣ **La madre (Event Loop) comienza a cocinar con los ingredientes que ya tiene** (ejecuta el código sincrónico).  
+2️⃣ **El hijo (libuv) recibe un encargo de pollo (una tarea asíncrona, como leer un archivo o hacer una petición a la base de datos).**  
+3️⃣ **Mientras el hijo va por el pollo, la madre sigue cocinando con lo que ya tiene** (Node.js sigue ejecutando otras tareas disponibles).  
+4️⃣ **Cuando el hijo vuelve con el pollo (la tarea asíncrona se completa), lo coloca en la mesa (cola de tareas).**  
+5️⃣ **La madre revisa la mesa y, si el pollo está listo, lo cocina y lo sirve** (el Event Loop ejecuta la tarea cuando el Call Stack está libre).  
+6️⃣ **El proceso se repite, asegurando que todas las tareas se manejen de manera eficiente y sin bloquear la cocina.**
+
+### **Conclusión**
+
+- El **Event Loop (madre)** organiza y ejecuta las tareas cuando es el momento adecuado.
+- **libuv (hijo)** maneja tareas asíncronas y las coloca en la **cola de tareas (mesa)** cuando están listas.
+- **El código sincrónico se ejecuta de inmediato, mientras que las tareas asíncronas se resuelven cuando el Event Loop las procesa.**
+
+Así es como Node.js gestiona múltiples tareas sin bloquear la ejecución del programa. 🚀🔥
+
+![event loop](https://res.cloudinary.com/dq0pfesxe/image/upload/v1739097947/nodejs_1_p6frt0.png)
+
+### preguntas:
+
+#### cuando se completa una tarea asincrona en libuv, En que momento decide Node Ejecutar la funcion callback asociada en la pila de llamada (callstack)?
+
+- Callbacks son ejecutados solo cuando el callstack esta vacio
+
+#### Node espera a que la pila de llamdas este vacia antes de ejecutar un callback o interrumpe el flujo normal de ejecucion para ejecutar el callback?
+
+- el flujo normal de ejecucion no se interrumpira para ejecutar una funcion de devolucion de llamada
+
+#### si do tareas asincronas como setTimeout y readFile se completan al mismo Tiempo, Como se decide Node que callback ejecutar primero en la pila de llamdas? , uno tiene prioridad sobre el otro?
+
+los callbacks de temporizador se ejecutar antes que las devoluciones de llamda I/O, incluso si ambas estan listas exactamente al mismo tiempo.

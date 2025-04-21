@@ -7,7 +7,6 @@ import Contact from '@/components/home/Contact'
 import StickyMenu from '@/components/home/MenuSticky'
 import ProjectCardBanner from '@/components/home/idebanner'
 
-
 export default function Home() {
   return (
     <>
