@@ -7,9 +7,8 @@ import Contact from '@/components/home/Contact'
 import StickyMenu from '@/components/home/MenuSticky'
 import ProjectCardBanner from '@/components/home/idebanner'
 
-const MAX_DISPLAY = 2
 
-export default function Home({ posts }) {
+export default function Home() {
   return (
     <>
       <StickyMenu />
