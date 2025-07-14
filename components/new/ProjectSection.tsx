@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ExternalLink, Github, Code, X } from "lucide-react" // Added X for close button
+import { ExternalLink, Github, X } from "lucide-react" // Added X for close button
 import SectionName from "./Section"
 
 if (typeof window !== "undefined") {

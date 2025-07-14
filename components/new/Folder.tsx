@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import SocialIcon from "../social-icons";
-import { Github, Linkedin, Twitter } from "../social-icons/icons";
-import { TwitterIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
