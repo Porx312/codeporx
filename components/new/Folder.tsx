@@ -125,7 +125,17 @@ const Folder: React.FC<FolderProps> = ({
 
   return (
     <div style={scaleStyle} className={className}>
-      <div
+     <div
+  role="button"
+  tabIndex={0}
+  aria-pressed={open}
+  aria-label={open ? 'Close social links folder' : 'Open social links folder'}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();   // evita scroll con barra espaciadora
+      handleClick();
+    }
+  }}
         className={`group relative mt-16 cursor-pointer transition-all duration-200 ease-in ${
           !open ? 'hover:-translate-y-2' : ''
         }`}
