@@ -46,7 +46,6 @@ export default function HeroSection() {
       className="flex min-h-[50vh] flex-col items-center justify-center px-6 text-center md:min-h-[65vh]"
     >
       <div className="mx-auto max-w-4xl">
-
         <SplitText
           text="JOSE BLANCO"
           className="text-center text-5xl font-semibold md:text-9xl"
@@ -61,7 +60,6 @@ export default function HeroSection() {
           textAlign="center"
           onLetterAnimationComplete={handleAnimationComplete}
         />
-
 
         <TrueFocus
           sentence="Developer Javascript"
