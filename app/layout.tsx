@@ -95,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="google-site-verification" content="Gk-A4Ed3U-8D4TRVP_g-o-otIW7fgeZKmi0ItFcH0hw" />
       <meta name="google-adsense-account" content="ca-pub-8242522331176450"></meta>
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-white   text-black antialiased dark:bg-black dark:text-white">
+      <body className="bg-white  text-black antialiased dark:bg-black dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
