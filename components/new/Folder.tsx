@@ -165,15 +165,9 @@ const Folder: React.FC<FolderProps> = ({
                   : 'hover:scale-110'
               }
               ${sizeClasses}
-              /* -------- efecto vidrio -------- */
-              /*   desenfoque */ /*
-              un  poco más de saturación */ /* contorno
-              de 1 px   muy tenue */ /* sombra suave */
-              shadow-[0_4px_30px_rgba(0,0,0,0.08)] ring-1 ring-white/30 backdrop-blur-md backdrop-saturate-150
               `}
                   style={{
                     ...(!open ? {} : { transform: transformStyle }),
-                    /* Fondo semitransparente en el mismo tono que tus variables paperX */
                     background: `rgba(${hexToRgb(
                       i === 0 ? paper1 : i === 1 ? paper2 : paper3
                     )}, 0.35)`,
@@ -211,7 +205,6 @@ const Folder: React.FC<FolderProps> = ({
               ...(open && { transform: 'skew(-15deg) scaleY(0.6)' }),
             }}
           >
-            {/*    <TwitterIcon  className="w-10 text-white" /> */}
             {!open ? 'Open' : 'Close'}
           </div>
         </div>
