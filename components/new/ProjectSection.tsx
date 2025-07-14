@@ -107,7 +107,6 @@ export function ProjectsSection() {
       <div className="mx-auto max-w-6xl">
         <SectionName name={'Projects'} description={'projects fullstack'} />
 
-        {/* Projects Grid */}
         <div className="projects-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <div
@@ -180,7 +179,6 @@ export function ProjectsSection() {
         </div>
       </div>
 
-      {/* Custom Project Details Modal */}
       {isModalOpen && selectedProject && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
