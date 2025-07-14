@@ -22,7 +22,7 @@
     "body-scroll-lock": "^4.0.0-beta.0",
     "contentlayer2": "0.5.3",
     "esbuild": "0.20.2",
-    "framer-motion": "^11.18.2",
+    "framer-motion": "10",
     "git": "^0.1.5",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.2",

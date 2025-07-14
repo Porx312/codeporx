@@ -187,7 +187,11 @@ export function ProjectsSection() {
           role="button"
           tabIndex={0}
           aria-label="Close project details"
-          onClick={closeProjectDetails}
+          onClick={(e) => {
+            // solo cierra si el usuario pulsó directamente en el overlay,
+            // no dentro del modal
+            if (e.target === e.currentTarget) closeProjectDetails()
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
@@ -199,8 +203,6 @@ export function ProjectsSection() {
             className="animate-fade-in-up relative w-full max-w-md rounded-lg border border-red-500/20 bg-gray-900 p-6 text-white shadow-2xl md:max-w-lg md:p-8 lg:max-w-xl"
             role="dialog"
             aria-modal="true"
-            /* antes: onClick={(e) => e.stopPropagation()} */
-            onMouseDown={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeProjectDetails}
