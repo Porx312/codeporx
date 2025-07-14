@@ -8,7 +8,7 @@ import SearchButton from './SearchButton'
 import Image from 'next/image'
 
 const Header = () => {
-  let headerClass = 'flex items-center w-full bg-white dark:bg-gray-950 justify-between py-10'
+  let headerClass = 'flex items-center w-full justify-between py-10 px-0 md:px-52 '
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
   }
@@ -16,18 +16,20 @@ const Header = () => {
   return (
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
-        <div className="flex items-center justify-between">
-          <div className="mr-3">
-            <Logo className="sm:w-18 sm:h-18 h-16 w-16" />
-          </div>
-          {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold sm:block">
-              {siteMetadata.headerTitle}
-            </div>
-          ) : (
-            siteMetadata.headerTitle
-          )}
-        </div>
+          <div className="flex items-center justify-between">
+      {/* —— Mobile (≤ 767 px): compact icon —— */}
+      <Logo className="h-14 w-14 block md:hidden" />
+
+      {/* —— Desktop (≥ 768 px): full word‑mark —— */}
+      <Image
+        src="/dark.png"
+        alt="Brand logo"
+        width={208}
+        height={60}
+        className="hidden md:block w-52"
+        priority
+      />
+    </div>
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="no-scrollbar hidden max-w-40 items-center space-x-4 overflow-x-auto pr-2 sm:flex sm:space-x-6 md:max-w-72 lg:max-w-96">
@@ -44,7 +46,6 @@ const Header = () => {
             ))}
         </div>
         <SearchButton />
-        <ThemeSwitch />
         <MobileNav />
       </div>
     </header>
