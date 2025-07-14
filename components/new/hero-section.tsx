@@ -9,15 +9,6 @@ import SplitText from './SplitPresentation'
 const handleAnimationComplete = () => {
   console.log('All letters have animated!')
 }
-/**
- * ---------------------------------------------------------------------
- * <HeroSection /> – compact version 🖥️📱
- * ---------------------------------------------------------------------
- * • Altura reducida: min‑h-[65vh] en lugar de full screen.
- * • Tipografía responsiva con clamp() para evitar tamaños gigantes.
- * • Animaciones GSAP conservadas pero con delays más cortos.
- * • Texto resumido y centrado para un look ultralimpi o.
- * ---------------------------------------------------------------------*/
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -55,7 +46,6 @@ export default function HeroSection() {
       className="flex min-h-[50vh] flex-col items-center justify-center px-6 text-center md:min-h-[65vh]"
     >
       <div className="mx-auto max-w-4xl">
-        {/* Nombre */}
 
         <SplitText
           text="JOSE BLANCO"
@@ -72,7 +62,6 @@ export default function HeroSection() {
           onLetterAnimationComplete={handleAnimationComplete}
         />
 
-        {/* Título */}
 
         <TrueFocus
           sentence="Developer Javascript"
@@ -83,7 +72,6 @@ export default function HeroSection() {
           pauseBetweenAnimations={1}
         />
 
-        {/* Descripción */}
         <p
           ref={descRef}
           className="mx-auto max-w-2xl text-[clamp(0.9rem,2.5vw,1.2rem)] leading-relaxed text-gray-300"

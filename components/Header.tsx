@@ -3,7 +3,6 @@ import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
-import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import Image from 'next/image'
 
@@ -17,10 +16,7 @@ const Header = () => {
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
         <div className="flex items-center justify-between">
-          {/* —— Mobile (≤ 767 px): compact icon —— */}
           <Logo className="block h-14 w-14 md:hidden" />
-
-          {/* —— Desktop (≥ 768 px): full word‑mark —— */}
           <Image
             src="/dark.png"
             alt="Brand logo"
