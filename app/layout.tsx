@@ -100,15 +100,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
             <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-            
-
-            <div className='background-pattern'>
-
- 
-              <Header />
-            </div>
+              <div className="background-pattern">
+                <Header />
+              </div>
               <main className="mb-auto">{children}</main>
-
             </SearchProvider>
           </SectionContainer>
         </ThemeProviders>

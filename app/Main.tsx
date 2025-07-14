@@ -4,9 +4,9 @@ import Portfolio from '@/components/new/portfolio'
 export default function Home() {
   return (
     <>
-    <StickyMenu />
-    <Portfolio/>
-    {/* 
+      <StickyMenu />
+      <Portfolio />
+      {/* 
       <HomeMain />
       <SkillsSlider />s
       <ProjectCardBanner />

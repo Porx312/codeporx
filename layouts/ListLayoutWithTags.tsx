@@ -139,7 +139,9 @@ export default function ListLayoutWithTags({
                           {formatDate(post.date, siteMetadata.locale)}
                         </time>
                         <div className="flex flex-wrap gap-2">
-                          {post.tags?.map((tag) => <Tag key={tag} text={tag} />)}
+                          {post.tags?.map((tag) => (
+                            <Tag key={tag} text={tag} />
+                          ))}
                         </div>
                       </div>
                       <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100 sm:text-2xl">

@@ -40,16 +40,16 @@ interface GridDistortionProps {
 /* ---------- Componente ---------- */
 const GridDistortion: React.FC<GridDistortionProps> = ({
   imageSrc,
-  grid        = 15,
-  mouse       = 0.1,
-  strength    = 0.15,
-  relaxation  = 0.9,
-  className   = '',
+  grid = 15,
+  mouse = 0.1,
+  strength = 0.15,
+  relaxation = 0.9,
+  className = '',
 }) => {
   /* Refs ----------------------------------------------------------- */
-  const containerRef   = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const imageAspectRef = useRef<number>(1)
-  const cameraRef      = useRef<THREE.OrthographicCamera | null>(null)
+  const cameraRef = useRef<THREE.OrthographicCamera | null>(null)
 
   /* Efecto --------------------------------------------------------- */
   useEffect(() => {
@@ -57,11 +57,11 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
 
     /* Escena, renderer, cámara ------------------------------------ */
     const container = containerRef.current
-    const scene     = new THREE.Scene()
+    const scene = new THREE.Scene()
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
-      alpha:     true,
+      alpha: true,
       powerPreference: 'high-performance',
     })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -73,23 +73,22 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
 
     /* Uniforms ----------------------------------------------------- */
     const uniforms: {
-      time:          { value: number }
-      resolution:    { value: THREE.Vector4 }
-      uTexture:      { value: THREE.Texture | null }
-      uDataTexture:  { value: THREE.DataTexture | null }
+      time: { value: number }
+      resolution: { value: THREE.Vector4 }
+      uTexture: { value: THREE.Texture | null }
+      uDataTexture: { value: THREE.DataTexture | null }
     } = {
-      time:        { value: 0 },
-      resolution:  { value: new THREE.Vector4() },
-      uTexture:    { value: null },
-      uDataTexture:{ value: null },
+      time: { value: 0 },
+      resolution: { value: new THREE.Vector4() },
+      uTexture: { value: null },
+      uDataTexture: { value: null },
     }
 
     /* Carga de la imagen ------------------------------------------ */
     new THREE.TextureLoader().load(imageSrc, (texture) => {
-      texture.minFilter     = THREE.LinearFilter
+      texture.minFilter = THREE.LinearFilter
       imageAspectRef.current =
-        (texture.image as HTMLImageElement).width /
-        (texture.image as HTMLImageElement).height
+        (texture.image as HTMLImageElement).width / (texture.image as HTMLImageElement).height
       uniforms.uTexture.value = texture
       handleResize()
     })
@@ -98,35 +97,29 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
     const size = grid
     const data = new Float32Array(4 * size * size)
     for (let i = 0; i < size * size; i++) {
-      data[i * 4]     = Math.random() * 255 - 125
+      data[i * 4] = Math.random() * 255 - 125
       data[i * 4 + 1] = Math.random() * 255 - 125
     }
-    const dataTexture = new THREE.DataTexture(
-      data,
-      size,
-      size,
-      THREE.RGBAFormat,
-      THREE.FloatType,
-    )
-    dataTexture.needsUpdate  = true
+    const dataTexture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat, THREE.FloatType)
+    dataTexture.needsUpdate = true
     uniforms.uDataTexture.value = dataTexture
 
     /* Malla -------------------------------------------------------- */
-    const material  = new THREE.ShaderMaterial({
+    const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
       uniforms,
       vertexShader,
       fragmentShader,
     })
-    const geometry  = new THREE.PlaneGeometry(1, 1, size - 1, size - 1)
-    const plane     = new THREE.Mesh(geometry, material)
+    const geometry = new THREE.PlaneGeometry(1, 1, size - 1, size - 1)
+    const plane = new THREE.Mesh(geometry, material)
     scene.add(plane)
 
     /* Resize ------------------------------------------------------- */
     const handleResize = () => {
       const { offsetWidth: w, offsetHeight: h } = container
       const containerAspect = w / h
-      const imageAspect     = imageAspectRef.current
+      const imageAspect = imageAspectRef.current
 
       renderer.setSize(w, h)
 
@@ -137,9 +130,9 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
       /* Ajuste de cámara ortográfica */
       const frustumH = 1
       const frustumW = frustumH * containerAspect
-      camera.left   = -frustumW / 2
-      camera.right  =  frustumW / 2
-      camera.top    =  frustumH / 2
+      camera.left = -frustumW / 2
+      camera.right = frustumW / 2
+      camera.top = frustumH / 2
       camera.bottom = -frustumH / 2
       camera.updateProjectionMatrix()
 
@@ -148,15 +141,18 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
 
     /* Ratón -------------------------------------------------------- */
     const mouseState = {
-      x: 0, y: 0,
-      prevX: 0, prevY: 0,
-      vX: 0, vY: 0,
+      x: 0,
+      y: 0,
+      prevX: 0,
+      prevY: 0,
+      vX: 0,
+      vY: 0,
     }
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect()
-      const x    = (e.clientX - rect.left) / rect.width
-      const y    = 1 - (e.clientY - rect.top) / rect.height
+      const x = (e.clientX - rect.left) / rect.width
+      const y = 1 - (e.clientY - rect.top) / rect.height
       mouseState.vX = x - mouseState.prevX
       mouseState.vY = y - mouseState.prevY
       Object.assign(mouseState, { x, y, prevX: x, prevY: y })
@@ -180,22 +176,22 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
 
       /* Relajación global */
       for (let i = 0; i < size * size; i++) {
-        data[i * 4]     *= relaxation
+        data[i * 4] *= relaxation
         data[i * 4 + 1] *= relaxation
       }
 
       /* Influencia del ratón */
       const gridMouseX = size * mouseState.x
       const gridMouseY = size * mouseState.y
-      const maxDist    = size * mouse
+      const maxDist = size * mouse
 
       for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
           const distSq = (gridMouseX - i) ** 2 + (gridMouseY - j) ** 2
           if (distSq < maxDist ** 2) {
-            const idx   = 4 * (i + size * j)
+            const idx = 4 * (i + size * j)
             const power = Math.min(maxDist / Math.sqrt(distSq), 10)
-            data[idx]     += strength * 100 * mouseState.vX * power
+            data[idx] += strength * 100 * mouseState.vX * power
             data[idx + 1] += strength * -100 * mouseState.vY * power
           }
         }
@@ -220,7 +216,7 @@ const GridDistortion: React.FC<GridDistortionProps> = ({
   }, [grid, mouse, strength, relaxation, imageSrc])
 
   /* Render --------------------------------------------------------- */
-  return <div ref={containerRef} className={`w-full h-full overflow-hidden ${className}`} />
+  return <div ref={containerRef} className={`h-full w-full overflow-hidden ${className}`} />
 }
 
 export default GridDistortion
