@@ -109,10 +109,12 @@ export function ProjectsSection() {
 
         <div className="projects-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className="project-card group transform cursor-pointer transition-all duration-500 hover:-rotate-1 hover:scale-105"
+            <button
+              type="button"
               onClick={() => openProjectDetails(project)}
+              aria-label={`Open details for ${project.title}`}
+              className="project-card … focus-visible:outline-red-500"
+              key={index}
             >
               <div className="hover:shadow-3xl relative z-10 w-[350px] overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-tr from-[#0F0F0F] to-[#0B0B0B] text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-red-500/40 hover:shadow-red-500/10">
                 {' '}
@@ -174,7 +176,7 @@ export function ProjectsSection() {
                 <div className="absolute left-0 top-0 h-20 w-20 rounded-br-3xl bg-gradient-to-br from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
                 <div className="absolute bottom-0 right-0 h-20 w-20 rounded-tl-3xl bg-gradient-to-tl from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -182,11 +184,23 @@ export function ProjectsSection() {
       {isModalOpen && selectedProject && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
-          onClick={closeProjectDetails} // Close when clicking outside content
+          role="button"
+          tabIndex={0}
+          aria-label="Close project details"
+          onClick={closeProjectDetails}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              closeProjectDetails()
+            }
+          }}
         >
           <div
             className="animate-fade-in-up relative w-full max-w-md rounded-lg border border-red-500/20 bg-gray-900 p-6 text-white shadow-2xl md:max-w-lg md:p-8 lg:max-w-xl"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside content
+            role="dialog"
+            aria-modal="true"
+            /* antes: onClick={(e) => e.stopPropagation()} */
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeProjectDetails}
