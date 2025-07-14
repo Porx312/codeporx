@@ -81,9 +81,11 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
                 const isActive = index === currentIndex;
                 return (
                     <span
-                        key={index}
-                        ref={(el) => (wordRefs.current[index] = el)}
-                        className="relative text-[3rem] font-black cursor-pointer"
+  key={index}
+  ref={(el) => {
+    wordRefs.current[index] = el;
+  }}
+
                         style={{
                             filter: manualMode
                                 ? isActive
