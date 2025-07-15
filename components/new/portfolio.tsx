@@ -37,7 +37,7 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen ">
       <main>
-        <section id="home" className="background-pattern relative">
+        <section id="home" className="background-pattern relative py-10 md:py-0">
           <HeroSection />
           <BlackGradientBottom />
         </section>

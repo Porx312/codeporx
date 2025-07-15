@@ -9,21 +9,21 @@ if (typeof window !== 'undefined') {
 
 const projects = [
   {
-    name: 'finapp',
+    name: 'docsjs',
     id: 1,
-    title: 'Financial Dashboard',
+    title: 'DocsJS - JavaScript Ecosystem Docs',
     description: [
-      'showcase your Playslits,',
-      'showcase your Playslits,',
-      'showcase your Playslits,',
+      'Comprehensive JavaScript documentation.',
+      'Explore libraries, frameworks, and tools.',
+      'Built for developers by developers.',
     ],
     longDescription:
-      'Helps users manage personal and business finances with bank integration and customizable dashboards.',
-    image: '/dark.png?height=400&width=600',
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-    techColors: ['#61dafb', '#83cd29', '#336791', '#ff9900'],
-    liveUrl: '#',
-    githubUrl: '#',
+      'DocsJS is a powerful documentation platform focused on the JavaScript ecosystem. It offers in-depth guides, API references, and community-curated content in English. From vanilla JS to the latest frameworks, DocsJS helps developers stay productive and informed.',
+    image: '/docsjs-yellow.png?height=400&width=600',
+    technologies: ['Next.js', 'MDX', 'Tailwind CSS', 'Vercel'],
+    techColors: ['#facc15', '#facc15', '#facc15', '#facc15'], // yellow tones
+    liveUrl: 'https://docsjs.dev',
+    githubUrl: 'https://github.com/yourusername/docsjs',
     featured: true,
   },
   {

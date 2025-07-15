@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ExternalLink, Github, X } from 'lucide-react' // Added X for close button
 import SectionName from './Section'
+import Image from 'next/image'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -12,21 +13,22 @@ if (typeof window !== 'undefined') {
 
 const projects = [
   {
-    name: 'finapp',
+    name: 'docsjs',
     id: 1,
-    title: 'Financial Dashboard',
+    title: 'DocsJS - JavaScript Ecosystem Docs',
     description: [
-      'Track income and expenses',
-      'Integrate with bank accounts',
-      'Visualize financial data',
+      'Comprehensive JavaScript documentation.',
+      'Explore libraries, frameworks, and tools.',
+      'Built for developers by developers.',
     ],
     longDescription:
-      'FinApp is a comprehensive financial dashboard designed to help users manage personal and business finances efficiently. It offers seamless bank integration, allowing users to connect their accounts and view all transactions in one place. The customizable dashboards provide insightful visualizations of income, expenses, and savings, empowering users to make informed financial decisions. Key features include budget tracking, goal setting, and detailed financial reports.',
-    image: '/placeholder.svg?height=400&width=600',
-    technologies: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-    techColors: ['#61dafb', '#83cd29', '#336791', '#ff9900'],
-    liveUrl: '#',
-    githubUrl: '#',
+      'DocsJS is a powerful documentation platform focused on the JavaScript ecosystem. It offers in-depth guides, API references, and community-curated content in Spanish',
+    image: '/docsjs.png?height=400&width=600',
+    images: ['/1.png', '/2.png'],
+    technologies: ['Next.js', 'MDX', 'Clerk', 'Vercel', 'Convex'],
+    techColors: ['#facc15', '#facc15', '#facc15', '#facc15'], // yellow tones
+    liveUrl: 'https://www.docsjs.com/',
+    githubUrl: 'https://github.com/Porx312/DockEs',
     featured: true,
   },
   {
@@ -39,8 +41,9 @@ const projects = [
       'Real-time inventory updates',
     ],
     longDescription:
-      'This E-Commerce Platform is a robust, full-stack solution built with a microservices architecture for scalability and resilience. It supports multiple payment gateways (e.g., Stripe, PayPal) and features real-time inventory management to prevent overselling. The platform includes user authentication, product catalog management, shopping cart functionality, and order processing, providing a seamless online shopping experience.',
-    image: '/placeholder.svg?height=400&width=600',
+      'This E-Commerce Platform is a robust, full-stack solution built with a microservices architecture for scalability and resilience. It supports multiple payment gateways (e.g., Stripe, PayPal) and features real-time inventory management to prevent overselling. The platform ',
+    image: '/docsjs.png?height=400&width=600',
+    images: ['/1.png', '/2.png'],
     technologies: ['Next.js', 'MongoDB', 'Stripe', 'Docker'],
     techColors: ['#000000', '#47a248', '#635bff', '#2496ed'],
     liveUrl: '#',
@@ -58,7 +61,8 @@ const projects = [
     ],
     longDescription:
       'The Task Management App is a comprehensive solution for individuals and teams to organize and track their work. It features an intuitive Kanban board for visual task management, integrated time tracking to monitor productivity, and robust team analytics to identify bottlenecks and optimize workflows. Real-time updates and notifications ensure everyone stays on the same page.',
-    image: '/placeholder.svg?height=400&width=600',
+    image: '/docsjs.png?height=400&width=600',
+    images: ['/1.png', '/2.png'],
     technologies: ['Vue.js', 'Express', 'Socket.io', 'Redis'],
     techColors: ['#4fc08d', '#83cd29', '#010101', '#dc382d'],
     liveUrl: '#',
@@ -132,13 +136,13 @@ export function ProjectsSection() {
                       <div className="absolute inset-0 animate-pulse rounded-full border border-red-500/10 delay-500"></div>
                       <div className="transform rounded-full border border-red-500/20 bg-gradient-to-br from-black/80 to-gray-900/60 p-6 shadow-2xl backdrop-blur-lg transition-all duration-500 hover:shadow-red-500/20 group-hover:rotate-12 group-hover:scale-110">
                         <div className="transform transition-transform duration-700 group-hover:rotate-180">
-                          <svg
-                            className="h-8 w-8 fill-current text-red-500 drop-shadow-lg filter transition-colors duration-300 group-hover:text-red-400"
-                            viewBox="0 0 496 512"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 30.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"></path>
-                          </svg>
+                          <Image
+                            src={project.image}
+                            alt={project.name}
+                            width={100}
+                            height={100}
+                            className="w-10"
+                          />
                         </div>
                       </div>
                     </div>
@@ -183,7 +187,7 @@ export function ProjectsSection() {
 
       {isModalOpen && selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center"
           role="button"
           tabIndex={0}
           aria-label="Close project details"
@@ -200,7 +204,7 @@ export function ProjectsSection() {
           }}
         >
           <div
-            className="animate-fade-in-up relative w-full max-w-md rounded-lg border border-red-500/20 bg-gray-900 p-6 text-white shadow-2xl md:max-w-lg md:p-8 lg:max-w-xl"
+            className="animate-fade-in-up relative h-full w-full rounded-lg border border-red-500/20 bg-black/20 bg-gray-900 p-16 py-0  text-white shadow-2xl backdrop-blur-md md:py-16 "
             role="dialog"
             aria-modal="true"
           >
@@ -211,7 +215,7 @@ export function ProjectsSection() {
             >
               <X className="h-6 w-6" />
             </button>
-            <h3 className="mb-2 text-3xl font-bold text-red-400">{selectedProject.title}</h3>
+            <h3 className="mb-2 text-4xl font-bold md:text-6xl ">{selectedProject.title}</h3>
             <p className="mb-4 text-base text-gray-300">{selectedProject.longDescription}</p>
             <div className="py-4">
               <h4 className="mb-2 text-lg font-semibold">Technologies Used:</h4>
@@ -230,23 +234,58 @@ export function ProjectsSection() {
                   </span>
                 ))}
               </div>
+              <div className="flex w-full flex-wrap items-center justify-center gap-3 py-5">
+                {selectedProject.images.slice(0, 2).map((src, index) => (
+                  <div
+                    key={src}
+                    className="relative aspect-video min-w-[250px] max-w-[1000px] flex-1"
+                  >
+                    <Image
+                      src={src}
+                      alt={`${selectedProject.name} screenshot ${index + 1}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      priority={index === 0}
+                      className="rounded-lg object-contain shadow"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="mt-6 flex flex-col justify-end gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-end">
+              {/* Live demo */}
               <a
                 href={selectedProject.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#ff0004] px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#cc0003]"
+                aria-label="Open live demo in a new tab"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg
+               bg-gradient-to-br from-red-400 to-red-500 px-5 py-2.5
+               text-sm font-semibold text-gray-900 shadow-lg
+               ring-1 ring-inset ring-yellow-500/30
+               transition-all duration-200
+               hover:scale-[1.02] hover:from-red-300 hover:to-red-400
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
               >
-                <ExternalLink className="h-4 w-4" /> Live Demo
+                <ExternalLink className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                Live&nbsp;Demo
               </a>
+
+              {/* GitHub repo */}
               <a
                 href={selectedProject.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-700 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-gray-800"
+                aria-label="View source code on GitHub (opens in a new tab)"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg
+               border border-gray-700 bg-gray-900/60 px-5 py-2.5
+               text-sm font-medium text-gray-100 shadow-lg
+               transition-all duration-200
+               hover:scale-[1.02] hover:bg-gray-800
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2"
               >
-                <Github className="h-4 w-4" /> GitHub Repo
+                <Github className="h-4 w-4 transition-transform duration-200 group-hover:-rotate-6" />
+                GitHub&nbsp;Repo
               </a>
             </div>
           </div>
