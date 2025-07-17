@@ -48,7 +48,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       >
         ← Anterior
       </button>
-      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+      <span className="text-sm font-medium text-gray-700 text-gray-300">
         Página {currentPage} de {totalPages}
       </span>
       <button
@@ -86,18 +86,18 @@ export default function ListLayoutWithTags({
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div className="py-12">
-        <h1 className="mb-10 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
+        <h1 className="mb-10 text-center text-3xl font-extrabold  text-gray-100 sm:text-4xl">
           {title}
         </h1>
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <aside className="mb-8 w-full lg:mb-0 lg:w-1/4">
-            <div className="sticky top-8 rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+            <div className="sticky top-8 rounded-lg  p-6 shadow-md bg-gray-800">
               {pathname.startsWith('/blog') ? (
                 <h3 className="font-bold uppercase text-red-500"> Todos Los Posts</h3>
               ) : (
                 <Link
                   href={`/blog`}
-                  className="font-bold uppercase text-gray-700 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-500"
+                  className="font-bold uppercase  text-gray-300 hover:text-red-500"
                 >
                   Todos Los Posts
                 </Link>
@@ -110,7 +110,7 @@ export default function ListLayoutWithTags({
                     className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${
                       decodeURI(pathname.split('/tags/')[1]) === slug(t)
                         ? 'bg-red-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+                        : ' bg-gray-700 text-gray-200 hover:bg-gray-600'
                     }`}
                   >
                     {t} ({tagCounts[t]})
@@ -128,12 +128,12 @@ export default function ListLayoutWithTags({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <article className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg dark:bg-gray-800">
+                  <article className="overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg bg-gray-800">
                     <div className="p-6">
                       <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <time
                           dateTime={post.date}
-                          className="mb-2 block text-sm text-gray-500 dark:text-gray-400 sm:mb-0"
+                          className="mb-2 block text-sm  text-gray-400 sm:mb-0"
                           suppressHydrationWarning
                         >
                           {formatDate(post.date, siteMetadata.locale)}
@@ -144,7 +144,7 @@ export default function ListLayoutWithTags({
                           ))}
                         </div>
                       </div>
-                      <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100 sm:text-2xl">
+                      <h2 className="mb-2 text-xl font-bold  text-gray-100 sm:text-2xl">
                         <Link
                           href={`/${post.path}`}
                           className="transition-colors duration-200 hover:text-red-500"
@@ -152,7 +152,7 @@ export default function ListLayoutWithTags({
                           {post.title}
                         </Link>
                       </h2>
-                      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300 sm:text-base">
+                      <p className="mb-4 text-sm  text-gray-300 sm:text-base">
                         {post.summary}
                       </p>
                       <Link

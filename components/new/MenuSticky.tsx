@@ -66,7 +66,7 @@ export default function StickyMenu() {
           <motion.ul
             className={`${
               isMenuOpen ? 'flex' : 'hidden'
-            } mt-2 flex-col space-y-2 rounded-lg bg-white bg-opacity-80 p-4 shadow-lg backdrop-blur-md dark:bg-neutral-900 dark:bg-opacity-80 dark:text-white md:mt-0 md:flex md:flex-row md:space-x-1 md:space-y-0`}
+            } mt-2 flex-col space-y-2 rounded-lg  p-4 shadow-lg backdrop-blur-md bg-neutral-900 bg-opacity-80 text-white md:mt-0 md:flex md:flex-row md:space-x-1 md:space-y-0`}
           >
             {menuItems.map((item) => {
               const IconComponent = item.icon // Obtener el componente del ícono
@@ -78,7 +78,7 @@ export default function StickyMenu() {
                     className={`flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                       activeSection === item.id
                         ? 'bg-red-500 text-white' // Cambiado a un color más genérico para shadcn/ui
-                        : 'text-gray-600 hover:text-gray-900 dark:text-neutral-300 dark:hover:text-white'
+                        : ' text-neutral-300 hover:text-white'
                     }`}
                     aria-label={item.label} // Accesibilidad: etiqueta para el lector de pantalla
                   >

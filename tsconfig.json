@@ -40,6 +40,6 @@
     ".contentlayer/generated",
     ".contentlayer/generated/**/*.json",
     ".next/types/**/*.ts"
-  ],
+, "components/new/gallery.jsx"  ],
   "exclude": ["node_modules"]
 }
