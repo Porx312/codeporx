@@ -192,7 +192,7 @@ export function ProjectsSection() {
 
       {isModalOpen && selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-200 ease-out"
+          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center  transition-opacity duration-200 ease-out"
           role="button"
           tabIndex={0}
           aria-label="Close project details"
