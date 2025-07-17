@@ -48,7 +48,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       >
         ← Anterior
       </button>
-      <span className="text-sm font-medium text-gray-700 text-gray-300">
+      <span className="text-sm font-medium  text-gray-300">
         Página {currentPage} de {totalPages}
       </span>
       <button
@@ -91,7 +91,7 @@ export default function ListLayoutWithTags({
         </h1>
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <aside className="mb-8 w-full lg:mb-0 lg:w-1/4">
-            <div className="sticky top-8 rounded-lg  p-6 shadow-md bg-gray-800">
+            <div className="sticky top-8 rounded-lg  bg-gray-800 p-6 shadow-md">
               {pathname.startsWith('/blog') ? (
                 <h3 className="font-bold uppercase text-red-500"> Todos Los Posts</h3>
               ) : (
@@ -128,7 +128,7 @@ export default function ListLayoutWithTags({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <article className="overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg bg-gray-800">
+                  <article className="overflow-hidden rounded-lg bg-gray-800 shadow-md transition-shadow duration-300 hover:shadow-lg">
                     <div className="p-6">
                       <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <time
@@ -152,9 +152,7 @@ export default function ListLayoutWithTags({
                           {post.title}
                         </Link>
                       </h2>
-                      <p className="mb-4 text-sm  text-gray-300 sm:text-base">
-                        {post.summary}
-                      </p>
+                      <p className="mb-4 text-sm  text-gray-300 sm:text-base">{post.summary}</p>
                       <Link
                         href={`/${post.path}`}
                         className="inline-block rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-red-600"

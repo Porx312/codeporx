@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ExternalLink, Github, X } from 'lucide-react' // Added X for close button
 import SectionName from './Section'
 import Image from 'next/image'
-
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
@@ -17,16 +16,22 @@ const projects = [
     id: 1,
     title: 'DocsJS - JavaScript Ecosystem Docs',
     description: [
-      'Comprehensive JavaScript documentation.',
+      'Comprehensive JavaScript docs.',
       'Explore libraries, frameworks, and tools.',
       'Built for developers by developers.',
     ],
     longDescription:
-      'DocsJS is a powerful documentation platform focused on the JavaScript ecosystem. It offers in-depth guides, API references, and community-curated content in Spanish',
+      'DocsJS is a powerful documentation platform focused on the JavaScript ecosystem. It offers in-depth guides, API references, and community-curated content in Spanish.',
     image: '/docsjs.png?height=400&width=600',
     images: ['/1.png', '/2.png'],
     technologies: ['Next.js', 'MDX', 'Clerk', 'Vercel', 'Convex'],
-    techColors: ['#facc15', '#facc15', '#facc15', '#facc15'], // yellow tones
+    techColors: [
+      '#3b82f6', // Next.js (black)
+      '#f97316', // MDX (orange)
+      '#3b82f6', // Clerk (blue)
+      '#7c3aed', // Vercel (black)
+      '#7c3aed', // Convex (purple)
+    ],
     liveUrl: 'https://www.docsjs.com/',
     githubUrl: 'https://github.com/Porx312/DockEs',
     featured: true,
@@ -187,14 +192,14 @@ export function ProjectsSection() {
 
       {isModalOpen && selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center"
+          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-200 ease-out"
           role="button"
           tabIndex={0}
           aria-label="Close project details"
           onClick={(e) => {
-            // solo cierra si el usuario pulsó directamente en el overlay,
-            // no dentro del modal
-            if (e.target === e.currentTarget) closeProjectDetails()
+            if (e.target === e.currentTarget) {
+              closeProjectDetails()
+            }
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -204,9 +209,13 @@ export function ProjectsSection() {
           }}
         >
           <div
-            className="animate-fade-in-up relative h-full w-full rounded-lg border border-red-500/20 bg-black/20 bg-gray-900 p-16 py-0  text-white shadow-2xl backdrop-blur-md md:py-16 "
+            className="relative mx-4 h-[auto] max-h-[90vh] w-full max-w-3xl transform  overflow-y-auto  rounded-3xl border-gray-700 bg-black/60 bg-gray-900 p-6 text-white shadow-2xl backdrop-blur-sm
+                   transition-all duration-300 ease-out data-[state=closed]:translate-y-10
+                   data-[state=open]:translate-y-0 data-[state=closed]:opacity-0
+                   data-[state=open]:opacity-100 md:p-8"
             role="dialog"
             aria-modal="true"
+            data-state={isModalOpen ? 'open' : 'closed'}
           >
             <button
               onClick={closeProjectDetails}
@@ -215,15 +224,36 @@ export function ProjectsSection() {
             >
               <X className="h-6 w-6" />
             </button>
-            <h3 className="mb-2 text-4xl font-bold md:text-6xl ">{selectedProject.title}</h3>
-            <p className="mb-4 text-base text-gray-300">{selectedProject.longDescription}</p>
-            <div className="py-4">
-              <h4 className="mb-2 text-lg font-semibold">Technologies Used:</h4>
+
+            {/* Título del proyecto */}
+            <h3 className="mb-4 text-center text-2xl font-bold md:text-5xl">
+              {selectedProject.title}
+            </h3>
+
+            {/* Sección de la imagen */}
+            <div className="flex w-full flex-wrap items-center justify-center gap-3 py-4">
+              {selectedProject.images.slice(0, 1).map((src, index) => (
+                <div key={src} className="relative aspect-video w-full overflow-hidden rounded-lg">
+                  <Image
+                    src={src || '/placeholder.svg'}
+                    alt={`${selectedProject.title} screenshot ${index + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    priority={index === 0}
+                    className="object-contain shadow-lg"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Sección de tecnologías */}
+            <div className="py-3">
+              <h4 className="mb-2 text-base font-semibold">Technologies Used:</h4>
               <div className="flex flex-wrap gap-2">
                 {selectedProject.technologies.map((tech, i) => (
                   <span
                     key={i}
-                    className="rounded-full border px-3 py-1 text-xs"
+                    className="rounded-full border px-2.5 py-0.5 text-xs font-medium"
                     style={{
                       borderColor: selectedProject.techColors[i],
                       color: selectedProject.techColors[i],
@@ -234,55 +264,35 @@ export function ProjectsSection() {
                   </span>
                 ))}
               </div>
-              <div className="flex w-full flex-wrap items-center justify-center gap-3 py-5">
-                {selectedProject.images.slice(0, 2).map((src, index) => (
-                  <div
-                    key={src}
-                    className="relative aspect-video min-w-[250px] max-w-[1000px] flex-1"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${selectedProject.name} screenshot ${index + 1}`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                      priority={index === 0}
-                      className="rounded-lg object-contain shadow"
-                    />
-                  </div>
-                ))}
-              </div>
             </div>
-            <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-end">
+
+            {/* Sección de enlaces */}
+            <div className="mt-5 flex flex-col items-stretch gap-2 sm:flex-row sm:justify-end">
               {/* Live demo */}
               <a
                 href={selectedProject.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Open live demo in a new tab"
-                className="group inline-flex items-center justify-center gap-2 rounded-lg
-               bg-gradient-to-br from-red-400 to-red-500 px-5 py-2.5
-               text-sm font-semibold text-gray-900 shadow-lg
-               ring-1 ring-inset ring-yellow-500/30
-               transition-all duration-200
-               hover:scale-[1.02] hover:from-red-300 hover:to-red-400
-               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-red-400
+                       to-red-500 px-4 py-2 text-sm font-semibold text-gray-900 shadow-lg
+                       ring-1 ring-inset ring-red-500/30 transition-all duration-200
+                       hover:scale-[1.02] hover:from-red-300 hover:to-red-400
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
               >
                 <ExternalLink className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 Live&nbsp;Demo
               </a>
-
               {/* GitHub repo */}
               <a
                 href={selectedProject.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="View source code on GitHub (opens in a new tab)"
-                className="group inline-flex items-center justify-center gap-2 rounded-lg
-               border border-gray-700 bg-gray-900/60 px-5 py-2.5
-               text-sm font-medium text-gray-100 shadow-lg
-               transition-all duration-200
-               hover:scale-[1.02] hover:bg-gray-800
-               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2"
+                className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-700
+                       bg-gray-900/60 px-4 py-2 text-sm font-medium text-gray-100 shadow-lg
+                       transition-all duration-200 hover:scale-[1.02] hover:bg-gray-800
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2"
               >
                 <Github className="h-4 w-4 transition-transform duration-200 group-hover:-rotate-6" />
                 GitHub&nbsp;Repo
