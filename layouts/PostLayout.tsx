@@ -37,7 +37,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   return (
     <SectionContainer>
       <ScrollTopAndComment />
-      <article className='flex items-center justify-center'>
+      <article className="flex items-center justify-center">
         <div className="xl:divide-y xl:divide-gray-200 ">
           <header className="pt-6 xl:pb-6">
             <div className="space-y-1 text-center">
@@ -112,10 +112,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </Link>
               </div>
               {siteMetadata.comments && (
-                <div
-                  className="pb-6 pt-6 text-center  text-gray-200"
-                  id="comment"
-                >
+                <div className="pb-6 pt-6 text-center  text-gray-200" id="comment">
                   <Comments slug={slug} />
                 </div>
               )}
