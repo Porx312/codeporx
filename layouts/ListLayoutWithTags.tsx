@@ -133,7 +133,7 @@ export default function ListLayoutWithTags({
                       <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <time
                           dateTime={post.date}
-                          className="mb-2 block text-sm  text-gray-400 sm:mb-0"
+                          className="mb-2 block text-sm  text-gray-200 sm:mb-0"
                           suppressHydrationWarning
                         >
                           {formatDate(post.date, siteMetadata.locale)}
@@ -152,7 +152,7 @@ export default function ListLayoutWithTags({
                           {post.title}
                         </Link>
                       </h2>
-                      <p className="mb-4 text-sm  text-gray-300 sm:text-base">{post.summary}</p>
+                      <p className="mb-4 text-sm  text-gray-200 sm:text-base">{post.summary}</p>
                       <Link
                         href={`/${post.path}`}
                         className="inline-block rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-red-600"

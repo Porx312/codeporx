@@ -48,7 +48,9 @@ input:-webkit-autofill:focus {
   margin-left: -24px;
   padding-right: 4px;
 }
-
+.content-header{ 
+  color: rgb(194, 193, 193);
+}
 .content-header:hover .content-header-link,
 .content-header-link:hover {
   opacity: 1;

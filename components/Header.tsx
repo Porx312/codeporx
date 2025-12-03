@@ -5,6 +5,7 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import SearchButton from './SearchButton'
 import Image from 'next/image'
+import ThemeSwitch from './ThemeSwitch'
 
 const Header = () => {
   let headerClass = 'flex items-center w-full justify-between py-10 px-0 md:px-52 '

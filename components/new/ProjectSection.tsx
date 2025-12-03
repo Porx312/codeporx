@@ -37,22 +37,22 @@ const projects = [
     featured: true,
   },
   {
-    name: 'ecommerce',
-    id: 2,
-    title: 'E-Commerce Platform',
-    description: [
-      'Microservices architecture',
-      'Multiple payment gateways',
-      'Real-time inventory updates',
-    ],
-    longDescription:
-      'This E-Commerce Platform is a robust, full-stack solution built with a microservices architecture for scalability and resilience. It supports multiple payment gateways (e.g., Stripe, PayPal) and features real-time inventory management to prevent overselling. The platform ',
-    image: '/docsjs.png?height=400&width=600',
-    images: ['/1.png', '/2.png'],
-    technologies: ['Next.js', 'MongoDB', 'Stripe', 'Docker'],
-    techColors: ['#000000', '#47a248', '#635bff', '#2496ed'],
-    liveUrl: '#',
-    githubUrl: '#',
+     name: 'ProjectD',
+  id: 2,
+  title: 'Assetto Corsa Circuit Analyzer',
+  description: [
+    'Analysis of other players’ racing lines',
+    'Lap timer to record personal bests',
+    'User management with sharing and saving analyses',
+  ],
+  longDescription:
+    'This Assetto Corsa project helps players improve their lap times by analyzing racing lines from other players and using a lap timer to track their own performance. Users can manage their profiles, save their analyses, and share or view others’ strategies, promoting continuous improvement and friendly competition.',
+  image: '/projectd.png?height=800&width=800',
+  images: ['/projectd1.png', '/projectd2.png'],
+  technologies: ['Next.js', 'Clerk', 'Convex', 'Zustand'],
+  techColors: ['#000000', '#47a248', '#635bff', '#2496ed'],
+    liveUrl: 'https://project-d-psi.vercel.app/',
+    githubUrl: 'https://github.com/Porx312/ProjectD',
     featured: true,
   },
   {
