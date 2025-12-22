@@ -172,14 +172,18 @@ input:-webkit-autofill:focus {
   --color: rgba(255, 255, 255, 0.2);
 
   background-image:
-    linear-gradient(-90deg,
+    linear-gradient(
+      -90deg,
       transparent calc(var(--gap) - var(--line)),
       var(--color) calc(var(--gap) - var(--line) + 1px),
-      var(--color) var(--gap)),
-    linear-gradient(0deg,
+      var(--color) var(--gap)
+    ),
+    linear-gradient(
+      0deg,
       transparent calc(var(--gap) - var(--line)),
       var(--color) calc(var(--gap) - var(--line) + 1px),
-      var(--color) var(--gap));
+      var(--color) var(--gap)
+    );
   background-size: var(--gap) var(--gap);
 }
 

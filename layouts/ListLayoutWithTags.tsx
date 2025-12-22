@@ -33,10 +33,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   return (
     <div className="mt-10 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
       <button
-        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${prevPage
-          ? 'bg-red-500 text-white hover:bg-red-600'
-          : 'cursor-not-allowed bg-gray-100 text-gray-400'
-          }`}
+        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${
+          prevPage
+            ? 'bg-red-500 text-white hover:bg-red-600'
+            : 'cursor-not-allowed bg-gray-100 text-gray-400'
+        }`}
         disabled={!prevPage}
         onClick={() => {
           if (prevPage) {
@@ -51,10 +52,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         Página {currentPage} de {totalPages}
       </span>
       <button
-        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${nextPage
-          ? 'bg-red-500 text-white hover:bg-red-600'
-          : 'cursor-not-allowed bg-gray-100 text-gray-400'
-          }`}
+        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${
+          nextPage
+            ? 'bg-red-500 text-white hover:bg-red-600'
+            : 'cursor-not-allowed bg-gray-100 text-gray-400'
+        }`}
         disabled={!nextPage}
         onClick={() => {
           if (nextPage) {
@@ -105,10 +107,11 @@ export default function ListLayoutWithTags({
                   <Link
                     key={t}
                     href={`/tags/${slug(t)}`}
-                    className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${decodeURI(pathname.split('/tags/')[1]) === slug(t)
-                      ? 'bg-red-500 text-white'
-                      : ' bg-gray-700 text-gray-200 hover:bg-gray-600'
-                      }`}
+                    className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${
+                      decodeURI(pathname.split('/tags/')[1]) === slug(t)
+                        ? 'bg-red-500 text-white'
+                        : ' bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    }`}
                   >
                     {t} ({tagCounts[t]})
                   </Link>
