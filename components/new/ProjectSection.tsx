@@ -1,98 +1,95 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ExternalLink, Github, X } from 'lucide-react' // Added X for close button
+import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react'
 import SectionName from './Section'
 import Image from 'next/image'
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const projects = [
+const showcaseSlides = [
   {
-    name: 'docsjs',
-    id: 1,
-    title: 'DocsJS - JavaScript Ecosystem Docs',
-    description: [
-      'Comprehensive JavaScript docs.',
-      'Explore libraries, frameworks, and tools.',
-      'Built for developers by developers.',
-    ],
-    longDescription:
-      'DocsJS is a powerful documentation platform focused on the JavaScript ecosystem. It offers in-depth guides, API references, and community-curated content in Spanish.',
-    image: '/docsjs.png?height=400&width=600',
-    images: ['/1.png', '/2.png'],
-    technologies: ['Next.js', 'MDX', 'Clerk', 'Vercel', 'Convex'],
-    techColors: [
-      '#3b82f6', // Next.js (black)
-      '#f97316', // MDX (orange)
-      '#3b82f6', // Clerk (blue)
-      '#7c3aed', // Vercel (black)
-      '#7c3aed', // Convex (purple)
-    ],
-    liveUrl: 'https://www.docsjs.com/',
-    githubUrl: 'https://github.com/Porx312/DockEs',
-    featured: true,
+    title: 'Competitive Battles',
+    tag: 'Battles',
+    description: 'A sophisticated matchmaking system where skill meets strategy. Challenge rivals and rise through the ranks.',
+    image: 'https://res.cloudinary.com/dq0pfesxe/image/upload/v1770463168/248_1x_shots_so_ywndqa.png',
+    traits: [
+      { name: 'Battle Request', desc: 'Direct PvP flow' },
+      { name: 'Rank System', desc: 'S / A / B / C levels' },
+      { name: 'Stage Progress', desc: 'Stage 1-5 evolution' },
+      { name: 'Discord Webhook', desc: 'Kill-feed alerts' },
+    ]
   },
   {
-    name: 'ProjectD',
-    id: 2,
-    title: 'Assetto Corsa Circuit Analyzer',
-    description: [
-      'Analysis of other players’ racing lines',
-      'Lap timer to record personal bests',
-      'User management with sharing and saving analyses',
-    ],
-    longDescription:
-      'This Assetto Corsa project helps players improve their lap times by analyzing racing lines from other players and using a lap timer to track their own performance. Users can manage their profiles, save their analyses, and share or view others’ strategies, promoting continuous improvement and friendly competition.',
-    image: '/projectd.png?height=800&width=800',
-    images: ['/projectd1.png', '/projectd2.png'],
-    technologies: ['Next.js', 'Clerk', 'Convex', 'Zustand'],
-    techColors: ['#000000', '#47a248', '#635bff', '#2496ed'],
-    liveUrl: 'https://project-d-psi.vercel.app/',
-    githubUrl: 'https://github.com/Porx312/ProjectD',
-    featured: true,
+    title: 'Global Rankings',
+    tag: 'Ranking',
+    description: 'The definitive leaderboard for the Touge community. Every millisecond counts in the pursuit of perfection.',
+    image: 'https://res.cloudinary.com/dq0pfesxe/image/upload/v1770463234/764_1x_shots_so_ibkbcb.png',
+    traits: [
+      { name: '100+ Drivers', desc: 'Active community' },
+      { name: 'Time Attack', desc: 'Sector-by-sector' },
+      { name: 'Battle Wins', desc: 'PvP performance' },
+      { name: 'Real-time API', desc: 'Instant updates' },
+    ]
   },
   {
-    name: 'taskmanager',
-    id: 3,
-    title: 'Task Management App',
-    description: [
-      'Kanban board for tasks',
-      'Integrated time tracking',
-      'Team collaboration features',
-    ],
-    longDescription:
-      'The Task Management App is a comprehensive solution for individuals and teams to organize and track their work. It features an intuitive Kanban board for visual task management, integrated time tracking to monitor productivity, and robust team analytics to identify bottlenecks and optimize workflows. Real-time updates and notifications ensure everyone stays on the same page.',
-    image: '/docsjs.png?height=400&width=600',
-    images: ['/1.png', '/2.png'],
-    technologies: ['Vue.js', 'Express', 'Socket.io', 'Redis'],
-    techColors: ['#4fc08d', '#83cd29', '#010101', '#dc382d'],
-    liveUrl: '#',
-    githubUrl: '#',
-    featured: false,
+    title: 'Precision Track Analytics',
+    tag: 'Tracks',
+    description: 'Optimize your performance by analyzing driver telemetry and YouTube video overlays to identify the perfect racing line and close performance gaps.',
+    image: 'https://res.cloudinary.com/dq0pfesxe/image/upload/v1770463050/380_1x_shots_so_yv6jll.png',
+    traits: [
+      { name: 'YouTube Analysis', desc: 'Video-based telemetry' },
+      { name: 'Overlay Comparison', desc: 'Identifies time gaps' },
+      { name: 'Apex Detection', desc: 'Cornering precision' },
+      { name: 'Pace Analytics', desc: 'Consistency tracking' },
+    ]
+  },
+  {
+    title: 'Driver Profile',
+    tag: 'Profile',
+    description: 'Your digital racing identity. Track your growth, rewards, and standing in the community.',
+    image: 'https://res.cloudinary.com/dq0pfesxe/image/upload/v1770462907/375_1x_shots_so_mgeriy.png',
+    traits: [
+      { name: 'Stats Profile', desc: 'Career overview' },
+      { name: 'Rank Display', desc: 'Visual progression' },
+      { name: 'Personal Best', desc: 'Circuit records' },
+      { name: 'Achievement', desc: 'Special driver tags' },
+    ]
+  },
+  {
+    title: 'Automated Server Hub',
+    tag: 'Server',
+    description: 'Industrial-grade infrastructure with an automated 24-hour map rotation driven by community choice and voting.',
+    image: 'https://res.cloudinary.com/dq0pfesxe/image/upload/v1770463737/706_1x_shots_so_ewmnc7.png',
+    traits: [
+      { name: '24h Rotation', desc: 'Automated changes' },
+      { name: 'Voting System', desc: 'Community choice' },
+      { name: 'Live Records', desc: 'Track-specific' },
+      { name: 'Node.js VPS', desc: 'Dedicated backend' },
+    ]
   },
 ]
 
 export function ProjectsSection() {
   const sectionRef = useRef(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        '.project-card',
-        { y: 100, opacity: 0 },
+        '.showcase-container',
+        { y: 50, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.2,
+          duration: 1.2,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.projects-grid',
+            trigger: '.showcase-container',
             start: 'top 80%',
           },
         }
@@ -101,206 +98,160 @@ export function ProjectsSection() {
     return () => ctx.revert()
   }, [])
 
-  const openProjectDetails = (project: (typeof projects)[0]) => {
-    setSelectedProject(project)
-    setIsModalOpen(true)
-  }
-
-  const closeProjectDetails = () => {
-    setIsModalOpen(false)
-    setSelectedProject(null)
-  }
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % showcaseSlides.length)
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + showcaseSlides.length) % showcaseSlides.length)
 
   return (
-    <section ref={sectionRef} className="px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <SectionName name={'Projects'} description={'projects fullstack'} />
-
-        <div className="projects-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <button
-              type="button"
-              onClick={() => openProjectDetails(project)}
-              aria-label={`Open details for ${project.title}`}
-              className="project-card … focus-visible:outline-red-500"
-              key={index}
+    <section ref={sectionRef} className="px-6 py-24 bg-black/50 overflow-hidden">
+      <div className="mx-auto max-w-7xl">
+        {/* Community Header */}
+        <div className="mb-20 text-center lg:text-left">
+          <SectionName name={'Featured Project'} description={'Project D - My most advanced development'} />
+          <h2 className="text-4xl md:text-6xl font-black text-white mt-4 mb-6 leading-tight">
+            A Platform Built for <span className="text-red-600">Pure Speed</span>
+          </h2>
+          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
+            Join the most advanced Touge community. Project Dream connects drivers across the globe with high-performance 
+            VPS servers, real-time rankings, and a competitive battle system that rewards skill and consistency.
+          </p>
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+            <a 
+              href="https://www.instagram.com/projectd" 
+              target="_blank" 
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all font-bold"
             >
-              <div className="hover:shadow-3xl relative z-10 w-[350px] overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-tr from-[#0F0F0F] to-[#0B0B0B] text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-red-500/40 hover:shadow-red-500/10">
-                {' '}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-red-500/5 to-red-400/10 opacity-40 transition-opacity duration-500 group-hover:opacity-60"></div>
-                  <div className="absolute -bottom-20 -left-20 h-48 w-48 transform animate-bounce rounded-full bg-gradient-to-tr from-red-500/10 to-transparent opacity-30 blur-3xl transition-all delay-500 duration-700 group-hover:scale-110 group-hover:opacity-50"></div>
-                  <div className="absolute left-10 top-10 h-16 w-16 animate-ping rounded-full bg-red-500/5 blur-xl"></div>
-                  <div className="absolute bottom-16 right-16 h-12 w-12 animate-ping rounded-full bg-red-500/5 blur-lg delay-1000"></div>
-                  <div className="absolute inset-0 translate-x-full -skew-x-12 transform bg-gradient-to-r from-transparent via-red-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-[-200%]"></div>
-                </div>
-                <div className="relative z-10 p-8">
-                  <div className="flex flex-col items-center text-center">
-                    <div className="relative mb-6">
-                      <div className="absolute inset-0 animate-ping rounded-full border-2 border-red-500/20"></div>
-                      <div className="absolute inset-0 animate-pulse rounded-full border border-red-500/10 delay-500"></div>
-                      <div className="transform rounded-full border border-red-500/20 bg-gradient-to-br from-black/80 to-gray-900/60 p-6 shadow-2xl backdrop-blur-lg transition-all duration-500 hover:shadow-red-500/20 group-hover:rotate-12 group-hover:scale-110">
-                        <div className="transform transition-transform duration-700 group-hover:rotate-180">
-                          <Image
-                            src={project.image}
-                            alt={project.name}
-                            width={100}
-                            height={100}
-                            className="w-10"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mb-4 transform transition-transform duration-300 group-hover:scale-105">
-                      <p className="animate-pulse bg-gradient-to-r from-red-400 via-red-500 to-red-400 bg-clip-text text-3xl font-bold text-transparent">
-                        {project.name}
-                      </p>
-                    </div>
-
-                    <div className="max-w-sm space-y-1">
-                      <p className="transform text-base font-semibold text-white transition-transform duration-300 group-hover:scale-105">
-                        {project.title}
-                      </p>
-                      <p className="transform text-sm leading-relaxed text-gray-300 transition-colors duration-300 group-hover:text-gray-200">
-                        {project.description[0]}
-                      </p>
-                      <p className="transform text-sm leading-relaxed text-gray-300 transition-colors duration-300 group-hover:text-gray-200">
-                        {project.description[1]}
-                      </p>
-                      <p className="transform text-sm leading-relaxed text-gray-300 transition-colors duration-300 group-hover:text-gray-200">
-                        {project.description[2]}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 h-0.5 w-1/3 transform animate-pulse rounded-full bg-gradient-to-r from-transparent via-red-500 to-transparent transition-all duration-500 group-hover:h-1 group-hover:w-1/2"></div>
-
-                    <div className="mt-4 flex space-x-2 opacity-60 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-red-500"></div>
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-red-500 delay-100"></div>
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-red-500 delay-200"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute left-0 top-0 h-20 w-20 rounded-br-3xl bg-gradient-to-br from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-                <div className="absolute bottom-0 right-0 h-20 w-20 rounded-tl-3xl bg-gradient-to-tl from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-              </div>
-            </button>
-          ))}
+              <Github className="w-5 h-5" /> Instagram
+            </a>
+            <a 
+              href="https://www.tiktok.com/@projectd" 
+              target="_blank" 
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all font-bold"
+            >
+              <ExternalLink className="w-5 h-5" /> TikTok
+            </a>
+            <a 
+              href="https://discord.gg/projectd" 
+              target="_blank" 
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600/10 border border-red-500/20 text-red-500 hover:bg-red-600/20 transition-all font-bold"
+            >
+              <ChevronRight className="w-5 h-5" /> Join Discord
+            </a>
+          </div>
         </div>
-      </div>
 
-      {isModalOpen && selectedProject && (
-        <div
-          className="fixed inset-0 z-50 flex h-full w-full items-center justify-center  transition-opacity duration-200 ease-out"
-          role="button"
-          tabIndex={0}
-          aria-label="Close project details"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              closeProjectDetails()
-            }
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
-              closeProjectDetails()
-            }
-          }}
-        >
-          <div
-            className="relative mx-4 h-[auto] max-h-[90vh] w-full max-w-3xl transform  overflow-y-auto  rounded-3xl border-gray-700 bg-black/60 bg-gray-900 p-6 text-white shadow-2xl backdrop-blur-sm
-                   transition-all duration-300 ease-out data-[state=closed]:translate-y-10
-                   data-[state=open]:translate-y-0 data-[state=closed]:opacity-0
-                   data-[state=open]:opacity-100 md:p-8"
-            role="dialog"
-            aria-modal="true"
-            data-state={isModalOpen ? 'open' : 'closed'}
-          >
-            <button
-              onClick={closeProjectDetails}
-              className="absolute right-4 top-4 text-gray-400 transition-colors duration-200 hover:text-white"
-              aria-label="Close"
-            >
-              <X className="h-6 w-6" />
-            </button>
-
-            {/* Título del proyecto */}
-            <h3 className="mb-4 text-center text-2xl font-bold md:text-5xl">
-              {selectedProject.title}
+        {/* Visual Explorer (Refactored Carousel) */}
+        <div className="showcase-container mt-32 relative">
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+              <div className="h-1 w-8 bg-red-600 rounded-full" />
+              Project Deep Dive
             </h3>
+          </div>
 
-            {/* Sección de la imagen */}
-            <div className="flex w-full flex-wrap items-center justify-center gap-3 py-4">
-              {selectedProject.images.slice(0, 1).map((src, index) => (
-                <div key={src} className="relative aspect-video w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={src || '/placeholder.svg'}
-                    alt={`${selectedProject.title} screenshot ${index + 1}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                    priority={index === 0}
-                    className="object-contain shadow-lg"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Sección de tecnologías */}
-            <div className="py-3">
-              <h4 className="mb-2 text-base font-semibold">Technologies Used:</h4>
-              <div className="flex flex-wrap gap-2">
-                {selectedProject.technologies.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="rounded-full border px-2.5 py-0.5 text-xs font-medium"
-                    style={{
-                      borderColor: selectedProject.techColors[i],
-                      color: selectedProject.techColors[i],
-                      backgroundColor: `${selectedProject.techColors[i]}20`,
-                    }}
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Text Content */}
+            <div className="order-2 lg:order-1">
+              <div className="flex gap-2 mb-8 overflow-x-auto pb-2 no-scrollbar">
+                {showcaseSlides.map((slide, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`px-4 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${
+                      currentSlide === idx 
+                        ? 'bg-red-600 text-white shadow-lg shadow-red-500/25' 
+                        : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                    }`}
                   >
-                    {tech}
-                  </span>
+                    {slide.tag}
+                  </button>
                 ))}
               </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="text-red-500 font-mono tracking-widest uppercase text-xs">Section Showcase</span>
+                  <h3 className="text-4xl md:text-5xl font-black text-white mt-2 mb-6">
+                    {showcaseSlides[currentSlide].title}
+                  </h3>
+                  <p className="text-xl text-gray-400 leading-relaxed mb-10">
+                    {showcaseSlides[currentSlide].description}
+                  </p>
+
+                  {/* Feature Grid Inside Content */}
+                  <div className="grid grid-cols-2 gap-4 mb-10">
+                    {showcaseSlides[currentSlide].traits.map((trait, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <h4 className="text-white font-bold text-sm mb-1">{trait.name}</h4>
+                        <p className="text-xs text-gray-500">{trait.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex gap-4 mb-12">
+                    <button 
+                      onClick={prevSlide} 
+                      className="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all text-white group"
+                      aria-label="Previous slide"
+                    >
+                      <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+                    </button>
+                    <button 
+                      onClick={nextSlide} 
+                      className="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all text-white group"
+                      aria-label="Next slide"
+                    >
+                      <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+
+                  <div>
+                     <a
+                      href="https://www.projectd.space/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-red-500 font-bold hover:translate-x-2 transition-transform text-lg"
+                    >
+                      Explore Project D <ExternalLink className="w-5 h-5" />
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* Sección de enlaces */}
-            <div className="mt-5 flex flex-col items-stretch gap-2 sm:flex-row sm:justify-end">
-              {/* Live demo */}
-              <a
-                href={selectedProject.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open live demo in a new tab"
-                className="group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-red-400
-                       to-red-500 px-4 py-2 text-sm font-semibold text-gray-900 shadow-lg
-                       ring-1 ring-inset ring-red-500/30 transition-all duration-200
-                       hover:scale-[1.02] hover:from-red-300 hover:to-red-400
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-              >
-                <ExternalLink className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-                Live&nbsp;Demo
-              </a>
-              {/* GitHub repo */}
-              <a
-                href={selectedProject.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View source code on GitHub (opens in a new tab)"
-                className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-700
-                       bg-gray-900/60 px-4 py-2 text-sm font-medium text-gray-100 shadow-lg
-                       transition-all duration-200 hover:scale-[1.02] hover:bg-gray-800
-                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2"
-              >
-                <Github className="h-4 w-4 transition-transform duration-200 group-hover:-rotate-6" />
-                GitHub&nbsp;Repo
-              </a>
+            {/* Visual Content */}
+            <div className="order-1 lg:order-2 sticky top-24">
+              <div className="relative aspect-video w-full">
+                <div className="absolute inset-0 bg-red-500/20 blur-[100px] rounded-full scale-75 opacity-50" />
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  className="relative h-full w-full rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl bg-gray-900"
+                >
+                  <Image
+                    src={showcaseSlides[currentSlide].image}
+                    alt={showcaseSlides[currentSlide].title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </section>
   )
 }
+
+
+
+
