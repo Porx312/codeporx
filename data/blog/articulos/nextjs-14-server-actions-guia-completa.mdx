@@ -1,0 +1,173 @@
+---
+title: 'Next.js 14 Server Actions: Guía Completa para Olvidar las API Routes'
+date: '2026-02-17'
+tags: ['nextjs', 'react', 'javascript']
+draft: false
+summary: 'Descubre cómo simplificar tu backend en Next.js 14 eliminando las API Routes tradicionales y adoptando Server Actions para un código más limpio y eficiente.'
+---
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## Introducción
+
+Con la llegada de **Next.js 14** y el App Router estable, la forma en que manejamos las mutaciones de datos en React ha cambiado radicalmente. Si vienes de versiones anteriores o de otros frameworks, probablemente estés acostumbrado a crear endpoints en `/pages/api` o `/app/api` para manejar formularios y actualizaciones de base de datos.
+
+Las **Server Actions** llegan para cambiar esto. Nos permiten ejecutar código del lado del servidor directamente desde nuestros componentes, eliminando la necesidad de crear una API intermedia para muchas tareas comunes.
+
+En esta guía, aprenderás qué son, por qué usarlas y cómo migrar tus viejas API routes a este nuevo paradigma.
+
+## ¿Qué son las Server Actions?
+
+Las Server Actions son **funciones asíncronas** que se ejecutan en el servidor pero que pueden ser invocadas desde el cliente (o desde otros componentes del servidor). Se basan en las React Actions y están perfectamente integradas con el ciclo de vida de renderizado de Next.js.
+
+### Ventajas Clave
+
+1.  **Menos Boilerplate**: No necesitas definir rutas, métodos HTTP (GET/POST), ni headers manualmente.
+2.  **Type Safety (Tipado)**: Al ser funciones directas, TypeScript infiere los tipos de entrada y salida automáticamente entre cliente y servidor.
+3.  **Progressive Enhancement**: Funcionan incluso si JavaScript está deshabilitado en el navegador (cuando se usan con formularios HTML estándar).
+4.  **Revalidación Integrada**: Puedes actualizar la caché de tus datos (`revalidatePath`) en la misma función, haciendo que la UI se actualice instantáneamente.
+
+## Ejemplo Práctico: Creando un Todo List
+
+Vamos a ver la diferencia entre el método "viejo" y el "nuevo".
+
+### La Forma Antigua (API Routes)
+
+Antes, para añadir un "Todo", necesitabas dos archivos.
+
+**1. El Endpoint (`app/api/todo/route.ts`)**
+
+```ts
+import { NextResponse } from 'next/server'
+import { db } from '@/lib/db'
+
+export async function POST(request: Request) {
+  const data = await request.json()
+  await db.todo.create({ data })
+  return NextResponse.json({ success: true })
+}
+```
+
+**2. El Componente Cliente (`components/AddTodo.tsx`)**
+
+```tsx
+'use client'
+
+export default function AddTodo() {
+  async function handleSubmit(e) {
+    e.preventDefault()
+    await fetch('/api/todo', {
+      method: 'POST',
+      body: JSON.stringify({ text: 'Nueva tarea' }),
+    })
+    // Y luego recargar la página o manejar estado global...
+  }
+
+  return <form onSubmit={handleSubmit}>...</form>
+}
+```
+
+Es mucho código para algo tan simple, y perdemos el tipado entre el `fetch` y el endpoint.
+
+### La Forma Nueva (Server Actions)
+
+Con Server Actions, todo puede vivir junto (o en un archivo separado de acciones) y es mucho más directo.
+
+**1. La Acción (`actions.ts`)**
+
+```ts
+'use server'
+
+import { db } from '@/lib/db'
+import { revalidatePath } from 'next/cache'
+
+export async function createTodo(formData: FormData) {
+  const text = formData.get('text') as string
+
+  if (!text) return
+
+  await db.todo.create({ data: { text } })
+
+  // ¡Magia! Esto actualiza la UI automáticamente
+  revalidatePath('/todos')
+}
+```
+
+**2. El Componente (`components/AddTodo.tsx`)**
+
+```tsx
+import { createTodo } from '@/actions'
+
+export default function AddTodo() {
+  return (
+    <form action={createTodo}>
+      <input name="text" type="text" required className="border p-2" />
+      <button type="submit">Agregar</button>
+    </form>
+  )
+}
+```
+
+¡Eso es todo! Observa que:
+
+- No hay `fetch`.
+- No hay `useState` para el input (el formulario lo maneja).
+- `revalidatePath` se encarga de refrescar los datos en pantalla sin que tengas que hacer nada en el cliente.
+
+## Manejo de Estados de Carga (useFormStatus)
+
+Una pregunta común es: "¿Cómo muestro un spinner si no tengo un estado `isLoading`?"
+
+React nos da el hook `useFormStatus` para esto. Solo funciona dentro de un componente que esté renderizado _dentro_ del formulario, por lo que solemos extraer el botón a su propio componente.
+
+```tsx
+'use client'
+
+import { useFormStatus } from 'react-dom'
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button disabled={pending} type="submit" className="rounded bg-blue-500 p-2 text-white">
+      {pending ? 'Guardando...' : 'Agregar Tarea'}
+    </button>
+  )
+}
+```
+
+## Validaciones con Zod
+
+Para aplicaciones reales, no debes confiar ciegamente en `formData`. Lo ideal es usar **Zod** para validar los datos en el servidor antes de procesarlos.
+
+```ts
+'use server'
+
+import { z } from 'zod'
+
+const schema = z.object({
+  text: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
+})
+
+export async function createTodo(formData: FormData) {
+  const parsed = schema.safeParse({
+    text: formData.get('text'),
+  })
+
+  if (!parsed.success) {
+    return { error: parsed.error.flatten().fieldErrors }
+  }
+
+  // Procesar datos...
+}
+```
+
+## Conclusión
+
+Las **Server Actions** no solo son "otra feature más", son un cambio de paradigma que simplifica enormemente el desarrollo full-stack con Next.js. Al reducir la separación artificial entre cliente y servidor, escribimos menos código, cometemos menos errores de tipo y entregamos aplicaciones más rápidas.
+
+Si todavía estás escribiendo `POST` handlers en 2026 para mutaciones simples, ¡es hora de refactorizar!
+
+---
+
+_¿Te ha gustado este artículo? Revisa otros posts sobre [Next.js](/tags/next) y [React](/tags/react) en el blog._

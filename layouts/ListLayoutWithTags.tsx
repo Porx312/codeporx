@@ -6,10 +6,10 @@ import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
-import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
 import { motion } from 'framer-motion'
+import BlogCard from '@/components/BlogCard'
 
 interface PaginationProps {
   totalPages: number
@@ -31,12 +31,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="mt-10 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+    <div className="mt-10 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6">
       <button
-        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${
+        className={`group relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 ${
           prevPage
-            ? 'bg-red-500 text-white hover:bg-red-600'
-            : 'cursor-not-allowed bg-gray-100 text-gray-400'
+            ? 'bg-transparent text-white border border-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+            : 'cursor-not-allowed bg-transparent text-gray-600 border border-gray-800'
         }`}
         disabled={!prevPage}
         onClick={() => {
@@ -46,16 +46,24 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           }
         }}
       >
-        ← Anterior
+        <span className="relative z-10 flex items-center gap-2">
+          <svg className={`w-4 h-4 transition-transform duration-300 ${prevPage ? 'group-hover:-translate-x-1' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Anterior
+        </span>
+         {prevPage && <div className="absolute inset-0 -z-10 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />}
       </button>
-      <span className="text-sm font-medium  text-gray-300">
-        Página {currentPage} de {totalPages}
+
+      <span className="text-sm font-medium text-gray-400">
+        Página <span className="text-red-500">{currentPage}</span> de <span className="text-white">{totalPages}</span>
       </span>
+
       <button
-        className={`w-full rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 sm:w-auto ${
+        className={`group relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 ${
           nextPage
-            ? 'bg-red-500 text-white hover:bg-red-600'
-            : 'cursor-not-allowed bg-gray-100 text-gray-400'
+             ? 'bg-transparent text-white border border-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+            : 'cursor-not-allowed bg-transparent text-gray-600 border border-gray-800'
         }`}
         disabled={!nextPage}
         onClick={() => {
@@ -64,7 +72,13 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           }
         }}
       >
-        Siguiente →
+        <span className="relative z-10 flex items-center gap-2">
+          Siguiente
+          <svg className={`w-4 h-4 transition-transform duration-300 ${nextPage ? 'group-hover:translate-x-1' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+        {nextPage && <div className="absolute inset-0 -z-10 bg-gradient-to-l from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />}
       </button>
     </div>
   )
@@ -90,37 +104,48 @@ export default function ListLayoutWithTags({
           {title}
         </h1>
         <div className="flex flex-col lg:flex-row lg:space-x-12">
-          <aside className="mb-8 w-full lg:mb-0 lg:w-1/4">
-            <div className="sticky top-8 rounded-lg  bg-gray-800 p-6 shadow-md">
-              {pathname.startsWith('/blog') ? (
-                <h3 className="font-bold uppercase text-red-500"> Todos Los Posts</h3>
-              ) : (
-                <Link
-                  href={`/blog`}
-                  className="font-bold uppercase  text-gray-300 hover:text-red-500"
-                >
-                  Todos Los Posts
-                </Link>
-              )}
-              <div className="mt-3 flex flex-wrap gap-2">
-                {sortedTags.map((t) => (
+          {/* Sidebar Filter */}
+          <aside className="mb-8 w-full lg:mb-0 lg:w-1/4 lg:sticky lg:top-24 lg:self-start">
+            <div className="rounded-3xl border border-white/5 bg-[#0F0F0F]/80 p-6 shadow-xl backdrop-blur-md">
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
+                Filtrar por Etiqueta
+              </h3>
+              
+              <div className="grid grid-cols-3 gap-2">
+                {pathname.startsWith('/blog') ? (
+                   <div className="col-span-3 flex items-center justify-center px-3 py-2 rounded-xl bg-red-500 text-white shadow-lg shadow-red-500/20 text-xs font-bold transition-transform hover:scale-105 mb-2">
+                    Todos
+                  </div>
+                ) : (
+                  <Link
+                    href={`/blog`}
+                     className="col-span-3 flex items-center justify-center px-3 py-2 rounded-xl bg-transparent border border-gray-800 text-gray-400 text-xs font-medium hover:border-gray-600 hover:text-white transition-all hover:scale-105 mb-2"
+                  >
+                    Todos
+                  </Link>
+                )}
+
+                {sortedTags.map((t) => {
+                   const isActive = decodeURI(pathname.split('/tags/')[1]) === slug(t)
+                   return (
                   <Link
                     key={t}
                     href={`/tags/${slug(t)}`}
-                    className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${
-                      decodeURI(pathname.split('/tags/')[1]) === slug(t)
-                        ? 'bg-red-500 text-white'
-                        : ' bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    className={`flex items-center justify-center px-2 py-2 rounded-lg text-[10px] font-medium transition-all duration-300 hover:scale-105 text-center break-words min-h-[40px] h-full ${
+                      isActive
+                        ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
+                        : 'bg-gray-800/50 text-gray-400 border border-transparent hover:bg-gray-700 hover:text-white'
                     }`}
                   >
-                    {t} ({tagCounts[t]})
+                    {t}
                   </Link>
-                ))}
+                )})}
               </div>
             </div>
           </aside>
+
           <main className="w-full lg:w-3/4">
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {displayPosts.map((post, index) => (
                 <motion.div
                   key={post.path}
@@ -128,39 +153,7 @@ export default function ListLayoutWithTags({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <article className="overflow-hidden rounded-lg bg-gray-800 shadow-md transition-shadow duration-300 hover:shadow-lg">
-                    <div className="p-6">
-                      <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <time
-                          dateTime={post.date}
-                          className="mb-2 block text-sm  text-gray-200 sm:mb-0"
-                          suppressHydrationWarning
-                        >
-                          {formatDate(post.date, siteMetadata.locale)}
-                        </time>
-                        <div className="flex flex-wrap gap-2">
-                          {post.tags?.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))}
-                        </div>
-                      </div>
-                      <h2 className="mb-2 text-xl font-bold  text-gray-100 sm:text-2xl">
-                        <Link
-                          href={`/${post.path}`}
-                          className="transition-colors duration-200 hover:text-red-500"
-                        >
-                          {post.title}
-                        </Link>
-                      </h2>
-                      <p className="mb-4 text-sm  text-gray-200 sm:text-base">{post.summary}</p>
-                      <Link
-                        href={`/${post.path}`}
-                        className="inline-block rounded-md bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-red-600"
-                      >
-                        Leer Más →
-                      </Link>
-                    </div>
-                  </article>
+                  <BlogCard post={post} />
                 </motion.div>
               ))}
             </div>

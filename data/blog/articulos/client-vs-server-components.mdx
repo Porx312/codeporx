@@ -1,0 +1,102 @@
+---
+title: 'Client Components vs Server Components en Next.js: ¿Cuál usar?'
+date: '2026-02-18'
+tags: ['nextjs', 'react', 'performance']
+draft: false
+summary: 'Entiende la diferencia fundamental entre Client y Server Components en el App Router de Next.js. Aprende cuándo usar "use client" y cómo optimizar tu aplicación.'
+---
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## El Nuevo Paradigma de React
+
+Con la llegada de **React Server Components (RSC)** a través del App Router de Next.js, la forma en que pensamos sobre nuestras aplicaciones ha cambiado. Ya no se trata de "SSG vs SSR", sino de dónde se renderiza cada componente individualmente.
+
+Por defecto, en Next.js (App Router), **todos los componentes son Server Components**. Esto significa que se renderizan exclusivamente en el servidor y envían HTML puro al cliente, sin hidratación de JavaScript para esa parte.
+
+## Server Components: Tu Nuevo Estándar
+
+Los Server Components son ideales para todo lo que no requiere interactividad inmediata del usuario.
+
+### Ventajas
+
+1.  **Cero Bundle Size**: Las librerías que uses aquí (ej. formateadores de fecha, parseadores de markdown) no se envían al cliente.
+2.  **Acceso Directo al Backend**: Puedes leer la base de datos o sistema de archivos directamente en el componente.
+3.  **Seguridad**: El código sensible (tokens, llaves de API) nunca sale del servidor.
+
+### ¿Cuándo usarlos?
+
+- Obtención de datos (Data Fetching).
+- Layouts estáticos o estructura de la página.
+- Renderizado de contenido Markdown.
+- SEO y metadatos.
+
+```tsx
+// app/page.tsx (Server Component por defecto)
+import { db } from '@/lib/db'
+
+export default async function Page() {
+  const posts = await db.post.findMany() // ¡Directo a la BD!
+
+  return (
+    <main>
+      <h1>Mis Posts</h1>
+      {posts.map((post) => (
+        <p key={post.id}>{post.title}</p>
+      ))}
+    </main>
+  )
+}
+```
+
+## Client Components: Interactividad
+
+Los Client Components son los componentes de React "de toda la vida". Se renderizan en el servidor (HTML inicial) y luego se _hidratan_ en el cliente para volverse interactivos.
+
+Para convertir un componente en Client Component, debes añadir la directiva `'use client'` al principio del archivo.
+
+### ¿Cuándo usarlos?
+
+- Eventos del usuario (`onClick`, `onChange`).
+- Hooks de React (`useState`, `useEffect`, `useReducer`).
+- APIs del navegador (`localStorage`, `window`, `geolocation`).
+- Animaciones (Framer Motion, GSAP).
+
+```tsx
+'use client'
+
+import { useState } from 'react'
+
+export default function Counter() {
+  const [count, setCount] = useState(0)
+
+  return <button onClick={() => setCount(count + 1)}>Contador: {count}</button>
+}
+```
+
+## El Patrón de "Hojas" (Leaf Pattern)
+
+Para optimizar el rendimiento, intenta empujar los Client Components lo más abajo posible en el árbol de componentes (hacia las "hojas").
+
+**Mal patrón:** Hacer que toda la página sea `'use client'` solo porque un botón necesita interactividad.
+
+**Buen patrón:** Mantener la página como Server Component y solo importar el botón interactivo.
+
+```tsx
+// app/page.tsx (Server)
+import ClientButton from './ClientButton'
+
+export default function Page() {
+  return (
+    <div>
+      <h1>Título Estático (Server)</h1>
+      <p>Contenido pesado que no se envía al cliente (Server)</p>
+      <ClientButton /> {/* Solo esto es cliente */}
+    </div>
+  )
+}
+```
+
+## Conclusión
+
+No veas esto como una elección binaria para toda tu app. La magia de Next.js está en mezclar ambos. Usa **Server Components** por defecto para rendimiento y SEO, y salpica **Client Components** solo donde necesites interactividad. ¡Tu bundle size te lo agradecerá!

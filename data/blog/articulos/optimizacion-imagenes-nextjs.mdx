@@ -1,0 +1,114 @@
+---
+title: 'Optimización de Imágenes en Next.js: Guía de next/image para Core Web Vitals'
+date: '2026-02-19'
+tags: ['nextjs', 'seo', 'performance']
+draft: false
+summary: 'Aprende a usar el componente Image de Next.js para convertir automáticamente tus imágenes a WebP/AVIF, prevenir Layout Shifts (CLS) y mejorar tu puntuación en Google Lighthouse.'
+---
+
+<TOCInline toc={props.toc} asDisclosure />
+
+## ¿Por qué las imágenes son el enemigo del rendimiento?
+
+Las imágenes suelen ser los recursos más pesados de una página web. Un par de fotos mal optimizadas (ej. PNGs de 5MB) pueden destruir tus métricas de **Core Web Vitals**, específicamente el **LCP (Largest Contentful Paint)**.
+
+Google penaliza los sitios lentos, por lo que optimizar imágenes no es opcional si te importa el SEO.
+
+## El Componente `next/image`
+
+Next.js incluye un componente `<Image />` que extiende el elemento `<img>` estándar de HTML con superpoderes automáticos:
+
+1.  **Optimización de Talle**: Sirve imágenes del tamaño correcto para cada dispositivo (no envía una foto 4K a un móvil).
+2.  **Formatos Modernos**: Convierte automáticamente JPG/PNG a **WebP** o **AVIF** (que pesan un 30-50% menos).
+3.  **Lazy Loading**: Solo carga las imágenes cuando entran en el viewport.
+4.  **Prevención de CLS**: Reserva el espacio exacto de la imagen para evitar que el contenido "salte" mientras carga.
+
+## Cómo usarlo
+
+### 1. Imágenes Locales
+
+Para imágenes que tienes en tu carpeta `public` o importadas directamente.
+
+```tsx
+import Image from 'next/image'
+import heroPic from '../public/hero.jpg'
+
+export default function Hero() {
+  return (
+    <Image
+      src={heroPic}
+      alt="Foto de paisaje"
+      // No necesitas width/height porque Next.js los lee del archivo importado
+      placeholder="blur" // ¡Efecto de carga borroso gratis!
+    />
+  )
+}
+```
+
+### 2. Imágenes Remotas
+
+Para imágenes que vienen de una URL externa (S3, Cloudinary, CMS). Debes definir el ancho y alto para evitar el CLS.
+
+```tsx
+import Image from 'next/image'
+
+export default function Avatar() {
+  return (
+    <Image
+      src="https://midominio.com/foto.jpg"
+      alt="Avatar"
+      width={500}
+      height={300}
+    />
+  )
+}
+```
+
+**Nota para imágenes remotas:** Debes configurar los dominios permitidos en `next.config.js`.
+
+```js
+// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'midominio.com',
+      },
+    ],
+  },
+}
+```
+
+## Propiedades Avanzadas
+
+### `fill` y `object-fit`
+
+A veces no sabes las dimensiones exactas y quieres que la imagen llene un contenedor (responsive).
+
+```tsx
+<div style={{ position: 'relative', height: '500px' }}>
+  <Image
+    src="/fondo.jpg"
+    alt="Fondo"
+    fill
+    style={{ objectFit: 'cover' }}
+  />
+</div>
+```
+
+### `priority`
+
+Usa esta propiedad **solo** para la imagen más importante del "above the fold" (lo primero que ve el usuario, como el Hero de la home). Esto desactiva el lazy loading y mejora el LCP.
+
+```tsx
+<Image
+  src="/hero.jpg"
+  alt="Hero"
+  priority
+/>
+```
+
+## Conclusión
+
+Dejar de usar `<img>` y pasarse a `next/image` es una de las victorias rápidas más fáciles en el desarrollo con Next.js. Tus usuarios (y Google) agradecerán la velocidad extra.
