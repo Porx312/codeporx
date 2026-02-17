@@ -31,12 +31,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="mt-10 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6">
+    <div className="mt-10 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
       <button
         className={`group relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 ${
           prevPage
-            ? 'bg-transparent text-white border border-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
-            : 'cursor-not-allowed bg-transparent text-gray-600 border border-gray-800'
+            ? 'border border-red-500/20 bg-transparent text-white hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+            : 'cursor-not-allowed border border-gray-800 bg-transparent text-gray-600'
         }`}
         disabled={!prevPage}
         onClick={() => {
@@ -47,23 +47,36 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         }}
       >
         <span className="relative z-10 flex items-center gap-2">
-          <svg className={`w-4 h-4 transition-transform duration-300 ${prevPage ? 'group-hover:-translate-x-1' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg
+            className={`h-4 w-4 transition-transform duration-300 ${prevPage ? 'group-hover:-translate-x-1' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           Anterior
         </span>
-         {prevPage && <div className="absolute inset-0 -z-10 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />}
+        {prevPage && (
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        )}
       </button>
 
       <span className="text-sm font-medium text-gray-400">
-        Página <span className="text-red-500">{currentPage}</span> de <span className="text-white">{totalPages}</span>
+        Página <span className="text-red-500">{currentPage}</span> de{' '}
+        <span className="text-white">{totalPages}</span>
       </span>
 
       <button
         className={`group relative overflow-hidden rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 ${
           nextPage
-             ? 'bg-transparent text-white border border-red-500/20 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
-            : 'cursor-not-allowed bg-transparent text-gray-600 border border-gray-800'
+            ? 'border border-red-500/20 bg-transparent text-white hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'
+            : 'cursor-not-allowed border border-gray-800 bg-transparent text-gray-600'
         }`}
         disabled={!nextPage}
         onClick={() => {
@@ -74,11 +87,18 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       >
         <span className="relative z-10 flex items-center gap-2">
           Siguiente
-          <svg className={`w-4 h-4 transition-transform duration-300 ${nextPage ? 'group-hover:translate-x-1' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg
+            className={`h-4 w-4 transition-transform duration-300 ${nextPage ? 'group-hover:translate-x-1' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </span>
-        {nextPage && <div className="absolute inset-0 -z-10 bg-gradient-to-l from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />}
+        {nextPage && (
+          <div className="absolute inset-0 -z-10 bg-gradient-to-l from-red-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        )}
       </button>
     </div>
   )
@@ -105,47 +125,48 @@ export default function ListLayoutWithTags({
         </h1>
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           {/* Sidebar Filter */}
-          <aside className="mb-8 w-full lg:mb-0 lg:w-1/4 lg:sticky lg:top-24 lg:self-start">
+          <aside className="mb-8 w-full lg:sticky lg:top-24 lg:mb-0 lg:w-1/4 lg:self-start">
             <div className="rounded-3xl border border-white/5 bg-[#0F0F0F]/80 p-6 shadow-xl backdrop-blur-md">
               <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
                 Filtrar por Etiqueta
               </h3>
-              
+
               <div className="grid grid-cols-3 gap-2">
                 {pathname.startsWith('/blog') ? (
-                   <div className="col-span-3 flex items-center justify-center px-3 py-2 rounded-xl bg-red-500 text-white shadow-lg shadow-red-500/20 text-xs font-bold transition-transform hover:scale-105 mb-2">
+                  <div className="col-span-3 mb-2 flex items-center justify-center rounded-xl bg-red-500 px-3 py-2 text-xs font-bold text-white shadow-lg shadow-red-500/20 transition-transform hover:scale-105">
                     Todos
                   </div>
                 ) : (
                   <Link
                     href={`/blog`}
-                     className="col-span-3 flex items-center justify-center px-3 py-2 rounded-xl bg-transparent border border-gray-800 text-gray-400 text-xs font-medium hover:border-gray-600 hover:text-white transition-all hover:scale-105 mb-2"
+                    className="col-span-3 mb-2 flex items-center justify-center rounded-xl border border-gray-800 bg-transparent px-3 py-2 text-xs font-medium text-gray-400 transition-all hover:scale-105 hover:border-gray-600 hover:text-white"
                   >
                     Todos
                   </Link>
                 )}
 
                 {sortedTags.map((t) => {
-                   const isActive = decodeURI(pathname.split('/tags/')[1]) === slug(t)
-                   return (
-                  <Link
-                    key={t}
-                    href={`/tags/${slug(t)}`}
-                    className={`flex items-center justify-center px-2 py-2 rounded-lg text-[10px] font-medium transition-all duration-300 hover:scale-105 text-center break-words min-h-[40px] h-full ${
-                      isActive
-                        ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
-                        : 'bg-gray-800/50 text-gray-400 border border-transparent hover:bg-gray-700 hover:text-white'
-                    }`}
-                  >
-                    {t}
-                  </Link>
-                )})}
+                  const isActive = decodeURI(pathname.split('/tags/')[1]) === slug(t)
+                  return (
+                    <Link
+                      key={t}
+                      href={`/tags/${slug(t)}`}
+                      className={`flex h-full min-h-[40px] items-center justify-center break-words rounded-lg px-2 py-2 text-center text-[10px] font-medium transition-all duration-300 hover:scale-105 ${
+                        isActive
+                          ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
+                          : 'border border-transparent bg-gray-800/50 text-gray-400 hover:bg-gray-700 hover:text-white'
+                      }`}
+                    >
+                      {t}
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           </aside>
 
           <main className="w-full lg:w-3/4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {displayPosts.map((post, index) => (
                 <motion.div
                   key={post.path}

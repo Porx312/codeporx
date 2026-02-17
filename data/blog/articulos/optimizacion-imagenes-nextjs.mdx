@@ -53,14 +53,7 @@ Para imágenes que vienen de una URL externa (S3, Cloudinary, CMS). Debes defini
 import Image from 'next/image'
 
 export default function Avatar() {
-  return (
-    <Image
-      src="https://midominio.com/foto.jpg"
-      alt="Avatar"
-      width={500}
-      height={300}
-    />
-  )
+  return <Image src="https://midominio.com/foto.jpg" alt="Avatar" width={500} height={300} />
 }
 ```
 
@@ -88,12 +81,7 @@ A veces no sabes las dimensiones exactas y quieres que la imagen llene un conten
 
 ```tsx
 <div style={{ position: 'relative', height: '500px' }}>
-  <Image
-    src="/fondo.jpg"
-    alt="Fondo"
-    fill
-    style={{ objectFit: 'cover' }}
-  />
+  <Image src="/fondo.jpg" alt="Fondo" fill style={{ objectFit: 'cover' }} />
 </div>
 ```
 
@@ -102,11 +90,7 @@ A veces no sabes las dimensiones exactas y quieres que la imagen llene un conten
 Usa esta propiedad **solo** para la imagen más importante del "above the fold" (lo primero que ve el usuario, como el Hero de la home). Esto desactiva el lazy loading y mejora el LCP.
 
 ```tsx
-<Image
-  src="/hero.jpg"
-  alt="Hero"
-  priority
-/>
+<Image src="/hero.jpg" alt="Hero" priority />
 ```
 
 ## Conclusión

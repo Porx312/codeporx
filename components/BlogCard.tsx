@@ -14,14 +14,12 @@ interface BlogCardProps {
 
 export default function BlogCard({ post }: BlogCardProps) {
   const { title, summary, date, tags, path } = post
-  
+
   return (
-    <div
-      className="group relative transform cursor-pointer transition-all duration-500 hover:-rotate-1 hover:scale-105 h-full"
-    >
-      <div className="hover:shadow-3xl relative z-10 w-full overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-tr from-[#0F0F0F] to-[#0B0B0B] text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-red-500/40 hover:shadow-red-500/10 h-full flex flex-col aspect-square">
+    <div className="group relative h-full transform cursor-pointer transition-all duration-500 hover:-rotate-1 hover:scale-105">
+      <div className="hover:shadow-3xl relative z-10 flex aspect-square h-full w-full flex-col overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-tr from-[#0F0F0F] to-[#0B0B0B] text-white shadow-2xl backdrop-blur-xl duration-700 hover:border-red-500/40 hover:shadow-red-500/10">
         {/* Background Effects */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-tr from-red-500/5 to-red-400/10 opacity-40 transition-opacity duration-500 group-hover:opacity-60"></div>
           <div className="absolute -bottom-20 -left-20 h-48 w-48 transform animate-bounce rounded-full bg-gradient-to-tr from-red-500/10 to-transparent opacity-30 blur-3xl transition-all delay-500 duration-700 group-hover:scale-110 group-hover:opacity-50"></div>
           <div className="absolute left-10 top-10 h-16 w-16 animate-ping rounded-full bg-red-500/5 blur-xl"></div>
@@ -30,38 +28,48 @@ export default function BlogCard({ post }: BlogCardProps) {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 p-8 flex flex-col h-full">
-           <div className="mb-4 flex flex-wrap gap-2">
-              {tags?.map((tag) => (
-                <Tag key={tag} text={tag} />
-              ))}
-            </div>
-            
-            <h2 className="mb-3 text-2xl font-bold leading-tight text-gray-100 group-hover:text-red-500 transition-colors duration-300">
-               <Link href={`/${path}`} className="focus:outline-none">
-                <span className="absolute inset-0" aria-hidden="true" />
-                {title}
-               </Link>
-            </h2>
+        <div className="relative z-10 flex h-full flex-col p-8">
+          <div className="mb-4 flex flex-wrap gap-2">
+            {tags?.map((tag) => (
+              <Tag key={tag} text={tag} />
+            ))}
+          </div>
 
-            <div className="mb-4 flex items-center text-sm text-gray-400">
-               <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-            </div>
+          <h2 className="mb-3 text-2xl font-bold leading-tight text-gray-100 transition-colors duration-300 group-hover:text-red-500">
+            <Link href={`/${path}`} className="focus:outline-none">
+              <span className="absolute inset-0" aria-hidden="true" />
+              {title}
+            </Link>
+          </h2>
 
-            <p className="mb-6 text-gray-300 line-clamp-4 flex-grow text-sm sm:text-base">
-              {summary}
-            </p>
+          <div className="mb-4 flex items-center text-sm text-gray-400">
+            <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+          </div>
 
-            <div className="mt-auto pt-4 flex items-center text-sm font-medium text-red-500 transition-colors duration-300 group-hover:text-red-400">
-                  Leer Más
-                  <svg className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-            </div>
-          
-           {/* Decorative corner accents */}
-           <div className="absolute left-0 top-0 h-20 w-20 rounded-br-3xl bg-gradient-to-br from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"></div>
-           <div className="absolute bottom-0 right-0 h-20 w-20 rounded-tl-3xl bg-gradient-to-tl from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"></div>
+          <p className="mb-6 line-clamp-4 flex-grow text-sm text-gray-300 sm:text-base">
+            {summary}
+          </p>
+
+          <div className="mt-auto flex items-center pt-4 text-sm font-medium text-red-500 transition-colors duration-300 group-hover:text-red-400">
+            Leer Más
+            <svg
+              className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </div>
+
+          {/* Decorative corner accents */}
+          <div className="pointer-events-none absolute left-0 top-0 h-20 w-20 rounded-br-3xl bg-gradient-to-br from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+          <div className="pointer-events-none absolute bottom-0 right-0 h-20 w-20 rounded-tl-3xl bg-gradient-to-tl from-red-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
         </div>
       </div>
     </div>
